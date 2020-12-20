@@ -58,8 +58,9 @@ public class SQLConnector {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "SELECT * FROM user WHERE email = ?;");
+            preparedStatement.setString(1, user.getEmail());
             ResultSet result = preparedStatement.executeQuery();
-            if(result.first()) {
+            if(result.next()) {
                 byte[] userPassword = result.getBytes(2);
                 byte[] givenPassword = PasswordHasher.getPasswordHash(user.getPass());
                 if(Arrays.equals(userPassword, givenPassword)) {

@@ -14,8 +14,8 @@
 </head>
 <body>
 Accueil<br/>
-<a href="register">Inscription</a>
-<a href="login">Connexion</a>
+<a href="inscription">Inscription</a>
+<a href="connexion">Connexion</a>
 
 </body>
 </html>

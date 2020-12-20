@@ -19,8 +19,19 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Inscription</servlet-name>
-        <url-pattern>/register</url-pattern>
+        <url-pattern>/inscription</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>Connecter</servlet-name>
+        <servlet-class>servlets.Connecter</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Connecter</servlet-name>
+        <url-pattern>/connexion</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>MonCompte</servlet-name>

@@ -9,6 +9,8 @@ public class Utilisateur {
     private String prenom;
 
 
+    public Utilisateur() { }
+
     public String getEmail() {
         return email;
     }

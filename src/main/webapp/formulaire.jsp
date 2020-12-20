@@ -11,7 +11,7 @@
 <body>
 <div class="mx-auto center">
     <h1>Inscription</h1>
-    <form method="post" class="mx-auto" action="register">
+    <form method="post" class="mx-auto" action="inscription">
         <fieldset>
             <legend>Inscription</legend>
             <p>Créez votre compte</p>
