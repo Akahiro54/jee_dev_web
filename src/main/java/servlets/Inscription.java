@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Utilisateur;
+import forms.InscriptionForm;
 import sql.SQLConnector;
 
 public class Inscription extends HttpServlet {
@@ -23,28 +24,18 @@ public class Inscription extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Get request parameters
-        String userMail = req.getParameter("email");
-        String userPass = req.getParameter("pass");
+        InscriptionForm form = new InscriptionForm();
 
-        if(userMail != null && userPass != null) {
-            // TODO : user form & fields verification
+        Utilisateur userCreated = form.inscrireUtilisateur(req);
 
-            // Creates the user bean
-            Utilisateur user = new Utilisateur();
+        req.setAttribute("form", form);
+        req.setAttribute("user", userCreated);
 
-            // Set user properties
-            user.setEmail(userMail);
-            user.setPass(userPass);
-
-            // Tries to save the user to the database
-            SQLConnector.getConnection().createUser(user);
+        if(form.getErreurs().isEmpty()) { // inscription success
+            resp.sendRedirect(req.getContextPath()+"/index.jsp"); // Returns to the main page
+        } else {
+            req.getRequestDispatcher("/formulaire.jsp").forward(req, resp); // stays on subscription page and display errors
         }
+    }
 
-
-        // Returns to the main page
-        resp.sendRedirect(req.getContextPath()+"/index.jsp");
-	}
-
-	
 }

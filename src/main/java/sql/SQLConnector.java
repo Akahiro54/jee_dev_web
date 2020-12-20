@@ -51,7 +51,8 @@ public class SQLConnector {
     }
 
 
-    public void createUser(Utilisateur user) {
+    public boolean createUser(Utilisateur user) {
+        boolean created = false;
         // TODO : Password hash
         // TODO : method to check if user exists
         try {
@@ -59,11 +60,14 @@ public class SQLConnector {
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getPass());
             preparedStatement.execute();
+            created = true;
         } catch (Exception e) {
             System.err.println("Cannot create the user.");
             System.err.println("User Object : " + user.toString());
             e.printStackTrace();
+            created = false;
         }
+        return created;
     }
 
 
