@@ -1,9 +1,12 @@
 package sql;
 
 import beans.Utilisateur;
+import com.mysql.cj.jdbc.Blob;
 import exceptions.DatabaseConnectionException;
+import tools.PasswordHasher;
 
 import java.sql.*;
+import java.util.Arrays;
 import java.util.Enumeration;
 
 public class SQLConnector {
@@ -50,15 +53,41 @@ public class SQLConnector {
         }
     }
 
+    public boolean login(Utilisateur user) {
+        boolean logged = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM user WHERE email = ?;");
+            ResultSet result = preparedStatement.executeQuery();
+            if(result.first()) {
+                byte[] userPassword = result.getBytes(2);
+                byte[] givenPassword = PasswordHasher.getPasswordHash(user.getPass());
+                if(Arrays.equals(userPassword, givenPassword)) {
+                    logged = true;
+                }
+            }
+        } catch(Exception e) {
+            System.err.println("Cannot log the user.");
+            System.err.println("User Object : " + user.toString());
+            e.printStackTrace();
+            logged = false;
+        }
+        return logged;
+    }
 
     public boolean createUser(Utilisateur user) {
         boolean created = false;
         // TODO : Password hash
         // TODO : method to check if user exists
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement( "INSERT INTO user (email, password) VALUES (?, ?);");
+            byte[] passwordHash = PasswordHasher.getPasswordHash(user.getPass());
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "INSERT INTO user (email, mot_de_passe,nom , prenom) VALUES (?, ?, ? ,?);");
             preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setString(2, user.getPass());
+            preparedStatement.setBytes(2, passwordHash);
+            preparedStatement.setString(3, user.getNom());
+            preparedStatement.setString(4, user.getPrenom());
+
             preparedStatement.execute();
             created = true;
         } catch (Exception e) {
