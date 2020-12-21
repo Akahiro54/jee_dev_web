@@ -11,6 +11,13 @@ import java.util.Enumeration;
 
 public class SQLConnector {
 
+    private static final String DATABASE_URL = "127.0.0.1";
+    private static final String DATABASE_NAME = "jee_database";
+    private static final String DATABASE_PORT = "3306";
+    private static final String DATABASE_USERNAME = "root";
+    private static final String DATABASE_PASSWORD = "root";
+
+
     // Singleton managing database connection
     private static volatile SQLConnector connector;
 
@@ -43,8 +50,8 @@ public class SQLConnector {
 
         // Tries to connect to the database then stores the connection object
         try {
-            String DBUrl = "jdbc:mysql://127.0.0.1/jee_database";
-            this.connection = DriverManager.getConnection(DBUrl, "root","root");
+            String DBUrl = "jdbc:mysql://" + SQLConnector.DATABASE_URL + ":" + SQLConnector.DATABASE_PORT  + "/" + SQLConnector.DATABASE_NAME;
+            this.connection = DriverManager.getConnection(DBUrl, SQLConnector.DATABASE_USERNAME,SQLConnector.DATABASE_PASSWORD);
             System.out.println("Successfully connected to the database.");
         } catch(SQLException sqe) {
             System.err.println("Cannot create connection to the database.");
