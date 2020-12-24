@@ -38,7 +38,7 @@
             <br />
 
             <label for="prenom">Prénom</label>
-            <input type="text" id="prenom" name="prenom" value="<c:out value="${user.prenomn}"/>" size="20" maxlength="20" />
+            <input type="text" id="prenom" name="prenom" value="<c:out value="${user.prenom}"/>" size="20" maxlength="20" />
             <span class="erreur">${form.erreurs['prenom']}</span>
             <br />
 

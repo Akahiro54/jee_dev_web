@@ -6,6 +6,7 @@ import exceptions.DatabaseConnectionException;
 import tools.PasswordHasher;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Enumeration;
 
@@ -90,11 +91,12 @@ public class SQLConnector {
         try {
             byte[] passwordHash = PasswordHasher.getPasswordHash(user.getPass());
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO user (email, mot_de_passe,nom , prenom) VALUES (?, ?, ? ,?);");
+                    "INSERT INTO utilisateur (email, mot_de_passe, nom , prenom, date_naissance) VALUES (?, ?, ? ,?, ?);");
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setBytes(2, passwordHash);
             preparedStatement.setString(3, user.getNom());
             preparedStatement.setString(4, user.getPrenom());
+            preparedStatement.setDate(5, new Date(System.currentTimeMillis()));
 
             preparedStatement.execute();
             created = true;

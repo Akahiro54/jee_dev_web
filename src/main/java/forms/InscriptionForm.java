@@ -63,7 +63,7 @@ public class InscriptionForm {
         } catch ( Exception e ) {
             setErreur( CHAMP_PRENOM, e.getMessage() );
         }
-        utilisateur.setNom( prenom );
+        utilisateur.setPrenom( prenom );
 
 
         // if there are no errors
