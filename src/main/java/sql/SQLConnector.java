@@ -65,12 +65,14 @@ public class SQLConnector {
         boolean logged = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM user WHERE email = ?;");
+                    "SELECT * FROM utilisateur WHERE email = ?;");
             preparedStatement.setString(1, user.getEmail());
             ResultSet result = preparedStatement.executeQuery();
             if(result.next()) {
-                byte[] userPassword = result.getBytes(2);
+                byte[] userPassword = result.getBytes(3);
                 byte[] givenPassword = PasswordHasher.getPasswordHash(user.getPass());
+                System.out.println(userPassword);
+                System.out.println(givenPassword);
                 if(Arrays.equals(userPassword, givenPassword)) {
                     logged = true;
                 }
