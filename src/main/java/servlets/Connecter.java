@@ -25,6 +25,8 @@ public class Connecter extends HttpServlet {
 
         if(form.connecterUtilisateur(req)) {
             System.out.println("SUCCESS ! Here set sesion variable");
+            resp.sendRedirect(req.getContextPath()+"/profil.jsp");
+
         } else {
             System.out.println("FAILED ! Login failed");
         }

@@ -71,8 +71,6 @@ public class SQLConnector {
             if(result.next()) {
                 byte[] userPassword = result.getBytes(3);
                 byte[] givenPassword = PasswordHasher.getPasswordHash(user.getPass());
-                System.out.println(userPassword);
-                System.out.println(givenPassword);
                 if(Arrays.equals(userPassword, givenPassword)) {
                     logged = true;
                 }
