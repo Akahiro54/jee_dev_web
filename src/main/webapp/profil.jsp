@@ -13,6 +13,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
+<%
+    beans.Utilisateur user = (beans.Utilisateur)request.getAttribute("user");
+%>
 <div class="container">
     <div class="main-body">
 
@@ -31,7 +34,13 @@
                         <div class="d-flex flex-column align-items-center text-center">
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                             <div class="mt-3">
-                                <h4>John Doe</h4>
+                                <h4>
+                                    <%
+                                        if (user != null) {
+                                            System.out.println(user.getNom());
+                                            System.out.println(user.getPrenom());
+                                        }
+                                    %></h4>
                             </div>
                         </div>
                     </div>

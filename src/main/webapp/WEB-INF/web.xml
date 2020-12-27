@@ -32,6 +32,16 @@
         <url-pattern>/connexion</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Deconnecter</servlet-name>
+        <servlet-class>servlets.Deconnecter</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Deconnecter</servlet-name>
+        <url-pattern>/deconnexion</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>MonCompte</servlet-name>
