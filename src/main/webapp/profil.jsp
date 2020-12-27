@@ -1,4 +1,4 @@
-<%--
+<%@ page import="beans.Utilisateur" %><%--
   Created by IntelliJ IDEA.
   User: florian
   Date: 27/12/2020
@@ -14,7 +14,7 @@
 </head>
 <body>
 <%
-    beans.Utilisateur user = (beans.Utilisateur)request.getAttribute("user");
+    Utilisateur utilisateur = (Utilisateur) session.getAttribute("sessionUtilisateur");
 %>
 <div class="container">
     <div class="main-body">
@@ -36,11 +36,12 @@
                             <div class="mt-3">
                                 <h4>
                                     <%
-                                        if (user != null) {
-                                            System.out.println(user.getNom());
-                                            System.out.println(user.getPrenom());
+                                        if (utilisateur != null) {
+                                            out.println(utilisateur.getNom() + " ");
+                                            out.println(utilisateur.getPrenom());
                                         }
-                                    %></h4>
+                                    %>
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -54,7 +55,12 @@
                                 <h6 class="mb-0">Full Name</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                Kenneth Valdez
+                                <%
+                                    if (utilisateur != null) {
+                                        out.println(utilisateur.getNom() + " ");
+                                        out.println(utilisateur.getPrenom());
+                                    }
+                                %>
                             </div>
                         </div>
                         <hr>
@@ -63,13 +69,17 @@
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                fip@jukmuh.al
+                                <%
+                                    if (utilisateur != null) {
+                                        out.println(utilisateur.getEmail());
+                                    }
+                                %>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Phone</h6>
+                                <h6 class="mb-0">Date de Naissance</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 (239) 816-9029

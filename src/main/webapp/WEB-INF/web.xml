@@ -44,11 +44,11 @@
 
 
     <servlet>
-        <servlet-name>MonCompte</servlet-name>
-        <servlet-class>servlets.MonCompte</servlet-class>
+        <servlet-name>Profil</servlet-name>
+        <servlet-class>servlets.Profil</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>MonCompte</servlet-name>
-        <url-pattern>/account</url-pattern>
+        <servlet-name>Profil</servlet-name>
+        <url-pattern>/profil</url-pattern>
     </servlet-mapping>
 </web-app>

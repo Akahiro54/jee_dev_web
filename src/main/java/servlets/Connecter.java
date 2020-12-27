@@ -31,36 +31,26 @@ public class Connecter extends HttpServlet {
 
         Utilisateur utilisateur = form.connecterUtilisateur(req);
 
-        if (form.getResultat()) {
-
             if(SQLConnector.getConnection().login(utilisateur)) {
-                System.out.println("SUCCESS ! Here set sesion variable");
+
+                Utilisateur util = SQLConnector.getConnection().RecupInfoUser(utilisateur.getEmail());
+                utilisateur.setPrenom(util.getPrenom());
+                utilisateur.setNom(util.getNom());
+
                 /* Récupération de la session depuis la requête */
                 HttpSession session = req.getSession();
                 session.setAttribute(ATT_SESSION_USER, utilisateur);
-
-                if (form.getErreurs().isEmpty()) {
-                    session.setAttribute(ATT_SESSION_USER, utilisateur);
-                } else {
-                    session.setAttribute(ATT_SESSION_USER, null);
-                }
 
                 /* Stockage du formulaire et du bean dans l'objet request */
                 req.setAttribute(ATT_FORM, form);
                 req.setAttribute(ATT_USER, utilisateur);
 
+                //resp.sendRedirect(req.getContextPath()+"/profil.jsp");
                 req.getServletContext().getRequestDispatcher("/profil.jsp").forward(req, resp);
 
             } else {
-                System.out.println("FAILED ! Login failed");
                 req.getServletContext().getRequestDispatcher("/connexion.jsp").forward(req, resp);
             }
-
-        }
-        else
-        {
-            req.getServletContext().getRequestDispatcher("/connexion.jsp").forward(req, resp);
-        }
 
     }
 }

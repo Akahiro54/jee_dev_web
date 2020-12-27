@@ -7,6 +7,7 @@ import tools.PasswordHasher;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 
@@ -107,6 +108,29 @@ public class SQLConnector {
             created = false;
         }
         return created;
+    }
+
+    public Utilisateur RecupInfoUser(String emailUtilisateur) {
+        ResultSet resultat = null;
+        Utilisateur utilisateur = new Utilisateur();
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareCall("SELECT * FROM utilisateur WHERE email = ? ");
+            preparedStatement.setString(1,emailUtilisateur);
+            resultat = preparedStatement.executeQuery();
+
+
+            while ( resultat.next() ) {
+                String prenomUtilisateur = resultat.getString(5);
+                String nomUtilisateur = resultat.getString(4);
+                utilisateur.setPrenom(prenomUtilisateur);
+                utilisateur.setNom(nomUtilisateur);
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return utilisateur;
     }
 
 
