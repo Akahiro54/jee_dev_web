@@ -36,6 +36,7 @@ public class Connecter extends HttpServlet {
                 Utilisateur util = SQLConnector.getConnection().RecupInfoUser(utilisateur.getEmail());
                 utilisateur.setPrenom(util.getPrenom());
                 utilisateur.setNom(util.getNom());
+                utilisateur.setDate(util.getDate());
 
                 /* Récupération de la session depuis la requête */
                 HttpSession session = req.getSession();

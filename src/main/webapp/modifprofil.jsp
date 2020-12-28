@@ -1,14 +1,14 @@
 <%@ page import="beans.Utilisateur" %><%--
   Created by IntelliJ IDEA.
   User: florian
-  Date: 27/12/2020
-  Time: 16:20
+  Date: 28/12/2020
+  Time: 13:42
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Profil</title>
+    <title>Modification Profil</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
@@ -89,7 +89,6 @@
                                 %>
                             </div>
                         </div>
-                        <hr>
                         <div class="row">
                             <div class="col-sm-9 text-secondary">
                                 <a href="modifprofil.jsp" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Modifier</a>
@@ -110,5 +109,3 @@
 </div>
 </body>
 </html>
-
-

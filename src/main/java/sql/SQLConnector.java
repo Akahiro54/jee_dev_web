@@ -123,6 +123,8 @@ public class SQLConnector {
             while ( resultat.next() ) {
                 String prenomUtilisateur = resultat.getString(5);
                 String nomUtilisateur = resultat.getString(4);
+                Date dateNaissanceUtilisateur = resultat.getDate(6);
+                utilisateur.setDate(dateNaissanceUtilisateur);
                 utilisateur.setPrenom(prenomUtilisateur);
                 utilisateur.setNom(nomUtilisateur);
 

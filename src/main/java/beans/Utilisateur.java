@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.Date;
+
 public class Utilisateur {
 
 
@@ -7,6 +9,7 @@ public class Utilisateur {
     private String pass;
     private String nom;
     private String prenom;
+    private Date date;
 
 
     public Utilisateur() { }
@@ -41,5 +44,24 @@ public class Utilisateur {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Utilisateur{" +
+                "email='" + email + '\'' +
+                ", pass='" + pass + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", date=" + date +
+                '}';
     }
 }
