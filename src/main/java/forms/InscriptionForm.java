@@ -48,6 +48,7 @@ public class InscriptionForm {
         return errors;
     }
 
+
     private void validateField(InscriptionFields field, Utilisateur utilisateur, String... data) throws Exception{
         switch(field) {
             case FIELD_MAIL:
@@ -106,7 +107,6 @@ public class InscriptionForm {
                  birthCal.get(Calendar.DATE) > todayCal.get(Calendar.DATE))) {
             age--;
         }
-        System.out.printf("User age : %d\n", age);
         return age >= 18;
     }
 

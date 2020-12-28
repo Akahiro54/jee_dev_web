@@ -6,7 +6,10 @@ import exceptions.DatabaseConnectionException;
 import tools.PasswordHasher;
 
 import java.sql.*;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -96,7 +99,9 @@ public class SQLConnector {
             preparedStatement.setBytes(2, passwordHash);
             preparedStatement.setString(3, user.getNom());
             preparedStatement.setString(4, user.getPrenom());
-            preparedStatement.setDate(5, new Date(System.currentTimeMillis()));
+            Instant instant = user.getDate().toInstant();
+            ZonedDateTime frDateTime = ZonedDateTime.ofInstant( instant, ZoneId.of("Europe/Paris"));
+            preparedStatement.setObject(5, frDateTime.toLocalDate());
 
             preparedStatement.execute();
             created = true;
