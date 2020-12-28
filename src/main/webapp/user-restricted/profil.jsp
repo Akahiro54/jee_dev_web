@@ -8,25 +8,9 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="pageTitle" scope="request" value="Mon profil"/>
-<jsp:include page="header.jsp" />
-<html>
-<head>
-    <title>Profil</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-</head>
-<body>
+<jsp:include page="../header.jsp" />
 <div class="container">
     <div class="main-body">
-
-        <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb" class="main-breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
-            </ol>
-        </nav>
-        <!-- /Breadcrumb -->
-
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
                 <div class="card">
@@ -81,7 +65,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-9 text-secondary">
-                                <a href="modifprofil" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Modifier</a>
+                                <a href="<%=request.getContextPath()%>/user-restricted/modifprofil" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Modifier</a>
                             </div>
                         </div>
                     </div>
@@ -89,7 +73,7 @@
                 <div class="row gutters-sm">
                     <div class="col-sm-6 mb-3">
                         <div class="card h-100">
-                            <a href="activite.jsp" class="list-group-item list-group-item-action list-group-item-warning">Je suis positif au covid</a>
+                            <a href="<%=request.getContextPath()%>/activite.jsp" class="list-group-item list-group-item-action list-group-item-warning">Je suis positif au covid</a>
                         </div>
                     </div>
                 </div>
@@ -97,6 +81,6 @@
         </div>
     </div>
 </div>
-<jsp:include page="footer.jsp" />
+<jsp:include page="../footer.jsp" />
 
 

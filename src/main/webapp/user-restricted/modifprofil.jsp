@@ -8,13 +8,13 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="pageTitle" scope="request" value="Modifier mon profil"/>
-<jsp:include page="header.jsp" />
+<jsp:include page="../header.jsp" />
 <div class="container">
     <div class="view-account">
         <section class="module">
             <div class="module-inner">
                 <div class="content-panel">
-                    <form method="post" action="modifprofil" class="form-horizontal">
+                    <form method="post" action="<%=request.getContextPath()%>/user-restricted/modifprofil" class="form-horizontal">
                         <fieldset class="fieldset">
                             <div class="form-group avatar">
                                 <figure class="figure col-md-2 col-sm-3 col-xs-12">
@@ -76,4 +76,4 @@
         </section>
     </div>
 </div>
-<jsp:include page="footer.jsp" />
+<jsp:include page="../footer.jsp" />

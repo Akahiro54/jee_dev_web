@@ -3,7 +3,7 @@ package forms;
 import beans.Utilisateur;
 import sql.SQLConnector;
 import tools.FormFields;
-import tools.Messages;
+import tools.Util;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -40,7 +40,7 @@ public class InscriptionForm {
         if ( errors.isEmpty() ) {
             // Tries to save the user to the database
             if (!SQLConnector.getConnection().createUser(utilisateur)) {
-                addError(FormFields.DATABASE.getFieldName(), Messages.DATABASE_ERROR_MESSAGE);
+                addError(FormFields.DATABASE.getFieldName(), Util.DATABASE_ERROR_MESSAGE);
             }
         }
     return utilisateur;

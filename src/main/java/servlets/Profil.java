@@ -2,6 +2,7 @@ package servlets;
 
 import beans.Utilisateur;
 import sql.SQLConnector;
+import tools.Util;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +19,13 @@ public class Profil extends HttpServlet  {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Utilisateur utilisateur = (Utilisateur) session.getAttribute("sessionUtilisateur");
-        req.setAttribute("utilisateur",utilisateur);
-        this.getServletContext().getRequestDispatcher( "/profil.jsp" ).forward( req, resp );
-
+        Utilisateur utilisateur = (Utilisateur) session.getAttribute(Util.ATT_SESSION_USER);
+        if(utilisateur == null) { // if no user, redirect to home page
+            resp.sendRedirect(req.getContextPath()+"/index.jsp");
+        } else {
+            req.setAttribute("utilisateur",utilisateur);
+            this.getServletContext().getRequestDispatcher( "/user-restricted/profil.jsp" ).forward( req, resp );
+        }
     }
 
 

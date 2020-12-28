@@ -49,7 +49,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Profil</servlet-name>
-        <url-pattern>/profil</url-pattern>
+        <url-pattern>/user-restricted/profil</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -58,7 +58,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ModifProfil</servlet-name>
-        <url-pattern>/modifprofil</url-pattern>
+        <url-pattern>/user-restricted/modifprofil</url-pattern>
     </servlet-mapping>
 
 
@@ -70,4 +70,15 @@
         <servlet-name>CreerActivite</servlet-name>
         <url-pattern>/creer_activite</url-pattern>
     </servlet-mapping>
+
+
+    <filter>
+        <filter-name>RestrictionFilter</filter-name>
+        <filter-class>filters.UserRestrictionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RestrictionFilter</filter-name>
+        <url-pattern>/user-restricted/*</url-pattern>
+    </filter-mapping>
+
 </web-app>
