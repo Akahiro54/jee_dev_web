@@ -85,10 +85,9 @@ public class SQLConnector {
         return logged;
     }
 
+    // TODO : method to check if user exists
     public boolean createUser(Utilisateur user) {
         boolean created = false;
-        // TODO : Password hash
-        // TODO : method to check if user exists
         try {
             byte[] passwordHash = PasswordHasher.getPasswordHash(user.getPass());
             PreparedStatement preparedStatement = connection.prepareStatement(

@@ -5,8 +5,10 @@ import sql.SQLConnector;
 import tools.Messages;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 
 public class InscriptionForm {
 
@@ -64,11 +66,48 @@ public class InscriptionForm {
                 utilisateur.setPrenom(data[0]);
                 validateFirstname(data[0]);
                 break;
+            case FIELD_DATENAISS:
+                Date date = validateBirthdate(data[0]);
+                utilisateur.setDate(date);
             default:
             case DATABASE:
             case FIELD_CONFIRMATION:
                 break;
         }
+    }
+
+    private Date validateBirthdate(String birthdate ) throws Exception {
+        Date date = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if(birthdate == null) {
+            throw new Exception("Merci d'entrer une date de naissance");
+        } else {
+            dateFormat.setLenient(false);
+            try {
+                date = dateFormat.parse(birthdate.trim());
+            } catch(ParseException e) {
+                throw new Exception("Merci d'entrer une date de naissance valide");
+            }
+        }
+        if(!isAdult(date)) {
+            throw new Exception("Il faut être majeur pour pouvoir utiliser l'application");
+        }
+        return date;
+    }
+
+    private boolean isAdult(Date birthdate) {
+        Calendar birthCal = Calendar.getInstance(Locale.FRANCE);
+        birthCal.setTime(birthdate);
+        Calendar todayCal = Calendar.getInstance(Locale.FRANCE);
+        todayCal.setTime(new Date());
+        int age = todayCal.get(Calendar.YEAR) - birthCal.get(Calendar.YEAR);
+        if (    birthCal.get(Calendar.MONTH) > todayCal.get(Calendar.MONTH) ||
+                (birthCal.get(Calendar.MONTH) == todayCal.get(Calendar.MONTH) &&
+                 birthCal.get(Calendar.DATE) > todayCal.get(Calendar.DATE))) {
+            age--;
+        }
+        System.out.printf("User age : %d\n", age);
+        return age >= 18;
     }
 
     private void validateMail( String email ) throws Exception {
@@ -131,6 +170,7 @@ enum InscriptionFields {
     FIELD_CONFIRMATION("confirmation"),
     FIELD_LASTNAME("nom"),
     FIELD_FIRSTNAME("prenom"),
+    FIELD_DATENAISS("date_naissance"),
     DATABASE("database");
 
 
