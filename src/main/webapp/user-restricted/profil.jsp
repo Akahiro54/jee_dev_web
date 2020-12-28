@@ -65,7 +65,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-9 text-secondary">
-                                <a href="<%=request.getContextPath()%>/user-restricted/modifprofil" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Modifier</a>
+                                <a href="<%=request.getContextPath()%>/user-restricted/modifier_profil" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Modifier</a>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                 <div class="row gutters-sm">
                     <div class="col-sm-6 mb-3">
                         <div class="card h-100">
-                            <a href="<%=request.getContextPath()%>/activite.jsp" class="list-group-item list-group-item-action list-group-item-warning">Je suis positif au covid</a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-warning">Je suis positif au covid</a>
                         </div>
                     </div>
                 </div>

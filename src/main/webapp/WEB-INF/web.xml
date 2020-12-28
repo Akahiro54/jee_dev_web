@@ -54,11 +54,11 @@
 
     <servlet>
         <servlet-name>ModifProfil</servlet-name>
-        <servlet-class>servlets.ModifProfil</servlet-class>
+        <servlet-class>servlets.ModifierProfil</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ModifProfil</servlet-name>
-        <url-pattern>/user-restricted/modifprofil</url-pattern>
+        <url-pattern>/user-restricted/modifier_profil</url-pattern>
     </servlet-mapping>
 
 

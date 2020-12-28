@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class ModifProfil extends HttpServlet {
+public class ModifierProfil extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,7 +23,7 @@ public class ModifProfil extends HttpServlet {
             resp.sendRedirect(req.getContextPath()+"/connexion");
         } else {
             req.setAttribute("utilisateur",utilisateur);
-            this.getServletContext().getRequestDispatcher( "/user-restricted/modifprofil.jsp" ).forward( req, resp );
+            this.getServletContext().getRequestDispatcher( "/user-restricted/modifier_profil.jsp" ).forward( req, resp );
         }
     }
 
@@ -41,7 +41,7 @@ public class ModifProfil extends HttpServlet {
         if(form.getErrors().isEmpty()) {
             resp.sendRedirect(req.getContextPath()+"/user-restricted/profil"); // Returns to the main page
         } else {
-            req.getRequestDispatcher("/user-restricted/modifprofil.jsp").forward(req, resp);
+            req.getRequestDispatcher("/user-restricted/modifier_profil.jsp").forward(req, resp);
         }
 
 

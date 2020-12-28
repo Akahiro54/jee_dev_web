@@ -19,7 +19,7 @@ public class Inscription extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// forward the request to the jsp register form
-	    req.getRequestDispatcher("/formulaire.jsp").forward(req, resp);
+	    req.getRequestDispatcher("/inscription.jsp").forward(req, resp);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Inscription extends HttpServlet {
         if(form.getErrors().isEmpty()) { // inscription success
             resp.sendRedirect(req.getContextPath()+"/index.jsp"); // Returns to the main page
         } else {
-            req.getRequestDispatcher("/formulaire.jsp").forward(req, resp); // stays on subscription page and display errors
+            req.getRequestDispatcher("/inscription.jsp").forward(req, resp); // stays on subscription page and display errors
         }
     }
 

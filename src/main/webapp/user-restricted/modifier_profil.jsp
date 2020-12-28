@@ -14,7 +14,7 @@
         <section class="module">
             <div class="module-inner">
                 <div class="content-panel">
-                    <form method="post" action="<%=request.getContextPath()%>/user-restricted/modifprofil" class="form-horizontal">
+                    <form method="post" action="<%=request.getContextPath()%>/user-restricted/modifier_profil" class="form-horizontal">
                         <fieldset class="fieldset">
                             <div class="form-group avatar">
                                 <figure class="figure col-md-2 col-sm-3 col-xs-12">
