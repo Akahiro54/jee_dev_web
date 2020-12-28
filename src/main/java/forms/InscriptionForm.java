@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+import static tools.FormulaireValidation.*;
+
 public class InscriptionForm {
 
     private Map<String,String> errors = new HashMap<String, String>();
@@ -61,47 +63,13 @@ public class InscriptionForm {
                 validateLastname(data[0]);
                 break;
             case FIELD_FIRSTNAME:
-                utilisateur.setPrenom(data[0]);
                 validateFirstname(data[0]);
+                utilisateur.setPrenom(data[0]);
                 break;
             default:
             case DATABASE:
             case FIELD_CONFIRMATION:
                 break;
-        }
-    }
-
-    private void validateMail( String email ) throws Exception {
-        if ( email != null ) {
-            if ( !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
-                throw new Exception( "Merci de saisir une adresse mail valide." );
-            }
-        } else {
-            throw new Exception( "Merci de saisir une adresse mail." );
-        }
-    }
-
-    private void validatePasswords( String motDePasse, String confirmation ) throws Exception {
-        if ( motDePasse != null && confirmation != null ) {
-            if ( !motDePasse.equals( confirmation ) ) {
-                throw new Exception( "Les mots de passe entrés sont différents, merci de les saisir à nouveau." );
-            } else if ( motDePasse.length() < 3 ) {
-                throw new Exception( "Les mots de passe doivent contenir au moins 3 caractères." );
-            }
-        } else {
-            throw new Exception( "Merci de saisir et confirmer votre mot de passe." );
-        }
-    }
-
-    private void validateLastname( String nom ) throws Exception {
-        if ( nom != null && nom.length() < 3 ) {
-            throw new Exception( "Le nom doit contenir au moins 3 caractères." );
-        }
-    }
-
-    private void validateFirstname( String nom ) throws Exception {
-        if ( nom != null && nom.length() < 3 ) {
-            throw new Exception( "Le nom doit contenir au moins 3 caractères." );
         }
     }
 
@@ -112,18 +80,6 @@ public class InscriptionForm {
         errors.put( champ, message );
     }
 
-    /*
-     * Méthode utilitaire qui retourne null si un champ est vide, et son contenu
-     * sinon.
-     */
-    private static String getFieldValue(HttpServletRequest request, String fieldName ) {
-        String valeur = request.getParameter( fieldName );
-        if ( valeur == null || valeur.trim().length() == 0 ) {
-            return null;
-        } else {
-            return valeur.trim();
-        }
-    }
 }
 enum InscriptionFields {
     FIELD_MAIL("email"),

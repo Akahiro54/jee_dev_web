@@ -13,9 +13,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
-<%
-    Utilisateur utilisateur = (Utilisateur) session.getAttribute("sessionUtilisateur");
-%>
 <div class="container">
     <div class="main-body">
 
@@ -34,14 +31,7 @@
                         <div class="d-flex flex-column align-items-center text-center">
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                             <div class="mt-3">
-                                <h4>
-                                    <%
-                                        if (utilisateur != null) {
-                                            out.println(utilisateur.getNom() + " ");
-                                            out.println(utilisateur.getPrenom());
-                                        }
-                                    %>
-                                </h4>
+                                <h4>${utilisateur.nom}</h4><h5>${utilisateur.prenom}</h5>
                             </div>
                         </div>
                     </div>
@@ -52,15 +42,19 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Nom Complet</h6>
+                                <h6 class="mb-0">Nom</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <%
-                                    if (utilisateur != null) {
-                                        out.println(utilisateur.getNom() + " ");
-                                        out.println(utilisateur.getPrenom());
-                                    }
-                                %>
+                                ${utilisateur.nom}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Prénom</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                ${utilisateur.prenom}
                             </div>
                         </div>
                         <hr>
@@ -69,11 +63,7 @@
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <%
-                                    if (utilisateur != null) {
-                                        out.println(utilisateur.getEmail());
-                                    }
-                                %>
+                                ${utilisateur.email}
                             </div>
                         </div>
                         <hr>
@@ -82,17 +72,13 @@
                                 <h6 class="mb-0">Date de Naissance</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <%
-                                    if (utilisateur != null) {
-                                        out.println(utilisateur.getDate());
-                                    }
-                                %>
+                                ${utilisateur.date}
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-sm-9 text-secondary">
-                                <a href="modifprofil.jsp" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Modifier</a>
+                                <a href="modifprofil" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Modifier</a>
                             </div>
                         </div>
                     </div>

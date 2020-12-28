@@ -13,98 +13,71 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
-<%
-    Utilisateur utilisateur = (Utilisateur) session.getAttribute("sessionUtilisateur");
-%>
 <div class="container">
-    <div class="main-body">
+    <div class="view-account">
+        <section class="module">
+            <div class="module-inner">
+                <div class="content-panel">
+                    <form method="post" action="modifprofil" class="form-horizontal">
+                        <fieldset class="fieldset">
+                            <div class="form-group avatar">
+                                <figure class="figure col-md-2 col-sm-3 col-xs-12">
+                                    <img class="img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                </figure>
+                                <div class="form-inline col-md-10 col-sm-9 col-xs-12">
+                                    <input type="file" class="file-uploader pull-left">
+                                    <button type="submit" class="btn btn-sm btn-default-alt pull-left">Valider</button>
+                                </div>
+                            </div>
 
-        <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb" class="main-breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
-            </ol>
-        </nav>
-        <!-- /Breadcrumb -->
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Prénom</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input name = "modifprenom" type="text" class="form-control" value="${utilisateur.prenom}">
 
-        <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex flex-column align-items-center text-center">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                            <div class="mt-3">
-                                <h4>
-                                    <%
-                                        if (utilisateur != null) {
-                                            out.println(utilisateur.getNom() + " ");
-                                            out.println(utilisateur.getPrenom());
-                                        }
-                                    %>
-                                </h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Nom</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input name = "modifnom" type="text" class="form-control" value="${utilisateur.nom}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Email</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input name = "modifemail" type="email" class="form-control" value="${utilisateur.email}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Date de naissance</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input name = "modifdate" type="date" class="form-control" value="${utilisateur.date}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Mot de passe</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input name="motdepasse" type="password" class="form-control" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Confirmation</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input name="confirmation" type="password" class="form-control" value="">
+                                </div>
+                            </div>
+                        </fieldset>
+                        <hr>
+                        <div class="form-group">
+                            <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
+                                <input class="btn btn-primary" type="submit" value="Valider">
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-            <div class="col-md-8">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Nom Complet</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                <%
-                                    if (utilisateur != null) {
-                                        out.println(utilisateur.getNom() + " ");
-                                        out.println(utilisateur.getPrenom());
-                                    }
-                                %>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Email</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                <%
-                                    if (utilisateur != null) {
-                                        out.println(utilisateur.getEmail());
-                                    }
-                                %>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Date de Naissance</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                <%
-                                    if (utilisateur != null) {
-                                        out.println(utilisateur.getDate());
-                                    }
-                                %>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-9 text-secondary">
-                                <a href="modifprofil.jsp" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Modifier</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row gutters-sm">
-                    <div class="col-sm-6 mb-3">
-                        <div class="card h-100">
-                            <a href="activite.jsp" class="list-group-item list-group-item-action list-group-item-warning">Je suis positif au covid</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
     </div>
 </div>
 </body>

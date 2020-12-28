@@ -51,4 +51,13 @@
         <servlet-name>Profil</servlet-name>
         <url-pattern>/profil</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ModifProfil</servlet-name>
+        <servlet-class>servlets.ModifProfil</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifProfil</servlet-name>
+        <url-pattern>/modifprofil</url-pattern>
+    </servlet-mapping>
 </web-app>

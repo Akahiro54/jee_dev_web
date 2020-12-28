@@ -119,8 +119,7 @@ public class SQLConnector {
             preparedStatement.setString(1,emailUtilisateur);
             resultat = preparedStatement.executeQuery();
 
-
-            while ( resultat.next() ) {
+            while (resultat.next()) {
                 String prenomUtilisateur = resultat.getString(5);
                 String nomUtilisateur = resultat.getString(4);
                 Date dateNaissanceUtilisateur = resultat.getDate(6);
@@ -133,6 +132,22 @@ public class SQLConnector {
             throwables.printStackTrace();
         }
         return utilisateur;
+    }
+
+    public void ModifInfoUser(String prenom, String nom,String emailUtilisateur, Date date, String emailActuel) {
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareCall("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ? WHERE email = ? ");
+            preparedStatement.setString(1,emailUtilisateur);
+            preparedStatement.setString(2,nom);
+            preparedStatement.setString(3,prenom);
+            preparedStatement.setDate(4,date);
+            preparedStatement.setString(5,emailActuel);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 

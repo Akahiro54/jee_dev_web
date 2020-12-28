@@ -1,6 +1,8 @@
 package servlets;
 
 import beans.Utilisateur;
+import forms.InscriptionForm;
+import forms.ModifProfilForm;
 import sql.SQLConnector;
 
 import javax.servlet.ServletException;
@@ -9,27 +11,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-public class Profil extends HttpServlet  {
+public class ModifProfil extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur) session.getAttribute("sessionUtilisateur");
         req.setAttribute("utilisateur",utilisateur);
-        this.getServletContext().getRequestDispatcher( "/profil.jsp" ).forward( req, resp );
+        this.getServletContext().getRequestDispatcher( "/modifprofil.jsp" ).forward( req, resp );
 
     }
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("ondiogndiongiondsiognoding");
+        ModifProfilForm modifProfilForm= new ModifProfilForm();
+        try {
+            modifProfilForm.modifierUtilisateur(req);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        req.getRequestDispatcher("/profil.jsp").forward(req, resp);
     }
-
-
 
 }
