@@ -1,18 +1,13 @@
 package sql;
 
 import beans.Utilisateur;
-import com.mysql.cj.jdbc.Blob;
-import exceptions.DatabaseConnectionException;
 import tools.PasswordHasher;
 
 import java.sql.*;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 
 public class SQLConnector {
 
@@ -138,7 +133,8 @@ public class SQLConnector {
         return utilisateur;
     }
 
-    public void ModifInfoUser(String prenom, String nom,String emailUtilisateur, Date date, String emailActuel) {
+    public boolean ModifInfoUser(String prenom, String nom, String emailUtilisateur, Date date, String emailActuel) {
+        boolean created = false;
         try {
 
             PreparedStatement preparedStatement = connection.prepareCall("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ? WHERE email = ? ");
@@ -148,10 +144,13 @@ public class SQLConnector {
             preparedStatement.setDate(4,date);
             preparedStatement.setString(5,emailActuel);
             preparedStatement.executeUpdate();
+            created = true;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            created = false;
         }
+        return created;
     }
 
 

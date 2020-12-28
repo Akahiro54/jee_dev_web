@@ -26,14 +26,20 @@ public class ModifProfil extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ModifProfilForm modifProfilForm= new ModifProfilForm();
-        try {
-            modifProfilForm.modifierUtilisateur(req);
-        } catch (Exception e) {
-            e.printStackTrace();
+        HttpSession session = req.getSession();
+        Utilisateur utilisateur = (Utilisateur) session.getAttribute("sessionUtilisateur");
+
+        ModifProfilForm form = new ModifProfilForm();
+        form.modifierUtilisateur(req);
+        req.setAttribute("form", form);
+        req.setAttribute("utilisateur", utilisateur);
+
+        if(form.getErrors().isEmpty()) {
+            resp.sendRedirect(req.getContextPath()+"/profil");
+        } else {
+            req.getRequestDispatcher("/modifprofil.jsp").forward(req, resp);
         }
 
-        resp.sendRedirect(req.getContextPath()+"/profil"); // Returns to the main page
     }
 
 }
