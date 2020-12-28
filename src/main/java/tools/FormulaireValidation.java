@@ -1,6 +1,11 @@
 package tools;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class FormulaireValidation {
 
@@ -37,6 +42,41 @@ public class FormulaireValidation {
             throw new Exception( "Le nom doit contenir au moins 3 caractères." );
         }
     }
+
+    public static Date validateBirthdate(String birthdate ) throws Exception {
+        Date date = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if(birthdate == null) {
+            throw new Exception("Merci d'entrer une date de naissance");
+        } else {
+            dateFormat.setLenient(false);
+            try {
+                date = dateFormat.parse(birthdate.trim());
+            } catch(ParseException e) {
+                throw new Exception("Merci d'entrer une date de naissance valide");
+            }
+        }
+        if(!isAdult(date)) {
+            throw new Exception("Il faut être majeur pour pouvoir utiliser l'application");
+        }
+        return date;
+    }
+
+    private static boolean isAdult(Date birthdate) {
+        Calendar birthCal = Calendar.getInstance(Locale.FRANCE);
+        birthCal.setTime(birthdate);
+        Calendar todayCal = Calendar.getInstance(Locale.FRANCE);
+        todayCal.setTime(new Date());
+        int age = todayCal.get(Calendar.YEAR) - birthCal.get(Calendar.YEAR);
+        if (    birthCal.get(Calendar.MONTH) > todayCal.get(Calendar.MONTH) ||
+                (birthCal.get(Calendar.MONTH) == todayCal.get(Calendar.MONTH) &&
+                        birthCal.get(Calendar.DATE) > todayCal.get(Calendar.DATE))) {
+            age--;
+        }
+//        System.out.printf("User age : %d\n", age);
+        return age >= 18;
+    }
+
 
     /*
      * Méthode utilitaire qui retourne null si un champ est vide, et son contenu

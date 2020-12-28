@@ -33,7 +33,7 @@ public class ModifProfil extends HttpServlet {
             e.printStackTrace();
         }
 
-        req.getRequestDispatcher("/profil.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath()+"/profil"); // Returns to the main page
     }
 
 }

@@ -5,8 +5,11 @@ import sql.SQLConnector;
 import tools.Messages;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static tools.FormulaireValidation.*;
 
 public class InscriptionForm {
 
@@ -42,7 +45,7 @@ public class InscriptionForm {
     return utilisateur;
     }
 
-    public Map<String, String> getErreurs() {
+    public Map<String, String> getErrors() {
         return errors;
     }
 
@@ -64,6 +67,10 @@ public class InscriptionForm {
                 utilisateur.setPrenom(data[0]);
                 validateFirstname(data[0]);
                 break;
+            case FIELD_DATENAISS:
+                Date date = validateBirthdate(data[0]);
+                utilisateur.setDate(date);
+                break;
             default:
             case DATABASE:
             case FIELD_CONFIRMATION:
@@ -71,39 +78,6 @@ public class InscriptionForm {
         }
     }
 
-    private void validateMail( String email ) throws Exception {
-        if ( email != null ) {
-            if ( !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
-                throw new Exception( "Merci de saisir une adresse mail valide." );
-            }
-        } else {
-            throw new Exception( "Merci de saisir une adresse mail." );
-        }
-    }
-
-    private void validatePasswords( String motDePasse, String confirmation ) throws Exception {
-        if ( motDePasse != null && confirmation != null ) {
-            if ( !motDePasse.equals( confirmation ) ) {
-                throw new Exception( "Les mots de passe entrés sont différents, merci de les saisir à nouveau." );
-            } else if ( motDePasse.length() < 3 ) {
-                throw new Exception( "Les mots de passe doivent contenir au moins 3 caractères." );
-            }
-        } else {
-            throw new Exception( "Merci de saisir et confirmer votre mot de passe." );
-        }
-    }
-
-    private void validateLastname( String nom ) throws Exception {
-        if ( nom != null && nom.length() < 3 ) {
-            throw new Exception( "Le nom doit contenir au moins 3 caractères." );
-        }
-    }
-
-    private void validateFirstname( String nom ) throws Exception {
-        if ( nom != null && nom.length() < 3 ) {
-            throw new Exception( "Le nom doit contenir au moins 3 caractères." );
-        }
-    }
 
     /*
      * Ajoute un message correspondant au champ spécifié à la map des errors.
@@ -131,6 +105,7 @@ enum InscriptionFields {
     FIELD_CONFIRMATION("confirmation"),
     FIELD_LASTNAME("nom"),
     FIELD_FIRSTNAME("prenom"),
+    FIELD_DATENAISS("date_naissance"),
     DATABASE("database");
 
 
