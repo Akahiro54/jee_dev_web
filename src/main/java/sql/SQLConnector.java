@@ -119,13 +119,11 @@ public class SQLConnector {
             resultat = preparedStatement.executeQuery();
 
             while (resultat.next()) {
-                String prenomUtilisateur = resultat.getString(5);
-                String nomUtilisateur = resultat.getString(4);
-                Date dateNaissanceUtilisateur = resultat.getDate(6);
-                utilisateur.setDate(dateNaissanceUtilisateur);
-                utilisateur.setPrenom(prenomUtilisateur);
-                utilisateur.setNom(nomUtilisateur);
-
+                utilisateur.setId(resultat.getInt(1));
+                utilisateur.setEmail(resultat.getString(2));
+                utilisateur.setNom(resultat.getString(4));
+                utilisateur.setPrenom(resultat.getString(5));
+                utilisateur.setDate(resultat.getDate(6));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -29,32 +29,22 @@ public class Connecter extends HttpServlet {
     // TODO Finish this method
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         ConnexionForm form = new ConnexionForm();
+        Utilisateur tmpUser = form.connecterUtilisateur(req);
+        if(SQLConnector.getConnection().login(tmpUser)) {
+            Utilisateur utilisateur = SQLConnector.getConnection().RecupInfoUser(tmpUser.getEmail());
+            /* Récupération de la session depuis la requête */
+            HttpSession session = req.getSession();
+            session.setAttribute(Util.ATT_SESSION_USER, utilisateur);
 
-        Utilisateur utilisateur = form.connecterUtilisateur(req);
+            /* Stockage du formulaire et du bean dans l'objet request */
+            req.setAttribute(ATT_FORM, form);
+            req.setAttribute(ATT_USER, utilisateur);
 
-            if(SQLConnector.getConnection().login(utilisateur)) {
-
-                Utilisateur util = SQLConnector.getConnection().RecupInfoUser(utilisateur.getEmail());
-                utilisateur.setPrenom(util.getPrenom());
-                utilisateur.setNom(util.getNom());
-                utilisateur.setDate(util.getDate());
-
-                /* Récupération de la session depuis la requête */
-                HttpSession session = req.getSession();
-                session.setAttribute(Util.ATT_SESSION_USER, utilisateur);
-
-                /* Stockage du formulaire et du bean dans l'objet request */
-                req.setAttribute(ATT_FORM, form);
-                req.setAttribute(ATT_USER, utilisateur);
-
-                resp.sendRedirect(req.getContextPath()+"/user-restricted/profil");
-//                req.getServletContext().getRequestDispatcher("/user-restricted/profil").forward(req, resp);
-
-            } else {
-                req.getServletContext().getRequestDispatcher("/connexion.jsp").forward(req, resp);
-            }
+            resp.sendRedirect(req.getContextPath()+"/user-restricted/profil");
+        } else {
+            req.getServletContext().getRequestDispatcher("/connexion.jsp").forward(req, resp);
+        }
 
     }
 }

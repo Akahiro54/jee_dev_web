@@ -5,6 +5,7 @@ import java.util.Date;
 public class Utilisateur {
 
 
+    private int id;
     private String email;
     private String pass;
     private String nom;
@@ -12,7 +13,11 @@ public class Utilisateur {
     private Date date;
 
 
-    public Utilisateur() { }
+    public Utilisateur() {}
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getEmail() {
         return email;
@@ -57,7 +62,8 @@ public class Utilisateur {
     @Override
     public String toString() {
         return "Utilisateur{" +
-                "email='" + email + '\'' +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
                 ", pass='" + pass + '\'' +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
