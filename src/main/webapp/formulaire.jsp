@@ -16,7 +16,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/bootstrap-datepicker.fr.min.js"></script>
-
     <script type='text/javascript'>
         $(function () {
             $('#datepicker').datepicker({
@@ -34,7 +33,8 @@
     <p>Créez votre compte maintenant et soyez prévenu immédiatement si vous êtes un cas contact !</p>
         <form method="post" class="mx-auto text-center rounded formulaire pt-1" action="inscription">
             <p>${form.errors['database']}</p>
-            <div class="form-group ml-1 mr-2 d-inline-flex">
+
+            <div class="form-group ml-1 mr-2">
                 <div class="mx-auto row">
                     <label class="col-form-label col-4" for="email">Adresse email <span class="required">*</span> : </label>
                     <input type="email" class="form-control my-auto col-8" id="email" name="email" value="<c:out value="${user.email}"/>" placeholder="Entrez votre adresse email" size="300px"/>
@@ -49,6 +49,7 @@
                     <span class="erreur text-danger text-center">${form.errors['motdepasse']}</span>
                 </div>
             </div>
+
             <div class="form-group ml-1 mr-2">
                 <div class="mx-auto row">
                     <label class="col-form-label col-4" for="confirmation">Confirmation du mot de passe <span class="required">*</span> : </label>
