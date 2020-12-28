@@ -68,9 +68,26 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CreerActivite</servlet-name>
-        <url-pattern>/creer_activite</url-pattern>
+        <url-pattern>/user-restricted/creer_activite</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Activites</servlet-name>
+        <servlet-class>servlets.Activites</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Activites</servlet-name>
+        <url-pattern>/user-restricted/activites</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreerLieu</servlet-name>
+        <servlet-class>servlets.CreerLieu</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreerLieu</servlet-name>
+        <url-pattern>/user-restricted/creer_lieu</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>RestrictionFilter</filter-name>

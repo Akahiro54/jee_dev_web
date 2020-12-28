@@ -6,14 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CreerActivite extends HttpServlet {
+public class CreerLieu extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(req.getContextPath() + "/user-restricted/creer_activite.jsp");
+        resp.sendRedirect(req.getContextPath() + "/user-restricted/creer_lieu.jsp");
     }
 
-    // TODO
+    //TODO
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);

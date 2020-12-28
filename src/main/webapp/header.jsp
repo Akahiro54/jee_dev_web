@@ -38,6 +38,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/profil">Mon compte</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/creer_activite">Nouvelle activité</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/creer_lieu">Nouveau lieu (TMP)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/activites">Activités</a>
+                    </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>
                     </li>
