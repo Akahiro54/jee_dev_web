@@ -60,4 +60,14 @@
         <servlet-name>ModifProfil</servlet-name>
         <url-pattern>/modifprofil</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>CreerActivite</servlet-name>
+        <servlet-class>servlets.CreerActivite</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreerActivite</servlet-name>
+        <url-pattern>/creer_activite</url-pattern>
+    </servlet-mapping>
 </web-app>

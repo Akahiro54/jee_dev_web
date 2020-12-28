@@ -1,22 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Connexion</title>
-
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css"/>
-    <link rel="stylesheet" href="css/inscription.css"/>
-
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/bootstrap-datepicker.fr.min.js"></script>
-
-</head>
-<body class="fond">
+<c:set var="pageTitle" scope="request" value="Connexion"/>
+<jsp:include page="header.jsp" />
 <div class="mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6">
     <h1>Connexion</h1>
     <p>Connectez-vous !</p>
@@ -44,5 +29,4 @@
         </c:if>
     </form>
 </div>
-</body>
-</html>
+<jsp:include page="footer.jsp" />
