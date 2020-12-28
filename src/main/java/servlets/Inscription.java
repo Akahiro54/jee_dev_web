@@ -31,7 +31,7 @@ public class Inscription extends HttpServlet {
         req.setAttribute("form", form);
         req.setAttribute("user", userCreated);
 
-        if(form.getErreurs().isEmpty()) { // inscription success
+        if(form.getErrors().isEmpty()) { // inscription success
             resp.sendRedirect(req.getContextPath()+"/index.jsp"); // Returns to the main page
         } else {
             req.getRequestDispatcher("/formulaire.jsp").forward(req, resp); // stays on subscription page and display errors

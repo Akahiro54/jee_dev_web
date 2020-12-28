@@ -33,12 +33,12 @@
     <h1>Inscription</h1>
     <p>Créez votre compte maintenant et soyez prévenu immédiatement si vous êtes un cas contact !</p>
         <form method="post" class="mx-auto text-center rounded formulaire pt-1" action="inscription">
-            <p>${form.erreurs['database']}</p>
+            <p>${form.errors['database']}</p>
             <div class="form-group ml-1 mr-2 d-inline-flex">
                 <div class="mx-auto row">
                     <label class="col-form-label col-4" for="email">Adresse email <span class="required">*</span> : </label>
                     <input type="email" class="form-control my-auto col-8" id="email" name="email" value="<c:out value="${user.email}"/>" placeholder="Entrez votre adresse email" size="300px"/>
-                    <span class="erreur">${form.erreurs['email']}</span>
+                    <span class="erreur">${form.errors['email']}</span>
                 </div>
             </div>
 
@@ -46,14 +46,14 @@
                 <div class="mx-auto row">
                     <label class="col-form-label col-4" for="motdepasse">Mot de passe <span class="required">*</span> : </label>
                     <input type="password" class="form-control my-auto col-8" id="motdepasse" placeholder="Entrez un mot de passe" name="motdepasse" value=""/>
-                    <span class="erreur">${form.erreurs['motdepasse']}</span>
+                    <span class="erreur">${form.errors['motdepasse']}</span>
                 </div>
             </div>
             <div class="form-group ml-1 mr-2">
                 <div class="mx-auto row">
                     <label class="col-form-label col-4" for="confirmation">Confirmation du mot de passe <span class="required">*</span> : </label>
                     <input type="password" class="form-control my-auto col-8" id="confirmation" name="confirmation" placeholder="Confirmez le mot de passe" value=""/>
-                    <span class="erreur">${form.erreurs['confirmation']}</span>
+                    <span class="erreur">${form.errors['confirmation']}</span>
                 </div>
             </div>
 
@@ -61,7 +61,7 @@
                 <div class="mx-auto row">
                     <label class="col-form-label col-4" for="nom">Nom <span class="required">*</span> : </label>
                     <input type="text" class="form-control my-auto col-8" id="nom" name="nom" value="<c:out value="${user.nom}"/>" placeholder="Entrez votre nom" />
-                    <span class="erreur">${form.erreurs['nom']}</span>
+                    <span class="erreur">${form.errors['nom']}</span>
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
                 <div class="mx-auto row">
                     <label class="col-form-label col-4" for="prenom">Prénom <span class="required">*</span> : </label>
                     <input type="text" class="form-control my-auto col-8" id="prenom" name="prenom" value="<c:out value="${user.prenom}"/>" placeholder="Entrez votre prénom" />
-                    <span class="erreur">${form.erreurs['prenom']}</span>
+                    <span class="erreur">${form.errors['prenom']}</span>
                 </div>
             </div>
 
@@ -81,8 +81,6 @@
             </div>
 
             <input type="submit" value="Inscription" class="btn btn-dark mb-2"/>
-            <br />
-            <p class="${empty form.erreurs ? 'succes' : 'erreur'}">${form.resultat}</p>
         </form>
 </div>
 </body>

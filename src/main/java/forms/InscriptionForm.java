@@ -42,7 +42,7 @@ public class InscriptionForm {
     return utilisateur;
     }
 
-    public Map<String, String> getErreurs() {
+    public Map<String, String> getErrors() {
         return errors;
     }
 
