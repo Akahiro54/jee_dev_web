@@ -3,7 +3,7 @@ package forms;
 import beans.Utilisateur;
 import sql.SQLConnector;
 import tools.FormFields;
-import tools.Messages;
+import tools.Util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,7 +35,7 @@ public class ModifProfilForm {
 
         if ( errors.isEmpty() ) {
             if (!SQLConnector.getConnection().ModifInfoUser(prenom,nom,email,date2,ancienEmail)) {
-                addError(FormFields.DATABASE.getFieldName(), Messages.DATABASE_ERROR_MESSAGE);
+                addError(FormFields.DATABASE.getFieldName(), Util.DATABASE_ERROR_MESSAGE);
             }
         }
 
