@@ -5,35 +5,44 @@
 <head>
     <meta charset="utf-8" />
     <title>Connexion</title>
-    <link type="text/css" rel="stylesheet" href="form.css" />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css"/>
+    <link rel="stylesheet" href="css/inscription.css"/>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/bootstrap-datepicker.fr.min.js"></script>
+
 </head>
-<body>
-<form method="post" action="connexion">
-    <fieldset>
-        <legend>Connexion</legend>
-        <p>Vous pouvez vous connecter via ce formulaire.</p>
+<body class="fond">
+<div class="mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6">
+    <h1>Connexion</h1>
+    <p>Connectez-vous !</p>
+    <form method="post" class="mx-auto text-center rounded formulaire pt-2" action="connexion">
+        <div class="form-group ml-1 mr-2">
+            <div class="mx-auto row">
+                <label class="col-form-label col-2" for="email">Adresse email : </label>
+                <input type="email" class="form-control my-auto col-10" id="email" name="email" value="<c:out value="${utilisateur.email}"/>" size="20" maxlength="60" />
+                <span class="erreur">${form.errors['email']}</span>
+            </div>
+        </div>
+        <div class="form-group ml-1 mr-2">
+            <div class="mx-auto row">
+                <label class="col-form-label col-2" for="motdepasse">Mot de passe : </label>
+                <input type="password" class="form-control my-auto col-10" id="motdepasse" name="motdepasse" value="" size="20" maxlength="20" />
+                <span class="erreur">${form.errors['motdepasse']}</span>
+            </div>
+        </div>
 
-        <label for="nom">Adresse email <span class="requis">*</span></label>
-        <input type="email" id="email" name="email" value="<c:out value="${utilisateur.email}"/>" size="20" maxlength="60" />
-        <span class="erreur">${form.erreurs['email']}</span>
-
-
-        <label for="motdepasse">Mot de passe <span class="requis">*</span></label>
-        <input type="password" id="motdepasse" name="motdepasse" value="" size="20" maxlength="20" />
-        <span class="erreur">${form.erreurs['motdepasse']}</span>
-
-
-        <input type="submit" value="Connexion" class="sansLabel" />
-
-
-        <p class="${empty form.erreurs ? 'succes' : 'erreur'}">${form.resultat}</p>
-
+        <input type="submit" value="Connexion" class="btn btn-dark mb-2" />
         <%-- Vérification de la présence d'un objet utilisateur en session --%>
         <c:if test="${!empty sessionScope.sessionUtilisateur}">
             <%-- Si l'utilisateur existe en session, alors on affiche son adresse email. --%>
             <p class="succes">Vous êtes connecté(e) avec l'adresse : ${sessionScope.sessionUtilisateur.email}</p>
         </c:if>
-    </fieldset>
-</form>
+    </form>
+</div>
 </body>
 </html>
