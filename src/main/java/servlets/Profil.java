@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Base64;
 
 public class Profil extends HttpServlet  {
 
@@ -20,6 +21,14 @@ public class Profil extends HttpServlet  {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur) session.getAttribute(Util.ATT_SESSION_USER);
+
+        if (utilisateur.getImage() != null)
+        {
+            String encode = Base64.getEncoder().encodeToString(utilisateur.getImage());
+            req.setAttribute("imgBase", encode);
+        }
+
+
         if(utilisateur == null) { // if no user, redirect to home page
             resp.sendRedirect(req.getContextPath()+"/index.jsp");
         } else {

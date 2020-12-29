@@ -5,18 +5,19 @@ import forms.ModifierProfilForm;
 import tools.Util;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.Base64;
 
+@MultipartConfig
 public class ModifierProfil extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur) session.getAttribute(Util.ATT_SESSION_USER);
+
         if(utilisateur == null) { // if no user, redirect to login page
             resp.sendRedirect(req.getContextPath()+"/connexion");
         } else {
@@ -44,5 +45,7 @@ public class ModifierProfil extends HttpServlet {
 
 
      }
+
+
 
 }

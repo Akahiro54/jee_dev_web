@@ -9,6 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="pageTitle" scope="request" value="Mon profil"/>
 <jsp:include page="../header.jsp" />
+</br>
 <div class="container">
     <div class="main-body">
         <div class="row gutters-sm">
@@ -16,7 +17,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="${utilisateur.image}" class="rounded-circle" width="150">
+                            <img src="data:image/jpeg;base64,${imgBase}" width="300">
                             <div class="mt-3">
                                 <h4>${utilisateur.nom}</h4><h5>${utilisateur.prenom}</h5>
                             </div>

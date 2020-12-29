@@ -6,11 +6,11 @@ import sql.UtilisateurTable;
 import tools.Util;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.Date;
 
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import java.util.Map;
 
 import static tools.FormTools.*;
 
+@MultipartConfig(maxFileSize = 1699999999)
 public class ModifierProfilForm {
 
     private Map<String,String> errors = new HashMap<String, String>();
@@ -25,7 +26,6 @@ public class ModifierProfilForm {
     public void modifierUtilisateur(HttpServletRequest request ) throws IOException, ServletException {
         HttpSession session = request.getSession();
         Utilisateur utilisateur = (Utilisateur) session.getAttribute("sessionUtilisateur");
-
 
         String prenom = request.getParameter("modifprenom");
         String nom = request.getParameter("modifnom");
@@ -35,28 +35,44 @@ public class ModifierProfilForm {
 
         InputStream inputStream = null;
 
-        String test = request.getParameter("modifphoto");
         Part filePart = request.getPart("modifphoto");
+        String nomImage = getNomFichier(filePart);
 
         if (filePart != null) {
 
-            // Prints out some information
-            // for debugging
-            System.out.println(filePart.getName());
-            System.out.println(filePart.getSize());
-            System.out.println(filePart.getContentType());
-
-            // Obtains input stream of the upload file
             inputStream = filePart.getInputStream();
+
+            if (nomImage.equals("\"\""))
+            {
+            }
+            else
+            {
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+                int nRead;
+                byte[] data = new byte[16384];
+
+                while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+                    buffer.write(data, 0, nRead);
+                }
+                utilisateur.setImage(buffer.toByteArray());
+            }
         }
-        //utilisateur.setImage(photo);
 
         validerChamps(utilisateur,prenom,nom,date,email);
-        Date date2 = Date.valueOf(request.getParameter("modifdate"));
+        Date date2 = Date.valueOf(date);
 
         if ( errors.isEmpty() ) {
-            if (!UtilisateurTable.ModifInfoUser(prenom,nom,email,date2,ancienEmail,inputStream)) {
-                addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
+            if (nomImage.equals("\"\""))
+            {
+                if (!UtilisateurTable.ModifInfoUser2(prenom,nom,email,date2,ancienEmail)) {
+                    addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
+                }
+            }
+            else{
+                if (!UtilisateurTable.ModifInfoUser(prenom,nom,email,date2,ancienEmail,filePart.getInputStream(),nomImage)) {
+                    addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
+                }
             }
         }
 
@@ -72,14 +88,14 @@ public class ModifierProfilForm {
         }
 
         try {
-            validateFieldSize(prenom);
+            validateName(prenom);
             utilisateur.setPrenom(prenom);
         } catch (Exception e) {
             addError("modifprenom", e.getMessage());
         }
 
         try {
-            validateFieldSize(nom);
+            validateName(nom);
             utilisateur.setNom(nom);
         } catch (Exception e) {
             addError("modifnom", e.getMessage());
@@ -105,6 +121,16 @@ public class ModifierProfilForm {
      */
     private void addError(String champ, String message) {
         errors.put(champ, message);
+    }
+
+    private static String getNomFichier( Part part ) {
+
+        for ( String contentDisposition : part.getHeader( "content-disposition" ).split( ";" ) ) {
+            if ( contentDisposition.trim().startsWith("filename") ) {
+                return contentDisposition.substring( contentDisposition.indexOf( '=' ) + 1 );
+            }
+        }
+        return null;
     }
 
 

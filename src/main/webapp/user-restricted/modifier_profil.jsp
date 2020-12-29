@@ -14,15 +14,13 @@
         <section class="module">
             <div class="module-inner">
                 <div class="content-panel">
-                    <form method="post" action="<%=request.getContextPath()%>/user-restricted/modifier_profil" class="form-horizontal">
+                    <form method="post" action="<%=request.getContextPath()%>/user-restricted/modifier_profil" class="form-horizontal" enctype="multipart/form-data">
                         <fieldset class="fieldset">
                             <div class="form-group avatar">
-                                <figure class="figure col-md-2 col-sm-3 col-xs-12">
-                                    <img class="img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                                </figure>
+                                <div><p></p></div>
+                                <hr>
                                 <div class="form-inline col-md-10 col-sm-9 col-xs-12">
-                                    <input type="file" class="file-uploader pull-left">
-                                    <button type="submit" class="btn btn-sm btn-default-alt pull-left">Valider</button>
+                                    <input name = "modifphoto" type="file" class="file-uploader pull-left">
                                 </div>
                             </div>
 

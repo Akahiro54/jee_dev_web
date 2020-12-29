@@ -1,19 +1,7 @@
 package sql;
 
-import beans.Activite;
-import beans.Lieu;
-import beans.Utilisateur;
-import tools.PasswordHasher;
-
-import java.io.InputStream;
 import java.sql.*;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+
 
 public class SQLConnector {
 

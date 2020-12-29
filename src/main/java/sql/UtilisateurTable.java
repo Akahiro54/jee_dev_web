@@ -79,6 +79,7 @@ public class UtilisateurTable {
                 utilisateur.setNom(resultat.getString(5));
                 utilisateur.setPrenom(resultat.getString(6));
                 utilisateur.setDate(resultat.getDate(7));
+                utilisateur.setImage(resultat.getBytes(11));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -86,25 +87,47 @@ public class UtilisateurTable {
         return utilisateur;
     }
 
-    public static boolean ModifInfoUser(String prenom, String nom, String emailUtilisateur, Date date, String emailActuel, InputStream photo) {
-        boolean updated = false;
+    public static boolean ModifInfoUser(String prenom, String nom, String emailUtilisateur, Date date, String emailActuel, InputStream photo,String nomImage) {
+        boolean created = false;
+        System.out.println("Ca passe ici");
         try {
 
-            PreparedStatement preparedStatement = SQLConnector.getConnection().prepareCall("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ?, image = ? WHERE email = ? ");
+            PreparedStatement preparedStatement = SQLConnector.getConnection().prepareCall("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ?, image = ?, nomimage = ? WHERE email = ? ");
             preparedStatement.setString(1,emailUtilisateur);
             preparedStatement.setString(2,nom);
             preparedStatement.setString(3,prenom);
             preparedStatement.setDate(4,date);
             preparedStatement.setBlob(5,photo);
-            preparedStatement.setString(6,emailActuel);
+            preparedStatement.setString(6,nomImage);
+            preparedStatement.setString(7,emailActuel);
             preparedStatement.executeUpdate();
-            updated = true;
+            created = true;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            updated = false;
+            created = false;
         }
-        return updated;
+        return created;
+    }
+
+    public static boolean ModifInfoUser2(String prenom, String nom, String emailUtilisateur, Date date, String emailActuel) {
+        boolean created = false;
+        try {
+
+            PreparedStatement preparedStatement = SQLConnector.getConnection().prepareCall("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ? WHERE email = ? ");
+            preparedStatement.setString(1,emailUtilisateur);
+            preparedStatement.setString(2,nom);
+            preparedStatement.setString(3,prenom);
+            preparedStatement.setDate(4,date);
+            preparedStatement.setString(5,emailActuel);
+            preparedStatement.executeUpdate();
+            created = true;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            created = false;
+        }
+        return created;
     }
 
     public static boolean userExistsMail(String email) {
