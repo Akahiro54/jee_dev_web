@@ -2,7 +2,6 @@ package forms;
 
 import beans.Utilisateur;
 import sql.SQLConnector;
-import tools.FormFields;
 import tools.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +11,8 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static tools.FormulaireValidation.*;
-import static tools.FormulaireValidation.validateFirstname;
+import static tools.FormTools.*;
+import static tools.FormTools.validateFirstname;
 
 public class ModifProfilForm {
 
@@ -35,7 +34,7 @@ public class ModifProfilForm {
 
         if ( errors.isEmpty() ) {
             if (!SQLConnector.getConnection().ModifInfoUser(prenom,nom,email,date2,ancienEmail)) {
-                addError(FormFields.DATABASE.getFieldName(), Util.DATABASE_ERROR_MESSAGE);
+                addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
             }
         }
 
@@ -58,7 +57,7 @@ public class ModifProfilForm {
         }
 
         try {
-            validateLastname(nom);
+            validateName(nom);
             utilisateur.setNom(nom);
         } catch (Exception e) {
             addError("modifnom", e.getMessage());

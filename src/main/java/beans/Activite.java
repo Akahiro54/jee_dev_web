@@ -1,14 +1,17 @@
 package beans;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Activite {
 
     private int id;
     private int idUtilisateur;
     private String nom;
-    private Date debut;
-    private Date fin;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
+    private LocalTime heureDebut;
+    private LocalTime heureFin;
     private int idLieu;
 
     public Activite() { }
@@ -37,20 +40,20 @@ public class Activite {
         this.nom = nom;
     }
 
-    public Date getDebut() {
-        return debut;
+    public LocalDate getDateDebut() {
+        return dateDebut;
     }
 
-    public void setDebut(Date debut) {
-        this.debut = debut;
+    public void setDateDebut(LocalDate dateDebut) {
+        this.dateDebut = dateDebut;
     }
 
-    public Date getFin() {
-        return fin;
+    public LocalDate getDateFin() {
+        return dateFin;
     }
 
-    public void setFin(Date fin) {
-        this.fin = fin;
+    public void setDateFin(LocalDate fin) {
+        this.dateFin = fin;
     }
 
     public int getIdLieu() {
@@ -59,5 +62,35 @@ public class Activite {
 
     public void setIdLieu(int idLieu) {
         this.idLieu = idLieu;
+    }
+
+    public LocalTime getHeureDebut() {
+        return heureDebut;
+    }
+
+    public void setHeureDebut(LocalTime heureDebut) {
+        this.heureDebut = heureDebut;
+    }
+
+    public LocalTime getHeureFin() {
+        return heureFin;
+    }
+
+    public void setHeureFin(LocalTime heureFin) {
+        this.heureFin = heureFin;
+    }
+
+    @Override
+    public String toString() {
+        return "Activite{" +
+                "id=" + id +
+                ", idUtilisateur=" + idUtilisateur +
+                ", nom='" + nom + '\'' +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", heureDebut=" + heureDebut +
+                ", heureFin=" + heureFin +
+                ", idLieu=" + idLieu +
+                '}';
     }
 }

@@ -48,25 +48,15 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <p style="word-wrap:break-word">Date de naissance (année/mois/jour) <span class="required">*</span> : </p>
-                <div id="datepicker" class="d-flex justify-content-center" style="min-width:130px;">
-                    <input type="hidden" name="date_naissance" id="my_hidden_input"  class="input text required" value="">
+            <div class="form-group ml-1 mr-2">
+                <div class="mx-auto row">
+                    <label class="col-form-label col-4" for="date_naissance">Date de naissance <span class="required">*</span> : </label>
+                    <input type="date" class="form-control my-auto col-8" id="date_naissance" name="date_naissance" class="form-control" value="<c:out value="${user.date}"/>">
+                    <span class="erreur text-danger text-center">${form.errors['date_naissance']}</span>
                 </div>
-                <span class="erreur text-danger text-center">${form.errors['date_naissance']}</span>
             </div>
 
             <input type="submit" value="Inscription" class="btn btn-dark mb-2"/>
         </form>
 </div>
-<script type='text/javascript'>
-    $(function () {
-        $('#datepicker').datepicker({
-            language: "fr",
-            inline: true,
-            sideBySide: true,
-            format: 'yyyy-mm-dd'
-        });
-    });
-</script>
 <jsp:include page="footer.jsp" />

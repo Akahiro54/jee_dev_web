@@ -1,12 +1,16 @@
 package sql;
 
+import beans.Activite;
+import beans.Lieu;
 import beans.Utilisateur;
 import tools.PasswordHasher;
 
 import java.sql.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SQLConnector {
@@ -152,4 +156,105 @@ public class SQLConnector {
     }
 
 
+    public ArrayList<Lieu> getAvailablePlaces() {
+        ArrayList<Lieu> lieux = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareCall("SELECT * FROM lieu");
+            ResultSet resultat = preparedStatement.executeQuery();
+
+            while (resultat.next()) {
+                Lieu l = new Lieu();
+                l.setId(resultat.getInt(1));
+                l.setNom(resultat.getString(2));
+                l.setDescription(resultat.getString(3));
+                l.setAdresse(resultat.getString(4));
+                l.setLatitude(resultat.getDouble(5));
+                l.setLongitude(resultat.getDouble(6));
+                l.setImage(resultat.getString(7));
+                lieux.add(l);
+            }
+        } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return lieux;
+    }
+
+
+
+    public boolean createActivity(Activite activite) {
+        boolean created = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "INSERT INTO activite (utilisateur, nom, debut, fin, lieu) VALUES (?, ?, ? ,?, ?);");
+            preparedStatement.setInt(1, activite.getIdUtilisateur());
+            preparedStatement.setString(2, activite.getNom());
+            LocalDateTime debut = LocalDateTime.of(activite.getDateDebut(), activite.getHeureDebut());
+            LocalDateTime fin = LocalDateTime.of(activite.getDateFin(), activite.getHeureFin());
+            preparedStatement.setObject(3, debut);
+            preparedStatement.setObject(4, fin);
+            preparedStatement.setInt(5, activite.getIdLieu());
+            preparedStatement.execute();
+            created = true;
+        } catch (Exception e) {
+            System.err.println("Cannot create the activity.");
+            System.err.println("Activity Object : " + activite.toString());
+            e.printStackTrace();
+            created = false;
+        }
+        return created;
+    }
+
+
+    /**
+     *
+     *
+     * EXISTS METHODS
+     *
+     *
+     */
+
+    public boolean placeExists(int idPlace) {
+        boolean exists = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareCall("SELECT count(*) FROM lieu WHERE id = ?");
+            preparedStatement.setInt(1,idPlace);
+            ResultSet resultat = preparedStatement.executeQuery();
+            while(resultat.next()) {
+                if(resultat.getInt(1) >= 1) exists = true;
+            }
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
+        return exists;
+    }
+
+    public boolean userExists(String email) {
+        boolean exists = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareCall("SELECT count(*) FROM utilisateur WHERE email = ?");
+            preparedStatement.setString(1,email);
+            ResultSet resultat = preparedStatement.executeQuery();
+            while(resultat.next()) {
+                if(resultat.getInt(1) >= 1) exists = true;
+            }
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
+        return exists;
+    }
+
+    public boolean activityExists(int idActivity) {
+        boolean exists = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareCall("SELECT count(*) FROM activite WHERE id = ?");
+            preparedStatement.setInt(1,idActivity);
+            ResultSet resultat = preparedStatement.executeQuery();
+            while(resultat.next()) {
+                if(resultat.getInt(1) >= 1) exists = true;
+            }
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
+        return exists;
+    }
 }
