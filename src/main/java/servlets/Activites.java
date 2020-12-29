@@ -2,8 +2,7 @@ package servlets;
 
 import beans.Activite;
 import beans.Utilisateur;
-import sql.ActiviteTable;
-import sql.SQLConnector;
+import dao.ActiviteTable;
 import tools.Util;
 
 import javax.servlet.ServletException;

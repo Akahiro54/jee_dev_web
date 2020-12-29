@@ -20,6 +20,9 @@
         </jsp-property-group>
     </jsp-config>
 
+    <listener>
+        <listener-class>init.DaoFactoryInitializer</listener-class>
+    </listener>
 
     <filter>
         <filter-name>RestrictionFilter</filter-name>

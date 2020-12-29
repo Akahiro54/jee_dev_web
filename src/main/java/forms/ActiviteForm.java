@@ -2,8 +2,7 @@ package forms;
 
 
 import beans.Activite;
-import sql.ActiviteTable;
-import sql.SQLConnector;
+import dao.ActiviteTable;
 import tools.Util;
 
 import javax.servlet.http.HttpServletRequest;

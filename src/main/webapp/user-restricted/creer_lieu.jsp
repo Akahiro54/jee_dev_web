@@ -38,7 +38,7 @@
 <%--        ADRESSE--%>
         <div class="form-group ml-1 mr-2">
             <div class="mx-auto row">
-                <label class="col-form-label col-4" for="adresse_lieu">Nom de l'activité <span class="required">*</span> : </label>
+                <label class="col-form-label col-4" for="adresse_lieu">Adresse du lieu <span class="required">*</span> : </label>
                 <input type="text" class="form-control my-auto col-8" id="adresse_lieu" name="adresse_lieu" value="<c:out value="${place.adresse}"/>" placeholder="Entrez l'adresse du lieu"/>
                 <span class="erreur text-danger text-center">${form.errors['adresse_lieu']}</span>
             </div>

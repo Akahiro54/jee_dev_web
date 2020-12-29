@@ -1,8 +1,8 @@
 package forms;
 
 import beans.Utilisateur;
-import sql.SQLConnector;
-import sql.UtilisateurTable;
+import dao.DAOFactory;
+import dao.UtilisateurDAO;
 import tools.Util;
 
 import javax.servlet.ServletException;
@@ -22,6 +22,11 @@ import static tools.FormTools.*;
 public class ModifierProfilForm {
 
     private Map<String,String> errors = new HashMap<String, String>();
+    private UtilisateurDAO utilisateurDAO;
+
+    public ModifierProfilForm(UtilisateurDAO utilisateurDAO) {
+        this.utilisateurDAO = utilisateurDAO;
+    }
 
     public void modifierUtilisateur(HttpServletRequest request ) throws IOException, ServletException {
         HttpSession session = request.getSession();
@@ -65,12 +70,12 @@ public class ModifierProfilForm {
         if ( errors.isEmpty() ) {
             if (nomImage.equals("\"\""))
             {
-                if (!UtilisateurTable.ModifInfoUser2(prenom,nom,email,date2,ancienEmail)) {
+                if (!utilisateurDAO.update(utilisateur, prenom, nom, email, date2, ancienEmail)) {
                     addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
                 }
             }
             else{
-                if (!UtilisateurTable.ModifInfoUser(prenom,nom,email,date2,ancienEmail,filePart.getInputStream(),nomImage)) {
+                if (!utilisateurDAO.update(utilisateur, prenom, nom, email, date2, ancienEmail, filePart.getInputStream(), nomImage)) {
                     addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
                 }
             }

@@ -1,8 +1,7 @@
 package forms;
 
 import beans.Lieu;
-import sql.LieuTable;
-import sql.SQLConnector;
+import dao.LieuTable;
 import tools.Util;
 
 import javax.servlet.http.HttpServletRequest;

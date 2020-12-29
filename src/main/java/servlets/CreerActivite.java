@@ -4,8 +4,7 @@ import beans.Activite;
 import beans.Lieu;
 import beans.Utilisateur;
 import forms.ActiviteForm;
-import sql.LieuTable;
-import sql.SQLConnector;
+import dao.LieuTable;
 import tools.Util;
 
 import javax.servlet.ServletException;

@@ -1,9 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Utilisateur;
+import dao.DAOFactory;
+import dao.UtilisateurDAO;
 import forms.InscriptionForm;
-import sql.SQLConnector;
+import tools.Util;
 
 public class Inscription extends HttpServlet {
+
+    private UtilisateurDAO utilisateurDAO;
+
+
+    @Override
+    public void init() throws ServletException {
+        this.utilisateurDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getUtilisateurDAO();
+    }
 
 	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,7 +31,7 @@ public class Inscription extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        InscriptionForm form = new InscriptionForm();
+        InscriptionForm form = new InscriptionForm(utilisateurDAO);
 
         Utilisateur userCreated = form.inscrireUtilisateur(req);
 

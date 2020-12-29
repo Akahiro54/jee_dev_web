@@ -1,7 +1,6 @@
 package tools;
 
-import sql.LieuTable;
-import sql.SQLConnector;
+import dao.LieuTable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;

@@ -1,6 +1,8 @@
 package servlets;
 
 import beans.Utilisateur;
+import dao.DAOFactory;
+import dao.UtilisateurDAO;
 import forms.ModifierProfilForm;
 import tools.Util;
 
@@ -12,6 +14,14 @@ import java.util.Base64;
 
 @MultipartConfig
 public class ModifierProfil extends HttpServlet {
+
+    private UtilisateurDAO utilisateurDAO;
+
+
+    @Override
+    public void init() throws ServletException {
+        this.utilisateurDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getUtilisateurDAO();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,7 +42,7 @@ public class ModifierProfil extends HttpServlet {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur) session.getAttribute("sessionUtilisateur");
 
-        ModifierProfilForm form = new ModifierProfilForm();
+        ModifierProfilForm form = new ModifierProfilForm(utilisateurDAO);
         form.modifierUtilisateur(req);
         req.setAttribute("form", form);
         req.setAttribute("utilisateur", utilisateur);
@@ -42,8 +52,6 @@ public class ModifierProfil extends HttpServlet {
         } else {
             req.getRequestDispatcher("/user-restricted/modifier_profil.jsp").forward(req, resp);
         }
-
-
      }
 
 

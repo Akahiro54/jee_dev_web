@@ -1,8 +1,8 @@
 package forms;
 
 import beans.Utilisateur;
-import sql.SQLConnector;
-import sql.UtilisateurTable;
+import dao.DAOFactory;
+import dao.UtilisateurDAO;
 import tools.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +15,13 @@ import static tools.FormTools.*;
 public class InscriptionForm {
 
     private Map<String,String> errors = new HashMap<String, String>();
+    private UtilisateurDAO utilisateurDAO;
 
-    public Utilisateur inscrireUtilisateur(HttpServletRequest request ) {
+    public InscriptionForm(UtilisateurDAO utilisateurDAO) {
+        this.utilisateurDAO = utilisateurDAO;
+    }
+
+    public Utilisateur inscrireUtilisateur(HttpServletRequest request) {
         Utilisateur utilisateur = new Utilisateur(); // initialize user
         InscriptionFields fields = InscriptionFields.FIELD_MAIL; //initialize fields to first field
         for(int i = 0 ; i < InscriptionFields.values().length - 1; i++) { // iterate over fields except the confirmation
@@ -36,17 +41,17 @@ public class InscriptionForm {
             fields = fields.next();
         }
 
-        if(UtilisateurTable.userExistsMail(utilisateur.getEmail())) {
+        if(utilisateurDAO.emailExists(utilisateur.getEmail())) {
             addError(InscriptionFields.FIELD_MAIL.getFieldName(), "Vous possédez déjà un compte avec cette adresse email.");
         }
-        if(UtilisateurTable.userExistsNickname(utilisateur.getPseudo())) {
+        if(utilisateurDAO.nicknameExists(utilisateur.getPseudo())) {
             addError(InscriptionFields.FIELD_PSEUDO.getFieldName(), "Ce pseudonyme existe déjà.");
         }
 
         // if there are no errors
         if ( errors.isEmpty() ) {
             // Tries to save the user to the database
-            if (!UtilisateurTable.createUser(utilisateur)) {
+            if (!utilisateurDAO.add(utilisateur)) {
                 addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
             }
         }
