@@ -2,6 +2,7 @@ package forms;
 
 import beans.Utilisateur;
 import sql.SQLConnector;
+import sql.UtilisateurTable;
 import tools.Util;
 
 import javax.servlet.ServletException;
@@ -54,7 +55,7 @@ public class ModifierProfilForm {
         Date date2 = Date.valueOf(request.getParameter("modifdate"));
 
         if ( errors.isEmpty() ) {
-            if (!SQLConnector.getConnection().ModifInfoUser(prenom,nom,email,date2,ancienEmail,inputStream)) {
+            if (!UtilisateurTable.ModifInfoUser(prenom,nom,email,date2,ancienEmail,inputStream)) {
                 addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
             }
         }

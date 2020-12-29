@@ -2,6 +2,7 @@ package forms;
 
 
 import beans.Activite;
+import sql.ActiviteTable;
 import sql.SQLConnector;
 import tools.Util;
 
@@ -46,9 +47,8 @@ public class ActiviteForm {
 
         // if there are no errors
         if ( errors.isEmpty() ) {
-
-//             Tries to save the activity to the database
-            if (!SQLConnector.getConnection().createActivity(activite)) {
+//          Tries to save the activity to the database
+            if (!ActiviteTable.createActivity(activite)) {
                 addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
             }
         }

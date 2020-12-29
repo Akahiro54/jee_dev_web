@@ -2,6 +2,7 @@ package forms;
 
 import beans.Utilisateur;
 import sql.SQLConnector;
+import sql.UtilisateurTable;
 import tools.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,17 +36,17 @@ public class InscriptionForm {
             fields = fields.next();
         }
 
-        if(SQLConnector.getConnection().userExistsMail(utilisateur.getEmail())) {
+        if(UtilisateurTable.userExistsMail(utilisateur.getEmail())) {
             addError(InscriptionFields.FIELD_MAIL.getFieldName(), "Vous possédez déjà un compte avec cette adresse email.");
         }
-        if(SQLConnector.getConnection().userExistsNickname(utilisateur.getPseudo())) {
+        if(UtilisateurTable.userExistsNickname(utilisateur.getPseudo())) {
             addError(InscriptionFields.FIELD_PSEUDO.getFieldName(), "Ce pseudonyme existe déjà.");
         }
 
         // if there are no errors
         if ( errors.isEmpty() ) {
             // Tries to save the user to the database
-            if (!SQLConnector.getConnection().createUser(utilisateur)) {
+            if (!UtilisateurTable.createUser(utilisateur)) {
                 addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
             }
         }

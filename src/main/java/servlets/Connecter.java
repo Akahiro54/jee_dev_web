@@ -3,6 +3,7 @@ package servlets;
 import beans.Utilisateur;
 import forms.ConnexionForm;
 import sql.SQLConnector;
+import sql.UtilisateurTable;
 import tools.Util;
 
 import javax.servlet.ServletException;
@@ -31,8 +32,8 @@ public class Connecter extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ConnexionForm form = new ConnexionForm();
         Utilisateur tmpUser = form.connecterUtilisateur(req);
-        if(SQLConnector.getConnection().login(tmpUser)) {
-            Utilisateur utilisateur = SQLConnector.getConnection().RecupInfoUser(tmpUser.getEmail());
+        if(UtilisateurTable.login(tmpUser)) {
+            Utilisateur utilisateur = UtilisateurTable.RecupInfoUser(tmpUser.getEmail());
             /* Récupération de la session depuis la requête */
             HttpSession session = req.getSession();
             session.setAttribute(Util.ATT_SESSION_USER, utilisateur);

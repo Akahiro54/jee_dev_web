@@ -1,6 +1,7 @@
 package forms;
 
 import beans.Lieu;
+import sql.LieuTable;
 import sql.SQLConnector;
 import tools.Util;
 
@@ -29,13 +30,13 @@ public class LieuForm {
             fields = fields.next();
         }
 
-        if(SQLConnector.getConnection().placeExistsByName(lieu.getNom())) {
+        if(LieuTable.placeExistsByName(lieu.getNom())) {
             addError(LieuFields.FIELD_NAME.getFieldName(), "Un lieu avec un nom identique existe déjà");
         }
         // if there are no errors
         if ( errors.isEmpty() ) {
         // Tries to save the activity to the database
-            if (!SQLConnector.getConnection().createPlace(lieu)) {
+            if (!LieuTable.createPlace(lieu)) {
                 addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
             }
         }

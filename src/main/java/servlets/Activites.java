@@ -1,9 +1,8 @@
 package servlets;
 
 import beans.Activite;
-import beans.Lieu;
 import beans.Utilisateur;
-import forms.ActiviteForm;
+import sql.ActiviteTable;
 import sql.SQLConnector;
 import tools.Util;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Activites extends HttpServlet {
@@ -26,7 +24,7 @@ public class Activites extends HttpServlet {
         if(utilisateur == null)  {
             resp.sendRedirect(req.getContextPath()+"/index.jsp");
         }  else  {
-            HashMap<Activite, String> activites = SQLConnector.getConnection().getMyActivities(utilisateur.getId());
+            HashMap<Activite, String> activites = ActiviteTable.getMyActivities(utilisateur.getId());
             req.setAttribute("activites", activites);
             req.getRequestDispatcher("/user-restricted/activites.jsp").forward(req,resp);
         }

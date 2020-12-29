@@ -70,10 +70,7 @@
                 <a role="button" class="col-2 btn btn-light" href="creer_lieu">Nouveau lieu</a>
                 <span class="erreur text-danger text-center">${form.errors['lieu']}</span>
             </div>
-
         </div>
-
-
         <input type="submit" value="Ajouter l'activité" class="btn btn-dark mb-2 mt-2"/>
     </form>
 </div>

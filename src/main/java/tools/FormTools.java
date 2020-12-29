@@ -1,5 +1,6 @@
 package tools;
 
+import sql.LieuTable;
 import sql.SQLConnector;
 
 import javax.servlet.http.HttpServletRequest;
@@ -85,7 +86,7 @@ public class FormTools {
         int id = -1;
         try {
             id = Integer.parseInt(idPlace);
-            if(!SQLConnector.getConnection().placeExistsById(id)) {
+            if(!LieuTable.placeExistsById(id)) {
                 throw new Exception("Merci de choisir un lieu existant.");
             }
         } catch (NumberFormatException nfe) {

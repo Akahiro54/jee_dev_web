@@ -4,6 +4,7 @@ import beans.Activite;
 import beans.Lieu;
 import beans.Utilisateur;
 import forms.ActiviteForm;
+import sql.LieuTable;
 import sql.SQLConnector;
 import tools.Util;
 
@@ -19,7 +20,7 @@ public class CreerActivite extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ArrayList<Lieu> lieux = SQLConnector.getConnection().getAvailablePlaces();
+        ArrayList<Lieu> lieux = LieuTable.getAvailablePlaces();
         req.setAttribute("lieux", lieux);
         req.getRequestDispatcher("/user-restricted/creer_activite.jsp").forward(req, resp);
     }
@@ -32,7 +33,7 @@ public class CreerActivite extends HttpServlet {
         if(utilisateur == null)  {
             resp.sendRedirect(req.getContextPath()+"/index.jsp");
         }  else  {
-            ArrayList<Lieu> lieux = SQLConnector.getConnection().getAvailablePlaces();
+            ArrayList<Lieu> lieux = LieuTable.getAvailablePlaces();
             req.setAttribute("lieux", lieux);
             ActiviteForm form = new ActiviteForm();
             Activite activite = form.ajouterActivite(req, utilisateur.getId());
