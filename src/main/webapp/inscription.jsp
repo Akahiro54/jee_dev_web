@@ -34,6 +34,14 @@
 
             <div class="form-group ml-1 mr-2">
                 <div class="mx-auto row">
+                    <label class="col-form-label col-4" for="pseudo">Pseudonyme <span class="required">*</span> : </label>
+                    <input type="text" class="form-control my-auto col-8" id="pseudo" name="pseudo" value="<c:out value="${user.pseudo}"/>" placeholder="Entrez un pseudonyme" />
+                    <span class="erreur text-danger text-center">${form.errors['pseudo']}</span>
+                </div>
+            </div>
+
+            <div class="form-group ml-1 mr-2">
+                <div class="mx-auto row">
                     <label class="col-form-label col-4" for="nom">Nom <span class="required">*</span> : </label>
                     <input type="text" class="form-control my-auto col-8" id="nom" name="nom" value="<c:out value="${user.nom}"/>" placeholder="Entrez votre nom" />
                     <span class="erreur text-danger text-center">${form.errors['nom']}</span>

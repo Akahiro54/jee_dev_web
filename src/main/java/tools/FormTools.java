@@ -3,7 +3,6 @@ package tools;
 import sql.SQLConnector;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -31,15 +30,22 @@ public class FormTools {
     public static void validateSomeSpecialChars(String data) throws Exception {
         if(data != null) {
             if(!data.matches("[A-Za-z0-9À-ÖØ-öø-ÿ\\s-,]+")) {
-                throw new Exception("Le champ ne peut contenir que des lettres, chiffres, accents, espaces, tirets et virgules.");
+                throw new Exception("Le champ ne peut contenir que des lettres, chiffres, accents, espaces, tirets (-) et virgules.");
             }
         }
     }
 
+    public static void validateNickname(String nickname) throws Exception {
+        if(nickname != null) {
+            if(!nickname.matches("[A-Za-z0-9_-]+")) {
+                throw new Exception("Le pseudo ne peut contenir que des lettres, chiffres et tirets (-,_).");
+            }
+        }
+    }
     public static void validateName(String data) throws Exception {
         if(data != null) {
             if(!data.matches("[A-Za-z\\sÀ-ÖØ-öø-ÿ-]+")) {
-                throw new Exception("Le champ ne peut contenir que des lettres, accents, espaces et - .");
+                throw new Exception("Le champ ne peut contenir que des lettres, accents, espaces et tirets (-).");
             }
         }
     }
@@ -79,7 +85,7 @@ public class FormTools {
         int id = -1;
         try {
             id = Integer.parseInt(idPlace);
-            if(!SQLConnector.getConnection().placeExists(id)) {
+            if(!SQLConnector.getConnection().placeExistsById(id)) {
                 throw new Exception("Merci de choisir un lieu existant.");
             }
         } catch (NumberFormatException nfe) {

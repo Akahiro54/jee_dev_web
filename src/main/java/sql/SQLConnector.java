@@ -73,7 +73,7 @@ public class SQLConnector {
             preparedStatement.setString(1, user.getEmail());
             ResultSet result = preparedStatement.executeQuery();
             if(result.next()) {
-                byte[] userPassword = result.getBytes(3);
+                byte[] userPassword = result.getBytes(4);
                 byte[] givenPassword = PasswordHasher.getPasswordHash(user.getPass());
                 if(Arrays.equals(userPassword, givenPassword)) {
                     logged = true;
@@ -88,20 +88,20 @@ public class SQLConnector {
         return logged;
     }
 
-    // TODO : method to check if user exists
+
     public boolean createUser(Utilisateur user) {
         boolean created = false;
         try {
             byte[] passwordHash = PasswordHasher.getPasswordHash(user.getPass());
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO utilisateur (email, mot_de_passe, nom , prenom, date_naissance) VALUES (?, ?, ? ,?, ?);");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO utilisateur (email, pseudo, mot_de_passe, nom , prenom, date_naissance) VALUES (?, ?, ? ,?, ?, ?);");
             preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setBytes(2, passwordHash);
-            preparedStatement.setString(3, user.getNom());
-            preparedStatement.setString(4, user.getPrenom());
+            preparedStatement.setString(2, user.getPseudo());
+            preparedStatement.setBytes(3, passwordHash);
+            preparedStatement.setString(4, user.getNom());
+            preparedStatement.setString(5, user.getPrenom());
             Instant instant = user.getDate().toInstant();
             ZonedDateTime frDateTime = ZonedDateTime.ofInstant( instant, ZoneId.of("Europe/Paris"));
-            preparedStatement.setObject(5, frDateTime.toLocalDate());
+            preparedStatement.setObject(6, frDateTime.toLocalDate());
 
             preparedStatement.execute();
             created = true;
@@ -126,9 +126,10 @@ public class SQLConnector {
             while (resultat.next()) {
                 utilisateur.setId(resultat.getInt(1));
                 utilisateur.setEmail(resultat.getString(2));
-                utilisateur.setNom(resultat.getString(4));
-                utilisateur.setPrenom(resultat.getString(5));
-                utilisateur.setDate(resultat.getDate(6));
+                utilisateur.setPseudo(resultat.getString(3));
+                utilisateur.setNom(resultat.getString(5));
+                utilisateur.setPrenom(resultat.getString(6));
+                utilisateur.setDate(resultat.getDate(7));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -137,7 +138,7 @@ public class SQLConnector {
     }
 
     public boolean ModifInfoUser(String prenom, String nom, String emailUtilisateur, Date date, String emailActuel, InputStream photo) {
-        boolean created = false;
+        boolean updated = false;
         try {
 
             PreparedStatement preparedStatement = connection.prepareCall("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ?, image = ? WHERE email = ? ");
@@ -148,13 +149,13 @@ public class SQLConnector {
             preparedStatement.setBlob(5,photo);
             preparedStatement.setString(6,emailActuel);
             preparedStatement.executeUpdate();
-            created = true;
+            updated = true;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            created = false;
+            updated = false;
         }
-        return created;
+        return updated;
     }
 
 
@@ -235,7 +236,7 @@ public class SQLConnector {
      *
      */
 
-    public boolean placeExists(int idPlace) {
+    public boolean placeExistsById(int idPlace) {
         boolean exists = false;
         try {
             PreparedStatement preparedStatement = connection.prepareCall("SELECT count(*) FROM lieu WHERE id = ?");
@@ -250,11 +251,42 @@ public class SQLConnector {
         return exists;
     }
 
-    public boolean userExists(String email) {
+    public boolean placeExistsByName(String namePlace) {
+        boolean exists = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareCall("SELECT count(*) FROM lieu WHERE nom = ?");
+            preparedStatement.setString(1,namePlace);
+            ResultSet resultat = preparedStatement.executeQuery();
+            while(resultat.next()) {
+                if(resultat.getInt(1) >= 1) exists = true;
+            }
+        } catch (SQLException sqe) {
+            exists = true;
+            sqe.printStackTrace();
+        }
+        return exists;
+    }
+
+    public boolean userExistsMail(String email) {
         boolean exists = false;
         try {
             PreparedStatement preparedStatement = connection.prepareCall("SELECT count(*) FROM utilisateur WHERE email = ?");
             preparedStatement.setString(1,email);
+            ResultSet resultat = preparedStatement.executeQuery();
+            while(resultat.next()) {
+                if(resultat.getInt(1) >= 1) exists = true;
+            }
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
+        return exists;
+    }
+
+    public boolean userExistsNickname(String nickname) {
+        boolean exists = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareCall("SELECT count(*) FROM utilisateur WHERE pseudo = ?");
+            preparedStatement.setString(1,nickname);
             ResultSet resultat = preparedStatement.executeQuery();
             while(resultat.next()) {
                 if(resultat.getInt(1) >= 1) exists = true;

@@ -46,6 +46,7 @@ public class ActiviteForm {
 
         // if there are no errors
         if ( errors.isEmpty() ) {
+
 //             Tries to save the activity to the database
             if (!SQLConnector.getConnection().createActivity(activite)) {
                 addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 28 déc. 2020 à 22:13
+-- Généré le : mar. 29 déc. 2020 à 17:25
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 8.0.0
 
@@ -56,7 +56,7 @@ CREATE TABLE `amis` (
 
 CREATE TABLE `lieu` (
   `id` bigint(20) NOT NULL,
-  `nom` text NOT NULL,
+  `nom` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `adresse` text NOT NULL,
   `latitude` double NOT NULL,
@@ -88,6 +88,7 @@ CREATE TABLE `notification` (
 CREATE TABLE `utilisateur` (
   `id` bigint(20) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `pseudo` varchar(255) NOT NULL,
   `mot_de_passe` blob NOT NULL,
   `nom` text NOT NULL,
   `prenom` text NOT NULL,
@@ -97,13 +98,6 @@ CREATE TABLE `utilisateur` (
   `role` enum('admin','user') NOT NULL DEFAULT 'user',
   `image` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Déchargement des données de la table `utilisateur`
---
-
-INSERT INTO `utilisateur` (`id`, `email`, `mot_de_passe`, `nom`, `prenom`, `date_naissance`, `contamine`, `date_contamination`, `role`, `image`) VALUES
-(2, 'test@test.fr', 0xe6aca174c42d5021351b1af8ec1f7156, 'Monsieur', 'Test', '1997-07-16', 0, NULL, 'user', NULL);
 
 --
 -- Index pour les tables déchargées
@@ -128,7 +122,8 @@ ALTER TABLE `amis`
 -- Index pour la table `lieu`
 --
 ALTER TABLE `lieu`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nom` (`nom`);
 
 --
 -- Index pour la table `notification`
@@ -143,7 +138,8 @@ ALTER TABLE `notification`
 --
 ALTER TABLE `utilisateur`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQUE_EMAIL` (`email`);
+  ADD UNIQUE KEY `UNIQUE_EMAIL` (`email`),
+  ADD UNIQUE KEY `pseudo` (`pseudo`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -153,13 +149,13 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `activite`
 --
 ALTER TABLE `activite`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `lieu`
 --
 ALTER TABLE `lieu`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `notification`
@@ -171,7 +167,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Contraintes pour les tables déchargées

@@ -34,6 +34,14 @@ public class InscriptionForm {
             }
             fields = fields.next();
         }
+
+        if(SQLConnector.getConnection().userExistsMail(utilisateur.getEmail())) {
+            addError(InscriptionFields.FIELD_MAIL.getFieldName(), "Vous possédez déjà un compte avec cette adresse email.");
+        }
+        if(SQLConnector.getConnection().userExistsNickname(utilisateur.getPseudo())) {
+            addError(InscriptionFields.FIELD_PSEUDO.getFieldName(), "Ce pseudonyme existe déjà.");
+        }
+
         // if there are no errors
         if ( errors.isEmpty() ) {
             // Tries to save the user to the database
@@ -53,6 +61,11 @@ public class InscriptionForm {
             case FIELD_MAIL:
                 utilisateur.setEmail(data[0]);
                 validateMail(data[0]);
+                break;
+            case FIELD_PSEUDO:
+                utilisateur.setPseudo(data[0]);
+                validateNickname(data[0]);
+                validateFieldSize(data[0]);
                 break;
             case FIELD_PASSWORD:
                 validatePasswords(data[0], data[1]);
@@ -90,6 +103,7 @@ public class InscriptionForm {
 
 enum InscriptionFields {
     FIELD_MAIL("email"),
+    FIELD_PSEUDO("pseudo"),
     FIELD_PASSWORD("motdepasse"),
     FIELD_CONFIRMATION("confirmation"),
     FIELD_LASTNAME("nom"),

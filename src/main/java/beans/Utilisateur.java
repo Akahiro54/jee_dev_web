@@ -8,6 +8,7 @@ public class Utilisateur {
 
     private int id;
     private String email;
+    private String pseudo;
     private String pass;
     private String nom;
     private String prenom;
@@ -79,5 +80,13 @@ public class Utilisateur {
                 ", prenom='" + prenom + '\'' +
                 ", date=" + date +
                 '}';
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
 }
