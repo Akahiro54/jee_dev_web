@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                            <img src="${utilisateur.image}" class="rounded-circle" width="150">
                             <div class="mt-3">
                                 <h4>${utilisateur.nom}</h4><h5>${utilisateur.prenom}</h5>
                             </div>
