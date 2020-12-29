@@ -13,6 +13,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class SQLConnector {
 
@@ -205,6 +206,31 @@ public class SQLConnector {
         return created;
     }
 
+    public HashMap<Activite, String> getMyActivities(int idUser) {
+        HashMap<Activite, String>  activities = new HashMap<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareCall("SELECT a.* , l.nom FROM ACTIVITE a INNER JOIN LIEU l ON a.lieu = l.id WHERE a.utilisateur = ?");
+            preparedStatement.setInt(1, idUser);
+            ResultSet resultat = preparedStatement.executeQuery();
+            while (resultat.next()) {
+                Activite a = new Activite();
+                a.setId(resultat.getInt(1));
+                a.setIdUtilisateur(resultat.getInt(2));
+                a.setNom(resultat.getString(3));
+                LocalDateTime debut = ((Timestamp)resultat.getObject(4)).toLocalDateTime();
+                LocalDateTime fin = ((Timestamp)resultat.getObject(5)).toLocalDateTime();
+                a.setDateDebut(debut.toLocalDate());
+                a.setHeureDebut(debut.toLocalTime());
+                a.setDateFin(fin.toLocalDate());
+                a.setHeureFin(fin.toLocalTime());
+                String lieu = resultat.getString(7);
+                activities.put(a,lieu);
+            }
+        } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return activities;
+    }
 
     public boolean createPlace(Lieu lieu) {
         boolean created = false;

@@ -55,7 +55,7 @@
         <div class="form-group ml-1 mr-2">
             <div class="mx-auto row">
                 <label class="col-form-label col-4" for="lieu">Choisissez un lieu <span class="required">*</span> : </label>
-                <select id="lieu" class="form-control my-auto col-8" name="lieu">
+                <select id="lieu" class="form-control my-auto col-6" name="lieu">
                     <c:forEach items="${lieux}" var="lieu">
                         <c:choose>
                             <c:when test="${lieu.id==activity.idLieu}">
@@ -67,13 +67,14 @@
                         </c:choose>
                     </c:forEach>
                 </select>
+                <a role="button" class="col-2 btn btn-light" href="creer_lieu">Nouveau lieu</a>
                 <span class="erreur text-danger text-center">${form.errors['lieu']}</span>
             </div>
+
         </div>
 
-        <p style="color:red"> TODO : button to add a place</p>
 
-        <input type="submit" value="Ajouter l'activité" class="btn btn-dark mb-2"/>
+        <input type="submit" value="Ajouter l'activité" class="btn btn-dark mb-2 mt-2"/>
     </form>
 </div>
 <jsp:include page="../footer.jsp" />
