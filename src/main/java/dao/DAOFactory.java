@@ -9,16 +9,13 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DAOFactory {
-//  FIXME : properties file is never compiled with IntelliJ
-//   Already tried : add in artifact, module, classpath, resources in maven,....
-
-//    private static final String PROPERTIES_FILE = "/WEB-INF/dao-info.properties";
-    private static final String URL = "jdbc:mysql://localhost";
-    private static final String PORT = "3306";
-    private static final String DATABASE = "jee_database";
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static final String PROPERTIES_FILE = "/dao.properties";
+    private static final String PROPERTY_URL = "url";
+    private static final String PROPERTY_PORT = "port";
+    private static final String PROPERTY_DATABASE = "database";
+    private static final String PROPERTY_DRIVER = "driver";
+    private static final String PROPERTY_USERNAME = "username";
+    private static final String PROPERTY_PASSWORD = "password";
 
     private static volatile DAOFactory factory;
     private String url, port,database, username, password;
@@ -35,29 +32,29 @@ public class DAOFactory {
         if(factory == null) {
             synchronized (DAOFactory.class) {
                 if(factory == null) {
-//                    Properties props = new Properties();
-//                    String url, port, database, driver, username, password;
-//                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-//                    InputStream propsFile = classLoader.getResourceAsStream(PROPERTIES_FILE);
-//                    if(propsFile == null) throw new DAOException("Cannot find properties file at : " + PROPERTIES_FILE + classLoader.toString());
-//                    try {
-//                        props.load(propsFile);
-//                        url = props.getProperty(PROPERTY_URL);
-//                        port = props.getProperty(PROPERTY_PORT);
-//                        database = props.getProperty(PROPERTY_DATABASE);
-//                        driver = props.getProperty(PROPERTY_DRIVER);
-//                        username = props.getProperty(PROPERTY_USERNAME);
-//                        password = props.getProperty(PROPERTY_PASSWORD);
-//                    }catch(Exception e) {
-//                        throw new DAOException("Cannot load properties file at : " + PROPERTIES_FILE + ". " + e.getMessage());
-//                    }
+                    Properties props = new Properties();
+                    String url, port, database, driver, username, password;
+                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                    InputStream propsFile = classLoader.getResourceAsStream(PROPERTIES_FILE);
+                    if(propsFile == null) throw new DAOException("Cannot find properties file at : " + PROPERTIES_FILE + classLoader.toString());
                     try {
-                        Class.forName(DRIVER);
+                        props.load(propsFile);
+                        url = props.getProperty(PROPERTY_URL);
+                        port = props.getProperty(PROPERTY_PORT);
+                        database = props.getProperty(PROPERTY_DATABASE);
+                        driver = props.getProperty(PROPERTY_DRIVER);
+                        username = props.getProperty(PROPERTY_USERNAME);
+                        password = props.getProperty(PROPERTY_PASSWORD);
+                    }catch(Exception e) {
+                        throw new DAOException("Cannot load properties file at : " + PROPERTIES_FILE + ". " + e.getMessage());
+                    }
+                    try {
+                        Class.forName(driver);
                     } catch (Exception e) {
-                        throw new DAOException("Cannot find driver : " + DRIVER);
+                        throw new DAOException("Cannot find driver : " + driver);
                     }
 
-                    factory = new DAOFactory(URL, PORT, DATABASE, USERNAME, PASSWORD);
+                    factory = new DAOFactory(url, port, database, username, password);
                 }
             }
         }
