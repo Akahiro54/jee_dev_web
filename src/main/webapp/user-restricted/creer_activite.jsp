@@ -5,7 +5,7 @@
   Time: 20:32
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="pageTitle" scope="request" value="Nouvelle activité"/>
 <jsp:include page="../header.jsp" />
@@ -17,7 +17,7 @@
         <div class="form-group ml-1 mr-2">
             <div class="mx-auto row">
                 <label class="col-form-label col-4" for="nom_activite">Nom de l'activité <span class="required">*</span> : </label>
-                <input type="nom_activite" class="form-control my-auto col-8" id="nom_activite" name="nom_activite" value="<c:out value="${activity.nom}"/>" placeholder="Entrez le nom de l'activité"/>
+                <input type="text" class="form-control my-auto col-8" id="nom_activite" name="nom_activite" value="<c:out value="${activity.nom}"/>" placeholder="Entrez le nom de l'activité"/>
                 <span class="erreur text-danger text-center">${form.errors['nom_activite']}</span>
             </div>
         </div>
@@ -54,7 +54,7 @@
 
         <div class="form-group ml-1 mr-2">
             <div class="mx-auto row">
-                <label class="col-form-label col-4" for="lieu">Choisissez un lieu : </label>
+                <label class="col-form-label col-4" for="lieu">Choisissez un lieu <span class="required">*</span> : </label>
                 <select id="lieu" class="form-control my-auto col-8" name="lieu">
                     <c:forEach items="${lieux}" var="lieu">
                         <c:choose>

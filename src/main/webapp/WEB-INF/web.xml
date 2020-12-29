@@ -13,6 +13,32 @@
         <welcome-file>default.jsp</welcome-file>
     </welcome-file-list>
 
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
+
+
+    <filter>
+        <filter-name>RestrictionFilter</filter-name>
+        <filter-class>filters.UserRestrictionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RestrictionFilter</filter-name>
+        <url-pattern>/user-restricted/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>filters.CharacterEncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>Inscription</servlet-name>
         <servlet-class>servlets.Inscription</servlet-class>
@@ -89,13 +115,6 @@
         <url-pattern>/user-restricted/creer_lieu</url-pattern>
     </servlet-mapping>
 
-    <filter>
-        <filter-name>RestrictionFilter</filter-name>
-        <filter-class>filters.UserRestrictionFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>RestrictionFilter</filter-name>
-        <url-pattern>/user-restricted/*</url-pattern>
-    </filter-mapping>
+
 
 </web-app>

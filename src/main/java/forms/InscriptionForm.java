@@ -60,11 +60,13 @@ public class InscriptionForm {
                 break;
             case FIELD_LASTNAME:
                 utilisateur.setNom(data[0]);
+                validateFieldSize(data[0]);
                 validateName(data[0]);
                 break;
             case FIELD_FIRSTNAME:
                 utilisateur.setPrenom(data[0]);
-                validateFirstname(data[0]);
+                validateFieldSize(data[0]);
+                validateName(data[0]);
                 break;
             case FIELD_DATENAISS:
                 Date date = validateBirthdate(data[0]);

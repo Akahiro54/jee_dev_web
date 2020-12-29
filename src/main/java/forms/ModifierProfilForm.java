@@ -5,7 +5,6 @@ import sql.SQLConnector;
 import tools.Util;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
@@ -17,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static tools.FormTools.*;
-import static tools.FormTools.validateFirstname;
 
 public class ModifierProfilForm {
 
@@ -73,14 +71,14 @@ public class ModifierProfilForm {
         }
 
         try {
-            validateFirstname(prenom);
+            validateFieldSize(prenom);
             utilisateur.setPrenom(prenom);
         } catch (Exception e) {
             addError("modifprenom", e.getMessage());
         }
 
         try {
-            validateName(nom);
+            validateFieldSize(nom);
             utilisateur.setNom(nom);
         } catch (Exception e) {
             addError("modifnom", e.getMessage());

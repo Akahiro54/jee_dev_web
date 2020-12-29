@@ -3,6 +3,7 @@ package tools;
 import sql.SQLConnector;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -13,6 +14,44 @@ import java.util.Date;
 import java.util.Locale;
 
 public class FormTools {
+
+
+    public static double validateCoordinates(String data) throws Exception {
+        double coordinates = 0;
+        if(data != null) {
+            try {
+                coordinates = Double.parseDouble(data);
+            }catch (NumberFormatException nfe) {
+                throw new Exception("Merci d'entrer des coordonnées valides");
+            }
+        }
+        return coordinates;
+    }
+
+    public static void validateSomeSpecialChars(String data) throws Exception {
+        if(data != null) {
+            if(!data.matches("[A-Za-z0-9À-ÖØ-öø-ÿ\\s-,]+")) {
+                throw new Exception("Le champ ne peut contenir que des lettres, chiffres, accents, espaces, tirets et virgules.");
+            }
+        }
+    }
+
+    public static void validateName(String data) throws Exception {
+        if(data != null) {
+            if(!data.matches("[\\w\\sÀ-ÖØ-öø-ÿ-]+")) {
+                throw new Exception("Le champ ne peut contenir que des lettres, accents, espaces et - .");
+            }
+        }
+    }
+//    public static void validateNoSpecialChars(String data) throws Exception {
+//        if(data != null) {
+//            if(!data.matches("[^\W\s_]+")) {
+//                throw new Exception("Le champ ne pas peut contenir d'espaces ni de caractères spéciaux ou accentués.");
+//            }
+//        }
+//    }
+
+
 
     public static LocalDate validateDate(String strDate) throws Exception {
         LocalDate date = null;
@@ -62,24 +101,21 @@ public class FormTools {
     public static void validatePasswords( String motDePasse, String confirmation ) throws Exception {
         if ( motDePasse != null && confirmation != null ) {
             if ( !motDePasse.equals( confirmation ) ) {
-                throw new Exception( "Les mots de passe entrés sont différents, merci de les saisir à nouveau." );
-            } else if ( motDePasse.length() < 3 ) {
-                throw new Exception( "Les mots de passe doivent contenir au moins 3 caractères." );
+                throw new Exception("Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
+            } else if ( motDePasse.length() < 3 || motDePasse.length() > 40) {
+                throw new Exception("Le mots de passe doit contenir entre 3 et 40 caractères." );
             }
         } else {
             throw new Exception( "Merci de saisir et confirmer votre mot de passe." );
         }
     }
 
-    public static void validateName(String nom ) throws Exception {
-        if(nom == null) throw new Exception("Le nom ne peut être vide.");
-        if(nom.length() < 3) throw new Exception( "Le nom doit contenir au moins 3 caractères.");
+
+    public static void validateFieldSize(String nom ) throws Exception {
+        if(nom == null) throw new Exception("Le champ ne peut être vide.");
+        if(nom.length() < 3 || nom.length() > 255) throw new Exception( "Le champ doit contenir entre 3 et 255 caractères.");
     }
 
-    public static void validateFirstname( String prenom ) throws Exception {
-        if(prenom == null) throw new Exception("Le prénom ne peut être vide.");
-        if (prenom.length() < 3 ) throw new Exception( "Le prénom doit contenir au moins 3 caractères." );
-    }
 
     public static Date validateBirthdate(String birthdate ) throws Exception {
         Date date = null;

@@ -163,7 +163,6 @@ public class SQLConnector {
         try {
             PreparedStatement preparedStatement = connection.prepareCall("SELECT * FROM lieu");
             ResultSet resultat = preparedStatement.executeQuery();
-
             while (resultat.next()) {
                 Lieu l = new Lieu();
                 l.setId(resultat.getInt(1));
@@ -186,8 +185,7 @@ public class SQLConnector {
     public boolean createActivity(Activite activite) {
         boolean created = false;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO activite (utilisateur, nom, debut, fin, lieu) VALUES (?, ?, ? ,?, ?);");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO activite (utilisateur, nom, debut, fin, lieu) VALUES (?, ?, ? ,?, ?);");
             preparedStatement.setInt(1, activite.getIdUtilisateur());
             preparedStatement.setString(2, activite.getNom());
             LocalDateTime debut = LocalDateTime.of(activite.getDateDebut(), activite.getHeureDebut());
@@ -205,6 +203,28 @@ public class SQLConnector {
         }
         return created;
     }
+
+
+    public boolean createPlace(Lieu lieu) {
+        boolean created = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO lieu (nom, description, adresse, latitude, longitude) VALUES (?, ?, ? ,?, ?);");
+            preparedStatement.setString(1, lieu.getNom());
+            preparedStatement.setString(2, lieu.getDescription());
+            preparedStatement.setString(3, lieu.getAdresse());
+            preparedStatement.setDouble(4, lieu.getLatitude());
+            preparedStatement.setDouble(5, lieu.getLatitude());
+            preparedStatement.execute();
+            created = true;
+        } catch (Exception e) {
+            System.err.println("Cannot create the place.");
+            System.err.println("Place Object : " + lieu.toString());
+            e.printStackTrace();
+            created = false;
+        }
+        return created;
+    }
+
 
 
     /**

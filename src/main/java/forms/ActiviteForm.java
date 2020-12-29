@@ -2,12 +2,10 @@ package forms;
 
 
 import beans.Activite;
-import beans.Utilisateur;
 import sql.SQLConnector;
 import tools.Util;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,7 +23,7 @@ public class ActiviteForm {
         Activite activite = new Activite(); // initialize activity
         activite.setIdUtilisateur(idUser);
         ActiviteFields fields = ActiviteFields.FIELD_NAME; //initialize fields to first field
-        for(int i = 0 ; i < InscriptionFields.values().length; i++) { // iterate over fields
+        for(int i = 0 ; i < ActiviteFields.values().length; i++) { // iterate over fields
             try {
                 String currentField = fields.getFieldName();
                 String currentFieldValue = getFieldValue(request, currentField);
@@ -63,8 +61,9 @@ public class ActiviteForm {
     private void validateField(ActiviteFields field, Activite activite, String... data) throws Exception{
         switch(field) {
             case FIELD_NAME:
+                validateSomeSpecialChars(data[0]);
                 activite.setNom(data[0]);
-                validateName(data[0]);
+                validateFieldSize(data[0]);
                 break;
             case FIELD_DATE_BEGIN:
                 LocalDate date_begin = validateDate(data[0]);
