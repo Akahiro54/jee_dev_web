@@ -89,7 +89,6 @@ public class UtilisateurTable {
 
     public static boolean ModifInfoUser(String prenom, String nom, String emailUtilisateur, Date date, String emailActuel, InputStream photo,String nomImage) {
         boolean created = false;
-        System.out.println("Ca passe ici");
         try {
 
             PreparedStatement preparedStatement = SQLConnector.getConnection().prepareCall("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ?, image = ?, nomimage = ? WHERE email = ? ");
