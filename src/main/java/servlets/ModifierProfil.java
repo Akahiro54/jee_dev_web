@@ -1,9 +1,7 @@
 package servlets;
 
 import beans.Utilisateur;
-import forms.InscriptionForm;
-import forms.ModifProfilForm;
-import sql.SQLConnector;
+import forms.ModifierProfilForm;
 import tools.Util;
 
 import javax.servlet.ServletException;
@@ -33,7 +31,7 @@ public class ModifierProfil extends HttpServlet {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur) session.getAttribute("sessionUtilisateur");
 
-        ModifProfilForm form = new ModifProfilForm();
+        ModifierProfilForm form = new ModifierProfilForm();
         form.modifierUtilisateur(req);
         req.setAttribute("form", form);
         req.setAttribute("utilisateur", utilisateur);

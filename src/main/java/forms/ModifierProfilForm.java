@@ -19,7 +19,7 @@ import java.util.Map;
 import static tools.FormTools.*;
 import static tools.FormTools.validateFirstname;
 
-public class ModifProfilForm {
+public class ModifierProfilForm {
 
     private Map<String,String> errors = new HashMap<String, String>();
 
