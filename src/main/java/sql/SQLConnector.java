@@ -3,6 +3,7 @@ package sql;
 import beans.Utilisateur;
 import tools.PasswordHasher;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -131,16 +132,17 @@ public class SQLConnector {
         return utilisateur;
     }
 
-    public boolean ModifInfoUser(String prenom, String nom, String emailUtilisateur, Date date, String emailActuel) {
+    public boolean ModifInfoUser(String prenom, String nom, String emailUtilisateur, Date date, String emailActuel, InputStream photo) {
         boolean created = false;
         try {
 
-            PreparedStatement preparedStatement = connection.prepareCall("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ? WHERE email = ? ");
+            PreparedStatement preparedStatement = connection.prepareCall("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ?, image = ? WHERE email = ? ");
             preparedStatement.setString(1,emailUtilisateur);
             preparedStatement.setString(2,nom);
             preparedStatement.setString(3,prenom);
             preparedStatement.setDate(4,date);
-            preparedStatement.setString(5,emailActuel);
+            preparedStatement.setBlob(5,photo);
+            preparedStatement.setString(6,emailActuel);
             preparedStatement.executeUpdate();
             created = true;
 

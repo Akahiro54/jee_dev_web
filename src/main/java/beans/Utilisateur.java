@@ -1,5 +1,6 @@
 package beans;
 
+import javax.servlet.http.Part;
 import java.util.Date;
 
 public class Utilisateur {
@@ -11,6 +12,7 @@ public class Utilisateur {
     private String nom;
     private String prenom;
     private Date date;
+    private Part image;
 
 
     public Utilisateur() {}
@@ -57,6 +59,14 @@ public class Utilisateur {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Part getImage() {
+        return image;
+    }
+
+    public void setImage(Part image) {
+        this.image = image;
     }
 
     @Override
