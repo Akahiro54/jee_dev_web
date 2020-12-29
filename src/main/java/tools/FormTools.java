@@ -38,7 +38,7 @@ public class FormTools {
 
     public static void validateName(String data) throws Exception {
         if(data != null) {
-            if(!data.matches("[\\w\\sÀ-ÖØ-öø-ÿ-]+")) {
+            if(!data.matches("[A-Za-z\\sÀ-ÖØ-öø-ÿ-]+")) {
                 throw new Exception("Le champ ne peut contenir que des lettres, accents, espaces et - .");
             }
         }
