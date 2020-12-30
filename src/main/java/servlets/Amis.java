@@ -1,8 +1,8 @@
 package servlets;
 
-import beans.Activite;
 import beans.Utilisateur;
-import dao.AmisTable;
+import dao.DAOFactory;
+import dao.UtilisateurDAO;
 import tools.Util;
 
 import javax.servlet.ServletException;
@@ -13,17 +13,23 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
 
 public class Amis extends HttpServlet {
+
+    private UtilisateurDAO utilisateurDAO;
+
+
+    @Override
+    public void init() throws ServletException {
+        this.utilisateurDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getUtilisateurDAO();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur)session.getAttribute(Util.ATT_SESSION_USER);
         ArrayList<Utilisateur> listeamis;
-        listeamis = AmisTable.getAmis(utilisateur.getId());
+        listeamis = new ArrayList<>(utilisateurDAO.getAmis(utilisateur.getId()));
         req.setAttribute("listeamis", listeamis);
 
         if (utilisateur.getImage() != null)

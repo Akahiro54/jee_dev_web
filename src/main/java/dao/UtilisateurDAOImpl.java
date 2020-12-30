@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -199,6 +200,29 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             SQLTools.close(connection,resultSet,preparedStatement);
         }
         return exists;
+    }
+
+    @Override
+    public List<Utilisateur> getAmis(int idUtilisateur) {
+        ArrayList<Utilisateur> listeAmis = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = "SELECT u.nom, u.prenom, u.image, u.id FROM amis a INNER JOIN utilisateur u ON a.ami2 = u.id WHERE a.ami1 = ? ";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUtilisateur);
+            ResultSet result = preparedStatement.executeQuery();
+            while(result.next()) {
+                Utilisateur util = new Utilisateur(result.getInt(4),result.getString(1),result.getString(2),result.getBytes(3));
+                listeAmis.add(util);
+            }
+        } catch(Exception e) {
+            System.err.println("Cannot get user friends: " + e.getMessage());
+            System.err.println("ID user: " + idUtilisateur);
+            System.err.println("Friend list : " + listeAmis);
+        }
+        return listeAmis;
     }
 
     private static Utilisateur map(ResultSet resultSet) throws SQLException {

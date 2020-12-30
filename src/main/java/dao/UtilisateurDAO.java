@@ -26,4 +26,6 @@ public interface UtilisateurDAO{
 
     boolean emailExists(String email);
 
+    List<Utilisateur> getAmis(int idUtilisateur);
+
 }
