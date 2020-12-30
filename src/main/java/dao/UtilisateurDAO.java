@@ -30,4 +30,6 @@ public interface UtilisateurDAO{
 
     List<Utilisateur> getNonAmis(int idUtilisateur);
 
+    public List<Utilisateur> searchNonAmis(int idUtilisateur, String nickname);
+
 }

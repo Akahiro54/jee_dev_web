@@ -9,12 +9,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="pageTitle" scope="request" value="Mes amis"/>
 <jsp:include page="../header.jsp" />
-
-<div class="container">
-    <form class="form-inline" method="post" action="search.jsp">
-        <input type="text" name="roll_no" class="form-control" placeholder="Search roll no..">
-        <button type="submit" name="save" class="btn btn-primary">Search</button>
-    </form>
+<div class="mt-2 mb-2">
+    <div class="container">
+        <div class="row">
+         <div class="col text-center">
+            <input type="text" name="roll_no" id="recherche" class="form-control" placeholder="Chercher des amis ...">
+            <button name="save" class="btn btn-primary mx-auto">Rechercher des amis</button>
+         </div>
+        </div>
+        <div class="row" id="resultatsRecherche"></div>
+    </div>
 </div>
 <div class="container">
     <div class="row">
@@ -65,16 +69,36 @@
         </div>
     </div>
 </div>
-<div><p>Zone de test</p>
-<button>Hello ! </button>
-</div>
 <script>
     $(document).ready(function(){
         $("button").click(function(){
-            $.post("amis", function(data, status){
-                alert("Data: " + data + "\nStatus: " + status);
-            });
+           startSearch();
+        });
+        $("#recherche").keypress(function(keycode){
+            if(keycode.which == 13) {
+                startSearch();
+            }
         });
     });
+
+    function startSearch() {
+        $.post("amis",
+            {
+                nickSearch: $("#recherche").val()
+            },
+            function(data,status){
+                $('#resultatsRecherche').empty();
+                if(data == "error") {
+                    alert("Merci d'entrer une recherche valide : 3 à 255 caractères, lettres chiffres et tirets (- , _).");
+                } else {
+                    jQuery.each(jsonData = JSON.parse(data), function(index) {
+                        $('#resultatsRecherche').prepend(
+                            '<div class="resultat card col-12 col-sm-12 col-md-6 col-xl-4 pt-1 pb-1 text-center align-middle">'+jsonData[index].pseudo + '<a href="ajouter_ami/'+jsonData[index].id+'" class="btn btn-danger">Ajouter l\'ami</a>' +'</div>'
+                        );
+                    })
+                }
+                //console.log("Data: " + data + "\nStatus: " + status); //used for debug purposes
+            });
+    }
 </script>
 <jsp:include page="../footer.jsp" />

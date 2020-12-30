@@ -230,9 +230,65 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         return listeAmis;
     }
 
+    //SELECT * FROM utilisateur WHERE id != 8 AND id NOT IN (SELECT u.id
+    //FROM amis a
+    //INNER JOIN utilisateur u
+    //ON CASE WHEN a.ami1 = 8 THEN a.ami2 ELSE a.ami1 END = u.id
+    //WHERE a.ami1 = 8 OR a.ami2 = 8)
     @Override
     public List<Utilisateur> getNonAmis(int idUtilisateur) {
-        return null;
+        ArrayList<Utilisateur> nonAmis = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = "SELECT u.nom, u.prenom, u.image, u.id FROM utilisateur WHERE id != ? AND id NOT IN (SELECT u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE a.ami1 = ? OR a.ami2 = ?)";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUtilisateur, idUtilisateur, idUtilisateur, idUtilisateur);
+            ResultSet result = preparedStatement.executeQuery();
+            while(result.next()) {
+                Utilisateur util = new Utilisateur(result.getInt(4),result.getString(1),result.getString(2),result.getBytes(3));
+                nonAmis.add(util);
+            }
+        } catch(Exception e) {
+            System.err.println("Cannot get user friends: " + e.getMessage());
+            System.err.println("ID user: " + idUtilisateur);
+            System.err.println("Friend list : " + nonAmis);
+        }
+        return nonAmis;
+    }
+
+    //SELECT * FROM utilisateur WHERE pseudo LIKE '%zor%' AND id != 8 AND id NOT IN (SELECT u.id
+    //FROM amis a
+    //INNER JOIN utilisateur u
+    //ON CASE WHEN a.ami1 = 8 THEN a.ami2 ELSE a.ami1 END = u.id
+    //WHERE a.ami1 = 8 OR a.ami2 = 8)
+    public List<Utilisateur> searchNonAmis(int idUtilisateur, String nickname) {
+        ArrayList<Utilisateur> nonAmis = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = "SELECT  id, pseudo, image FROM utilisateur WHERE pseudo LIKE ? AND id != ? AND id NOT IN (SELECT u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE a.ami1 = ? OR a.ami2 = ?)";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, nickname, idUtilisateur, idUtilisateur, idUtilisateur, idUtilisateur);
+            preparedStatement.setString(1, "%" + nickname + "%");
+            ResultSet result = preparedStatement.executeQuery();
+            while(result.next()) {
+                Utilisateur util = new Utilisateur();
+                util.setId(result.getInt(1));
+                util.setPseudo(result.getString(2));
+                util.setImage(result.getBytes(3));
+                nonAmis.add(util);
+            }
+        } catch(Exception e) {
+            System.err.println("Cannot get user friends: " + e.getMessage());
+            System.err.println("ID user: " + idUtilisateur);
+            System.err.println("Nickname: " + nickname);
+            System.err.println("Friend list : " + nonAmis);
+            e.printStackTrace();
+        }
+        return nonAmis;
     }
 
     private static Utilisateur map(ResultSet resultSet) throws SQLException {
