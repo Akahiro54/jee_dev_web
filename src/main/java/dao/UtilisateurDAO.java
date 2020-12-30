@@ -28,4 +28,6 @@ public interface UtilisateurDAO{
 
     List<Utilisateur> getAmis(int idUtilisateur);
 
+    List<Utilisateur> getNonAmis(int idUtilisateur);
+
 }

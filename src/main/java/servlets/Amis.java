@@ -46,7 +46,10 @@ public class Amis extends HttpServlet {
     //TODO
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
+        HttpSession session = req.getSession();
+        Utilisateur utilisateur = (Utilisateur)session.getAttribute(Util.ATT_SESSION_USER);
+        String greetings = "Salut," + utilisateur.getPseudo() + "!";
+        resp.setContentType("text/plain");
+        resp.getWriter().write(greetings);
     }
 }

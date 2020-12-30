@@ -51,7 +51,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         Connection connection = null;
         ResultSet resultSet = null;
         String request = null;
-        if(data.length == 8) { // updating user with image
+        if(data.length == 7) { // updating user with image
             request = "UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ?, image = ?, nomimage = ? WHERE email = ? ";
         } else { // normal update
             request = "UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ? WHERE email = ? ";
@@ -130,18 +130,21 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
     @Override
     public boolean canLogin(Utilisateur user) {
+
         boolean logged = false;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
         String request = "SELECT * FROM utilisateur WHERE email = ?";
         try {
+            System.out.println(user.getEmail());
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request, false, user.getEmail());
             result = preparedStatement.executeQuery();
             if(result.next()) {
                 byte[] userPassword = result.getBytes(4);
                 byte[] givenPassword = PasswordHasher.getPasswordHash(user.getPass());
+                System.out.println(userPassword + "_" +givenPassword);
                 if(Arrays.equals(userPassword, givenPassword)) {
                     logged = true;
                 }
@@ -153,6 +156,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         }  finally {
             SQLTools.close(connection,result,preparedStatement);
         }
+        System.out.println("CanLogin ? " + logged);
         return logged;
     }
 
@@ -208,10 +212,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
-        String request = "SELECT u.nom, u.prenom, u.image, u.id FROM amis a INNER JOIN utilisateur u ON a.ami2 = u.id WHERE a.ami1 = ? ";
+        // Get the current user friends, by checking the TWO columns
+        String request = "SELECT u.nom, u.prenom, u.image, u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE a.ami1 = ? OR a.ami2 = ?";
         try {
             connection = daoFactory.getConnection();
-            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUtilisateur);
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUtilisateur, idUtilisateur, idUtilisateur);
             ResultSet result = preparedStatement.executeQuery();
             while(result.next()) {
                 Utilisateur util = new Utilisateur(result.getInt(4),result.getString(1),result.getString(2),result.getBytes(3));
@@ -223,6 +228,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             System.err.println("Friend list : " + listeAmis);
         }
         return listeAmis;
+    }
+
+    @Override
+    public List<Utilisateur> getNonAmis(int idUtilisateur) {
+        return null;
     }
 
     private static Utilisateur map(ResultSet resultSet) throws SQLException {

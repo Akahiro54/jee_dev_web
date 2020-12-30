@@ -65,4 +65,16 @@
         </div>
     </div>
 </div>
+<div><p>Zone de test</p>
+<button>Hello ! </button>
+</div>
+<script>
+    $(document).ready(function(){
+        $("button").click(function(){
+            $.post("amis", function(data, status){
+                alert("Data: " + data + "\nStatus: " + status);
+            });
+        });
+    });
+</script>
 <jsp:include page="../footer.jsp" />
