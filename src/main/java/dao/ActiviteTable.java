@@ -37,7 +37,7 @@ public class ActiviteTable {
     public static HashMap<Activite, String> getMyActivities(int idUser) {
         HashMap<Activite, String>  activities = new HashMap<>();
         try {
-            PreparedStatement preparedStatement = SQLConnector.getConnection().prepareCall("SELECT a.* , l.nom FROM activite a INNER JOIN LIEU l ON a.lieu = l.id WHERE a.utilisateur = ?");
+            PreparedStatement preparedStatement = SQLConnector.getConnection().prepareCall("SELECT a.* , l.nom FROM ACTIVITE a INNER JOIN LIEU l ON a.lieu = l.id WHERE a.utilisateur = ?");
             preparedStatement.setInt(1, idUser);
             ResultSet resultat = preparedStatement.executeQuery();
             while (resultat.next()) {

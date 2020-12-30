@@ -16,7 +16,7 @@
             <div class="card col-12 col-sm-12 col-md-6 col-xl-4">
                 <div class="card-body">
                     <h5 class="card-title">Nom : <c:out value="${activite.key.nom}"/></h5>
-                    <h6 class="card-subtitle text-muted">Lieu : <c:out value="${activite.value}"/></h6>
+                    <h6 class="card-subtitle text-muted">Lieu : <c:out value="${activite.value.nom}"/></h6>
                     <p class="card-text"><br/>
                         Dates de l'activité :
                     <ul>
