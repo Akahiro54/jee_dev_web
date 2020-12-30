@@ -3,6 +3,7 @@ package forms;
 
 import beans.Activite;
 import dao.ActiviteDAO;
+import dao.LieuDAO;
 import tools.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +20,11 @@ public class ActiviteForm {
     private Map<String,String> errors = new HashMap<String, String>();
 
     private ActiviteDAO activiteDAO;
+    private LieuDAO lieuDAO;
 
-    public ActiviteForm(ActiviteDAO activiteDAO) {
+    public ActiviteForm(ActiviteDAO activiteDAO, LieuDAO lieuDAO) {
         this.activiteDAO = activiteDAO;
+        this.lieuDAO = lieuDAO;
     }
 
     public Activite ajouterActivite(HttpServletRequest request, int idUser) {
@@ -87,8 +90,14 @@ public class ActiviteForm {
                 activite.setHeureFin(time_end);
                 break;
             case FIELD_PLACE:
-                int id = placeExists(data[0]);
-                if(id != -1) activite.setIdLieu(id);
+                int id = placeIsANumber(data[0]);
+                if(id != -1)  {
+                    if(lieuDAO.placeExistsById(id)) {
+                        activite.setIdLieu(id);
+                    } else {
+                        throw new Exception("Merci de choisir un lieu existant.");
+                    }
+                }
                 break;
             default:
                 break;

@@ -1,7 +1,5 @@
 package tools;
 
-import dao.LieuTable;
-
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -81,13 +79,10 @@ public class FormTools {
         return time;
     }
 
-    public static int placeExists(String idPlace) throws Exception {
+    public static int placeIsANumber(String idPlace) throws Exception {
         int id = -1;
         try {
             id = Integer.parseInt(idPlace);
-            if(!LieuTable.placeExistsById(id)) {
-                throw new Exception("Merci de choisir un lieu existant.");
-            }
         } catch (NumberFormatException nfe) {
             throw new Exception("Merci de choisir un lieu existant.");
         }

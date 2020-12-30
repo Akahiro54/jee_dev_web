@@ -1,9 +1,8 @@
 package forms;
 
 import beans.Lieu;
-import dao.LieuTable;
+import dao.LieuDAO;
 import tools.Util;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +13,11 @@ public class LieuForm {
 
     private Map<String,String> errors = new HashMap<String, String>();
 
+    private LieuDAO lieuDAO;
+
+    public LieuForm(LieuDAO lieuDAO) {
+        this.lieuDAO = lieuDAO;
+    }
 
     public Lieu ajouterLieu(HttpServletRequest request) {
         Lieu lieu = new Lieu(); // initialize activity
@@ -29,13 +33,13 @@ public class LieuForm {
             fields = fields.next();
         }
 
-        if(LieuTable.placeExistsByName(lieu.getNom())) {
+        if(lieuDAO.placeExistsByName(lieu.getNom())) {
             addError(LieuFields.FIELD_NAME.getFieldName(), "Un lieu avec un nom identique existe déjà");
         }
         // if there are no errors
         if ( errors.isEmpty() ) {
         // Tries to save the activity to the database
-            if (!LieuTable.createPlace(lieu)) {
+            if (!lieuDAO.add(lieu)) {
                 addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
             }
         }

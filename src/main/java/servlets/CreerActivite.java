@@ -3,11 +3,8 @@ package servlets;
 import beans.Activite;
 import beans.Lieu;
 import beans.Utilisateur;
-import dao.ActiviteDAO;
-import dao.DAOFactory;
-import dao.UtilisateurDAO;
+import dao.*;
 import forms.ActiviteForm;
-import dao.LieuTable;
 import tools.Util;
 
 import javax.servlet.ServletException;
@@ -21,16 +18,19 @@ import java.util.ArrayList;
 public class CreerActivite extends HttpServlet {
 
     private ActiviteDAO activiteDAO;
+    private LieuDAO lieuDAO;
 
 
     @Override
     public void init() throws ServletException {
         this.activiteDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getActiviteDAO();
+        this.lieuDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getLieuDAO();
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ArrayList<Lieu> lieux = LieuTable.getAvailablePlaces();
+        ArrayList<Lieu> lieux = new ArrayList<Lieu>(lieuDAO.getAllPlaces());
         req.setAttribute("lieux", lieux);
         req.getRequestDispatcher("/user-restricted/creer_activite.jsp").forward(req, resp);
     }
@@ -43,9 +43,9 @@ public class CreerActivite extends HttpServlet {
         if(utilisateur == null)  {
             resp.sendRedirect(req.getContextPath()+"/index.jsp");
         }  else  {
-            ArrayList<Lieu> lieux = LieuTable.getAvailablePlaces();
+            ArrayList<Lieu> lieux = new ArrayList<Lieu>(lieuDAO.getAllPlaces());
             req.setAttribute("lieux", lieux);
-            ActiviteForm form = new ActiviteForm(activiteDAO);
+            ActiviteForm form = new ActiviteForm(activiteDAO, lieuDAO);
             Activite activite = form.ajouterActivite(req, utilisateur.getId());
             req.setAttribute("form", form);
             req.setAttribute("activity", activite);

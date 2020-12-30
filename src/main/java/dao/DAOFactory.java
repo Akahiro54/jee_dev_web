@@ -73,5 +73,9 @@ public class DAOFactory {
         return new ActiviteDAOImpl(this);
     }
 
+    public LieuDAO getLieuDAO() {
+        return new LieuDAOImpl(this);
+    }
+
 
 }
