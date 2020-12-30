@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.Base64" %><%--
   Created by IntelliJ IDEA.
   User: Adrien
   Date: 29/12/2020
@@ -39,7 +39,7 @@
                                     <div class="p-10 bg-white">
                                         <div class="media media-xs overflow-visible">
                                             <a class="media-left" href="javascript:;">
-                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="media-object img-circle">
+                                                    <img src="data:image/jpeg;base64,${listeImage.get(listeamis.id)}" alt="" width="50" height="50">
                                             </a>
                                             <div class="media-body valign-middle">
                                                 <b class="text-inverse"><c:out value="${listeamis.nom}" />  <c:out value="${listeamis.prenom}" /></b>
@@ -49,7 +49,7 @@
                                                     <a href="javascript:;" class="btn btn-default">Amis</a>
                                                     <a href="javascript:;" data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-expanded="false"></a>
                                                     <ul class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(101px, 34px, 0px);">
-                                                        <li><a href="javascript:;">Action 1</a></li>
+                                                        <li><a href="javascript:;">Supprimer</a></li>
                                                     </ul>
                                                 </div>
                                             </div>

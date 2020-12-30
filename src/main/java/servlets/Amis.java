@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
 
 public class Amis extends HttpServlet {
 
@@ -33,11 +36,14 @@ public class Amis extends HttpServlet {
         listeamis = new ArrayList<>(utilisateurDAO.getAmis(utilisateur.getId()));
         req.setAttribute("listeamis", listeamis);
 
-        if (utilisateur.getImage() != null)
-        {
-            String encode = Base64.getEncoder().encodeToString(utilisateur.getImage());
-            req.setAttribute("imgBase", encode);
+        HashMap<Integer,String> listeImage = new HashMap<>();
+        for (int i = 0; i < listeamis.size(); i++) {
+            System.out.println(i);
+            listeImage.put(listeamis.get(i).getId(),Base64.getEncoder().encodeToString(listeamis.get(i).getImage()));
+            //System.out.println(Base64.getEncoder().encodeToString(listeamis.get(i).getImage()));
         }
+        System.out.println(listeImage.get(7));
+        req.setAttribute("listeImage", listeImage);
 
         req.getRequestDispatcher("/user-restricted/amis.jsp").forward(req,resp);
 
