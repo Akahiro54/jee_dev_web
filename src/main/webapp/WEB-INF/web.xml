@@ -110,6 +110,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>Amis</servlet-name>
+        <servlet-class>servlets.Amis</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Amis</servlet-name>
+        <url-pattern>/user-restricted/amis</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>CreerLieu</servlet-name>
         <servlet-class>servlets.CreerLieu</servlet-class>
     </servlet>

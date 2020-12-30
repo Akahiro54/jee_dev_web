@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-datepicker.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/inscription.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/amis.css"/>
 
     <script src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
@@ -47,9 +48,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/activites">Activités</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/amis">Amis</a>
+                    </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>
                     </li>
+
                </c:when>
                 <c:otherwise>
                     <%-- Sinon il peut se connecter ou s'inscrire --%>
