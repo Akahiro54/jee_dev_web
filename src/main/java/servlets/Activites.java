@@ -1,8 +1,10 @@
 package servlets;
 
 import beans.Activite;
+import beans.Lieu;
 import beans.Utilisateur;
-import dao.ActiviteTable;
+import dao.ActiviteDAO;
+import dao.DAOFactory;
 import tools.Util;
 
 import javax.servlet.ServletException;
@@ -15,6 +17,13 @@ import java.util.HashMap;
 
 public class Activites extends HttpServlet {
 
+    private ActiviteDAO activiteDAO;
+
+
+    @Override
+    public void init() throws ServletException {
+        this.activiteDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getActiviteDAO();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,7 +32,7 @@ public class Activites extends HttpServlet {
         if(utilisateur == null)  {
             resp.sendRedirect(req.getContextPath()+"/index.jsp");
         }  else  {
-            HashMap<Activite, String> activites = ActiviteTable.getMyActivities(utilisateur.getId());
+            HashMap<Activite, Lieu> activites = new HashMap<Activite, Lieu>(activiteDAO.getUserActivitiesWithPlaces(utilisateur.getId()));
             req.setAttribute("activites", activites);
             req.getRequestDispatcher("/user-restricted/activites.jsp").forward(req,resp);
         }

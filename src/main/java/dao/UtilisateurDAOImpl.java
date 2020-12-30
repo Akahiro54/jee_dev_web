@@ -1,6 +1,7 @@
 package dao;
 
 import beans.Utilisateur;
+import exceptions.DAOException;
 import tools.PasswordHasher;
 
 import java.sql.Connection;
@@ -55,7 +56,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             request = "UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ? WHERE email = ? ";
         }
         try {
-            connection = DAOFactory.getInstance().getConnection();
+            connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false, data);
             preparedStatement.executeUpdate();
             updated = true;
@@ -79,7 +80,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         String request = "SELECT * FROM utilisateur WHERE email = ? ";
         Utilisateur utilisateur = new Utilisateur();
         try {
-            connection = DAOFactory.getInstance().getConnection();
+            connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false, email);
             resultat = preparedStatement.executeQuery();
             if(resultat.next()) {
@@ -101,15 +102,19 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     public boolean add(Utilisateur user) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet generatedValue = null;
         boolean created = false;
         String request = "INSERT INTO utilisateur (email, pseudo, mot_de_passe, nom , prenom, date_naissance) VALUES (?, ?, ? ,?, ?, ?)";
         try {
-            connection = DAOFactory.getInstance().getConnection();
+            connection = daoFactory.getConnection();
             byte[] passwordHash = PasswordHasher.getPasswordHash(user.getPass());
             Instant instant = user.getDate().toInstant();
             ZonedDateTime frDateTime = ZonedDateTime.ofInstant( instant, ZoneId.of("Europe/Paris"));
             preparedStatement = SQLTools.initPreparedRequest(connection, request, true,user.getEmail(), user.getPseudo(), passwordHash, user.getNom(), user.getPrenom(), frDateTime.toLocalDate());
             preparedStatement.executeUpdate();
+            generatedValue = preparedStatement.getGeneratedKeys();
+            if(generatedValue.next()) user.setId(generatedValue.getInt(1));
+            else throw new DAOException("Cannot get new ID");
             created = true;
         } catch (Exception e) {
             System.err.println("Cannot create the user : " + e.getMessage());
@@ -130,7 +135,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         ResultSet result = null;
         String request = "SELECT * FROM utilisateur WHERE email = ?";
         try {
-            connection = DAOFactory.getInstance().getConnection();
+            connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request, false, user.getEmail());
             result = preparedStatement.executeQuery();
             if(result.next()) {
@@ -158,7 +163,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         ResultSet resultSet = null;
         String request = "SELECT count(*) FROM utilisateur WHERE pseudo = ?";
         try {
-            connection = DAOFactory.getInstance().getConnection();
+            connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false,nickname);
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
@@ -181,7 +186,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         ResultSet resultSet = null;
         String request = "SELECT count(*) FROM utilisateur WHERE email = ?";
         try {
-            connection = DAOFactory.getInstance().getConnection();
+            connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false,email);
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {

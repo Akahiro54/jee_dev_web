@@ -2,7 +2,7 @@ package forms;
 
 
 import beans.Activite;
-import dao.ActiviteTable;
+import dao.ActiviteDAO;
 import tools.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +18,11 @@ public class ActiviteForm {
 
     private Map<String,String> errors = new HashMap<String, String>();
 
+    private ActiviteDAO activiteDAO;
+
+    public ActiviteForm(ActiviteDAO activiteDAO) {
+        this.activiteDAO = activiteDAO;
+    }
 
     public Activite ajouterActivite(HttpServletRequest request, int idUser) {
         Activite activite = new Activite(); // initialize activity
@@ -47,7 +52,7 @@ public class ActiviteForm {
         // if there are no errors
         if ( errors.isEmpty() ) {
 //          Tries to save the activity to the database
-            if (!ActiviteTable.createActivity(activite)) {
+            if (!activiteDAO.add(activite)) {
                 addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
             }
         }

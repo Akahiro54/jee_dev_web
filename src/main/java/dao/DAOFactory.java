@@ -69,5 +69,9 @@ public class DAOFactory {
         return new UtilisateurDAOImpl(this);
     }
 
+    public ActiviteDAO getActiviteDAO() {
+        return new ActiviteDAOImpl(this);
+    }
+
 
 }
