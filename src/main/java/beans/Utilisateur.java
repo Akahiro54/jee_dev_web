@@ -20,6 +20,13 @@ public class Utilisateur {
 
     public Utilisateur() {}
 
+    public Utilisateur(int id, String nom, String prenom, byte[] image) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.image = image;
+    }
+
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }
