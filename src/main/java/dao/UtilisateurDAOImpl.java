@@ -51,23 +51,22 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         Connection connection = null;
         ResultSet resultSet = null;
         String request = null;
-
-        if(finput != null) { // updating user with image
-            request = "UPDATE utilisateur SET image = ?, prenom = ?, nom = ?, email = ?, date_naissance = ?, nomimage = ? WHERE email = ? ";
-        } else { // normal update
-            request = "UPDATE utilisateur SET prenom = ?, nom = ?, email = ?, date_naissance = ? WHERE email = ? ";
-        }
         try {
-
             connection = daoFactory.getConnection();
-            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, data);
-            preparedStatement.setBlob(1, finput);
-            preparedStatement.setObject(2,data[0]);
-            preparedStatement.setObject(3,data[1]);
-            preparedStatement.setObject(4,data[2]);
-            preparedStatement.setObject(5,data[3]);
-            preparedStatement.setObject(6,data[4]);
-            preparedStatement.setObject(7,data[5]);
+            if(finput != null) { // updating user with image
+                request = "UPDATE utilisateur SET image = ?, prenom = ?, nom = ?, email = ?, date_naissance = ?, nomimage = ? WHERE email = ? ";
+                preparedStatement = connection.prepareStatement(request);
+                preparedStatement.setBlob(1, finput);
+                preparedStatement.setObject(2,data[0]);
+                preparedStatement.setObject(3,data[1]);
+                preparedStatement.setObject(4,data[2]);
+                preparedStatement.setObject(5,data[3]);
+                preparedStatement.setObject(6,data[4]);
+                preparedStatement.setObject(7,data[5]);
+            } else { // normal update
+                request = "UPDATE utilisateur SET prenom = ?, nom = ?, email = ?, date_naissance = ? WHERE email = ? ";
+                preparedStatement = SQLTools.initPreparedRequest(connection,request,false, data);
+            }
             preparedStatement.executeUpdate();
             updated = true;
         } catch(Exception e) {
