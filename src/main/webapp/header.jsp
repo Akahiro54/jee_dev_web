@@ -40,21 +40,32 @@
                         <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/profil">Mon compte</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/creer_activite">Nouvelle activité</a>
+                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/creer_activite">Créer une activité</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/creer_lieu">Nouveau lieu (TMP)</a>
+                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/creer_lieu">Créer un lieu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/activites">Activités</a>
+                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/activites">Mes activités</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/amis">Amis</a>
+                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/amis">Mes amis</a>
                     </li>
-                    <li class="nav-item active">
+                    <c:choose>
+                        <c:when test="${hasNotifications == true}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/notifications">Mes notifications <span class="badge badge-danger">!</span></a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/notifications">Mes notifications</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                    <li class="nav-item">
                         <a class="nav-link" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>
                     </li>
-
                </c:when>
                 <c:otherwise>
                     <%-- Sinon il peut se connecter ou s'inscrire --%>
@@ -66,17 +77,6 @@
                     </li>
                 </c:otherwise>
             </c:choose>
-<%--            <li class="nav-item dropdown">--%>
-<%--                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--%>
-<%--                    Dropdown--%>
-<%--                </a>--%>
-<%--                <div class="dropdown-menu" aria-labelledby="navbarDropdown">--%>
-<%--                    <a class="dropdown-item" href="#">Action</a>--%>
-<%--                    <a class="dropdown-item" href="#">Another action</a>--%>
-<%--                    <div class="dropdown-divider"></div>--%>
-<%--                    <a class="dropdown-item" href="#">Something else here</a>--%>
-<%--                </div>--%>
-<%--            </li>--%>
         </ul>
     </div>
 </nav>

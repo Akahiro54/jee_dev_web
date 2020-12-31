@@ -146,14 +146,12 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         ResultSet result = null;
         String request = "SELECT * FROM utilisateur WHERE email = ?";
         try {
-            System.out.println(user.getEmail());
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request, false, user.getEmail());
             result = preparedStatement.executeQuery();
             if(result.next()) {
                 byte[] userPassword = result.getBytes(4);
                 byte[] givenPassword = PasswordHasher.getPasswordHash(user.getPass());
-                System.out.println(userPassword + "_" +givenPassword);
                 if(Arrays.equals(userPassword, givenPassword)) {
                     logged = true;
                 }
@@ -165,7 +163,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         }  finally {
             SQLTools.close(connection,result,preparedStatement);
         }
-        System.out.println("CanLogin ? " + logged);
         return logged;
     }
 

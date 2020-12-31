@@ -21,7 +21,25 @@ public class NotificationDAOImpl implements NotificationDAO{
 
     @Override
     public boolean hasNotifications(int idUser) {
-        return false;
+        boolean hasNotifications = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = "SELECT count(*) FROM notification WHERE etat = 'non_lue' AND destination = ?";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false,idUser);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                if(resultSet.getInt(1) >= 1) hasNotifications = true;
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot check if user has notifications : " + e.getMessage());
+            System.err.println("ID given : " + idUser);
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return hasNotifications;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class SQLTools {
             try{
                 statement.close();
             }catch (SQLException sqe) {
-                System.out.println("Cannot close statement : " + sqe.getMessage());
+                System.err.println("Cannot close statement : " + sqe.getMessage());
             }
         }
         close(connection);
@@ -33,7 +33,7 @@ public class SQLTools {
             try {
                 connection.close();
             } catch(SQLException sqe) {
-                System.out.println("Cannot close connection : " + sqe.getMessage());
+                System.err.println("Cannot close connection : " + sqe.getMessage());
             }
         }
     }
@@ -43,7 +43,7 @@ public class SQLTools {
             try {
                 resultSet.close();
             } catch(SQLException sqe) {
-                System.out.println("Cannot close ResultSet : " + sqe.getMessage());
+                System.err.println("Cannot close ResultSet : " + sqe.getMessage());
             }
         }
     }

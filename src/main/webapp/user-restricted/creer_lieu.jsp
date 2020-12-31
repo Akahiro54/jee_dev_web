@@ -13,9 +13,6 @@
     <h1>Créer un lieu</h1>
     <form method="post" class="mx-auto text-center rounded formulaire pt-1" accept-charset="UTF-8" action="creer_lieu">
         <p>${form.errors['database']}</p>
-<%
-    System.out.println(page);
-%>
 <%--        NOM--%>
         <div class="form-group ml-1 mr-2">
             <div class="mx-auto row">
