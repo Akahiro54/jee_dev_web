@@ -42,11 +42,8 @@ public class Amis extends HttpServlet {
                 listeImage.put(listeami.getId(), Base64.getEncoder().encodeToString(listeami.getImage()));
             }
         }
-        System.out.println(listeImage.get(7));
         req.setAttribute("listeImage", listeImage);
         req.getRequestDispatcher("/user-restricted/amis.jsp").forward(req,resp);
-
-
     }
 
     //TODO

@@ -2,10 +2,12 @@ package dao;
 
 import beans.EtatNotification;
 import beans.Notification;
+import beans.Utilisateur;
 import exceptions.DAOException;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationDAOImpl implements NotificationDAO{
@@ -24,7 +26,25 @@ public class NotificationDAOImpl implements NotificationDAO{
 
     @Override
     public List<Notification> getNotifications(int idUser, EtatNotification etatNotification) {
-        return null;
+        ArrayList<Notification> listeNotifications = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = "SELECT * FROM notification WHERE destination = ? AND etat = ?";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUser, etatNotification.getEtatNotification());
+            ResultSet result = preparedStatement.executeQuery();
+            while(result.next()) {
+                Notification notif = map(result);
+                listeNotifications.add(notif);
+            }
+        } catch(Exception e) {
+            System.err.println("Cannot get user notifications: " + e.getMessage());
+            System.err.println("ID user : " + idUser + ", asked state : " + etatNotification);
+            System.err.println("Notifications list : " + listeNotifications);
+        }
+        return listeNotifications;
     }
 
     @Override

@@ -128,6 +128,15 @@
         <url-pattern>/user-restricted/creer_lieu</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Notifications</servlet-name>
+        <servlet-class>servlets.Notifications</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Notifications</servlet-name>
+        <url-pattern>/user-restricted/notifications</url-pattern>
+    </servlet-mapping>
+
 
 
 </web-app>
