@@ -65,27 +65,28 @@ public class InscriptionForm {
     private void validateField(InscriptionFields field, Utilisateur utilisateur, String... data) throws Exception{
         switch(field) {
             case FIELD_MAIL:
-                utilisateur.setEmail(data[0]);
                 validateMail(data[0]);
+                utilisateur.setEmail(data[0]);
                 break;
             case FIELD_PSEUDO:
-                utilisateur.setPseudo(data[0]);
                 validateNickname(data[0]);
                 validateFieldSize(data[0]);
+                utilisateur.setPseudo(data[0]);
                 break;
             case FIELD_PASSWORD:
                 validatePasswords(data[0], data[1]);
+                validateFieldSize(data[0]);
                 utilisateur.setPass(data[0]);
                 break;
             case FIELD_LASTNAME:
-                utilisateur.setNom(data[0]);
                 validateFieldSize(data[0]);
                 validateName(data[0]);
+                utilisateur.setNom(data[0]);
                 break;
             case FIELD_FIRSTNAME:
-                utilisateur.setPrenom(data[0]);
                 validateFieldSize(data[0]);
                 validateName(data[0]);
+                utilisateur.setPrenom(data[0]);
                 break;
             case FIELD_DATENAISS:
                 Date date = validateBirthdate(data[0]);

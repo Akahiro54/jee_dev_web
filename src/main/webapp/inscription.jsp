@@ -2,6 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="pageTitle" scope="request" value="Inscription"/>
 <jsp:include page="header.jsp" />
+<c:if test="${!empty sessionScope.sessionUtilisateur}">
+    <%-- Si l'utilisateur existe en session, alors on le redirige sur son profil. --%>
+    <c:redirect url="user-restricted/profil"/>
+</c:if>
 <div class="mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6">
     <h1>Inscription</h1>
     <p>Créez votre compte maintenant et soyez prévenu immédiatement si vous êtes un cas contact !</p>
@@ -66,5 +70,6 @@
 
             <input type="submit" value="Inscription" class="btn btn-dark mb-2"/>
         </form>
+
 </div>
 <jsp:include page="footer.jsp" />
