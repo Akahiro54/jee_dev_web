@@ -15,11 +15,7 @@ import java.io.IOException;
 
 public class Connecter extends HttpServlet {
 
-    public static final String ATT_USER = "utilisateur";
-    public static final String ATT_FORM = "form";
-
     private UtilisateurDAO utilisateurDAO;
-
 
     @Override
     public void init() throws ServletException {
@@ -28,7 +24,7 @@ public class Connecter extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/connexion.jsp").forward(req, resp);
+        req.getRequestDispatcher("/connexion.jsp").forward(req, resp);		// forward the request to the jsp login form
   }
 
 
@@ -36,14 +32,14 @@ public class Connecter extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             ConnexionForm form = new ConnexionForm(utilisateurDAO);
             Utilisateur user = form.connecterUtilisateur(req);
-            req.setAttribute(ATT_FORM, form);
-            req.setAttribute(ATT_USER, user);
-            if(form.getErrors().isEmpty()) {
+            req.setAttribute(Util.ATT_FORM, form);
+            req.setAttribute(Util.ATT_FORM_USER, user);
+            if(form.getErrors().isEmpty()) { // login success
                 HttpSession session = req.getSession();
                 session.setAttribute(Util.ATT_SESSION_USER, user);
-                resp.sendRedirect(req.getContextPath()+"/user-restricted/profil");
+                resp.sendRedirect(req.getContextPath()+"/user-restricted/profil"); // Goes to the profile page
             } else {
-                req.getServletContext().getRequestDispatcher("/connexion.jsp").forward(req, resp);
+                req.getServletContext().getRequestDispatcher("/connexion.jsp").forward(req, resp); // stays on login page and display errors
             }
       }
 }

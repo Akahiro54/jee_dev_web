@@ -56,7 +56,7 @@
             <div class="mx-auto row">
                 <label class="col-form-label col-4" for="lieu">Choisissez un lieu <span class="required">*</span> : </label>
                 <select id="lieu" class="form-control my-auto col-6" name="lieu">
-                    <c:forEach items="${lieux}" var="lieu">
+                    <c:forEach items="${places}" var="lieu">
                         <c:choose>
                             <c:when test="${lieu.id==activity.idLieu}">
                                 <option selected="selected" value="<c:out value="${lieu.id}"/>"><c:out value="${lieu.nom}"/></option>

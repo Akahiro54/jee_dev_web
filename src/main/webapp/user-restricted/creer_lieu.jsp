@@ -27,7 +27,7 @@
             <div class="mx-auto row">
                 <label class="col-form-label col-4" for="description_lieu">Description du lieu : </label>
 <%--                <input type="text" class="form-control my-auto col-8" id="description_lieu" name="description_lieu" value="<c:out value="${place.description}"/>" placeholder="Décrivez le lieu (optionnel)"/>--%>
-                    <textarea class="form-control my-auto col-8" rows="3"  id="description_lieu" name="description_lieu" value="<c:out value="${place.description}"/>" placeholder="Décrivez le lieu (optionnel)"></textarea>
+                    <textarea class="form-control my-auto col-8" rows="3"  id="description_lieu" name="description_lieu" placeholder="Décrivez le lieu (optionnel)"><c:out value="${place.description}"/></textarea>
                 <span class="erreur text-danger text-center">${form.errors['description_lieu']}</span>
             </div>
         </div>

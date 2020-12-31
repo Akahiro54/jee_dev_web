@@ -27,28 +27,28 @@
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Prénom</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input name = "modifprenom" type="text" class="form-control" value="${utilisateur.prenom}">
+                                    <input name = "modifprenom" type="text" class="form-control" value="${user.prenom}">
                                     <span class="erreur text-danger text-center">${form.errors['prenom']}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Nom</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input name = "modifnom" type="text" class="form-control" value="${utilisateur.nom}">
+                                    <input name = "modifnom" type="text" class="form-control" value="${user.nom}">
                                     <span class="erreur text-danger text-center">${form.errors['nom']}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2  col-sm-3 col-xs-12 control-label">Email</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input name = "modifemail" type="email" class="form-control" value="${utilisateur.email}">
+                                    <input name = "modifemail" type="email" class="form-control" value="${user.email}">
                                     <span class="erreur text-danger text-center">${form.errors['email']}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Date de naissance</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input name = "modifdate" type="date" class="form-control" value="${utilisateur.date}">
+                                    <input name = "modifdate" type="date" class="form-control" value="${user.date}">
                                     <span class="erreur text-danger text-center">${form.errors['date_naissance']}</span>
                                 </div>
                             </div>

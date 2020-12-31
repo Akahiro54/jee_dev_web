@@ -31,7 +31,7 @@ public class Notifications extends HttpServlet {
         Utilisateur utilisateur = (Utilisateur)session.getAttribute(Util.ATT_SESSION_USER);
         if(utilisateur != null) {
             ArrayList<Notification> notifications = new ArrayList<>(notificationDAO.getNotifications(utilisateur.getId(), EtatNotification.NON_LUE));
-            req.setAttribute("notifications", notifications);
+            req.setAttribute(Util.ATT_FORM_NOTIFICATIONS, notifications);
             req.getRequestDispatcher("/user-restricted/notifications.jsp").forward(req,resp);
         } else {
             // redirect home

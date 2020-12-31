@@ -13,7 +13,7 @@
         <div class="form-group ml-1 mr-2">
             <div class="mx-auto row">
                 <label class="col-form-label col-2" for="email">Adresse email : </label>
-                <input type="email" class="form-control my-auto col-10" id="email" name="email" value="<c:out value="${utilisateur.email}"/>" size="20" maxlength="60" />
+                <input type="email" class="form-control my-auto col-10" id="email" name="email" value="<c:out value="${user.email}"/>" size="20" maxlength="60" />
                 <span class="erreur">${form.errors['email']}</span>
             </div>
         </div>

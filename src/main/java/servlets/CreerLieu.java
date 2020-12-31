@@ -32,12 +32,11 @@ public class CreerLieu extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LieuForm form = new LieuForm(lieuDAO);
         Lieu lieu = form.ajouterLieu(req);
-        req.setAttribute("form", form);
-        req.setAttribute("place", lieu);
+        req.setAttribute(Util.ATT_FORM, form);
+        req.setAttribute(Util.ATT_FORM_PLACE, lieu);
         if(form.getErrors().isEmpty()) {
             resp.sendRedirect(req.getContextPath()+"/index.jsp");
         } else {
-            System.err.println(form.getErrors());
             req.getRequestDispatcher("/user-restricted/creer_lieu.jsp").forward(req, resp);
         }
     }

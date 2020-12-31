@@ -25,21 +25,17 @@ public class Inscription extends HttpServlet {
 
 	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// forward the request to the jsp register form
-	    req.getRequestDispatcher("/inscription.jsp").forward(req, resp);
+	    req.getRequestDispatcher("/inscription.jsp").forward(req, resp);		// forward the request to the jsp register form
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         InscriptionForm form = new InscriptionForm(utilisateurDAO);
-
         Utilisateur userCreated = form.inscrireUtilisateur(req);
-
-        req.setAttribute("form", form);
-        req.setAttribute("user", userCreated);
-
+        req.setAttribute(Util.ATT_FORM, form);
+        req.setAttribute(Util.ATT_FORM_USER, userCreated);
         if(form.getErrors().isEmpty()) { // inscription success
-            resp.sendRedirect(req.getContextPath()+"/index.jsp"); // Returns to the main page
+            resp.sendRedirect(req.getContextPath()+"/connexion"); // Goes to the login page
         } else {
             req.getRequestDispatcher("/inscription.jsp").forward(req, resp); // stays on subscription page and display errors
         }

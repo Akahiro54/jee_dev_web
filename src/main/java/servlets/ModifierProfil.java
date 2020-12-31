@@ -31,7 +31,7 @@ public class ModifierProfil extends HttpServlet {
         if(utilisateur == null) { // if no user, redirect to login page
             resp.sendRedirect(req.getContextPath()+"/connexion");
         } else {
-            req.setAttribute("utilisateur",utilisateur);
+            req.setAttribute(Util.ATT_FORM_USER,utilisateur);
             this.getServletContext().getRequestDispatcher( "/user-restricted/modifier_profil.jsp" ).forward( req, resp );
         }
     }
@@ -44,8 +44,8 @@ public class ModifierProfil extends HttpServlet {
 
         ModifierProfilForm form = new ModifierProfilForm(utilisateurDAO);
         form.modifierUtilisateur(req);
-        req.setAttribute("form", form);
-        req.setAttribute("utilisateur", utilisateur);
+        req.setAttribute(Util.ATT_FORM, form);
+        req.setAttribute(Util.ATT_FORM_USER, utilisateur);
 
         if(form.getErrors().isEmpty()) {
             resp.sendRedirect(req.getContextPath()+"/user-restricted/profil"); // Returns to the main page

@@ -28,7 +28,7 @@ public class Profil extends HttpServlet  {
         if(utilisateur == null) { // if no user, redirect to home page
             resp.sendRedirect(req.getContextPath()+"/index.jsp");
         } else {
-            req.setAttribute("utilisateur",utilisateur);
+            req.setAttribute(Util.ATT_FORM_USER,utilisateur);
             this.getServletContext().getRequestDispatcher( "/user-restricted/profil.jsp" ).forward( req, resp );
         }
     }

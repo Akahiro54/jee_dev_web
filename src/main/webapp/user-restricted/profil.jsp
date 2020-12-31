@@ -26,7 +26,7 @@
                                 </c:otherwise>
                             </c:choose>
                             <div class="mt-3">
-                                <h4>${utilisateur.nom}</h4><h5>${utilisateur.prenom}</h5>
+                                <h4>${user.nom}</h4><h5>${user.prenom}</h5>
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                                 <h6 class="mb-0">Nom</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${utilisateur.nom}
+                                ${user.nom}
                             </div>
                         </div>
                         <hr>
@@ -49,7 +49,7 @@
                                 <h6 class="mb-0">Prénom</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${utilisateur.prenom}
+                                ${user.prenom}
                             </div>
                         </div>
                         <hr>
@@ -58,7 +58,7 @@
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${utilisateur.email}
+                                ${user.email}
                             </div>
                         </div>
                         <hr>
@@ -67,7 +67,7 @@
                                 <h6 class="mb-0">Date de Naissance</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${utilisateur.date}
+                                ${user.date}
                             </div>
                         </div>
                         <hr>

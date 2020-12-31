@@ -31,7 +31,7 @@ public class CreerActivite extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ArrayList<Lieu> lieux = new ArrayList<Lieu>(lieuDAO.getAllPlaces());
-        req.setAttribute("lieux", lieux);
+        req.setAttribute(Util.ATT_FORM_PLACES, lieux);
         req.getRequestDispatcher("/user-restricted/creer_activite.jsp").forward(req, resp);
     }
 
@@ -44,11 +44,11 @@ public class CreerActivite extends HttpServlet {
             resp.sendRedirect(req.getContextPath()+"/index.jsp");
         }  else  {
             ArrayList<Lieu> lieux = new ArrayList<Lieu>(lieuDAO.getAllPlaces());
-            req.setAttribute("lieux", lieux);
+            req.setAttribute(Util.ATT_FORM_PLACES, lieux);
             ActiviteForm form = new ActiviteForm(activiteDAO, lieuDAO);
             Activite activite = form.ajouterActivite(req, utilisateur.getId());
-            req.setAttribute("form", form);
-            req.setAttribute("activity", activite);
+            req.setAttribute(Util.ATT_FORM, form);
+            req.setAttribute(Util.ATT_FORM_ACTIVITY, activite);
             if(form.getErrors().isEmpty()) {
                 resp.sendRedirect(req.getContextPath()+"/user-restricted/activites.jsp");
             } else {
