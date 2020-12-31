@@ -77,5 +77,7 @@ public class DAOFactory {
         return new LieuDAOImpl(this);
     }
 
+    public NotificationDAO getNotificationDAO() { return new NotificationDAOImpl(this); }
+
 
 }

@@ -3,6 +3,7 @@ package servlets;
 import beans.Utilisateur;
 import com.google.gson.Gson;
 import dao.DAOFactory;
+import dao.NotificationDAO;
 import dao.UtilisateurDAO;
 import tools.FormTools;
 import tools.Util;
@@ -21,11 +22,12 @@ import java.util.HashMap;
 public class Amis extends HttpServlet {
 
     private UtilisateurDAO utilisateurDAO;
-
+    private NotificationDAO notificationDAO;
 
     @Override
     public void init() throws ServletException {
         this.utilisateurDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getUtilisateurDAO();
+        this.notificationDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getNotificationDAO();
     }
 
     @Override
@@ -86,8 +88,10 @@ public class Amis extends HttpServlet {
                 try {
                     int idAmi = Integer.parseInt(req.getParameter("ami"));
                     if(!utilisateurDAO.areFriends(idAmi,idUtilisateur)) {
-                        if(utilisateurDAO.addFriend(idUtilisateur, idAmi)) {
-                           resp.getWriter().write(success);
+                        if(notificationDAO.add(idUtilisateur, idAmi, "Vous avez une nouvelle demande d'ami")) {
+                            if(utilisateurDAO.addFriend(idUtilisateur, idAmi)) {
+                                resp.getWriter().write(success);
+                            }
                         }
                     } else {
                         error += ": vous êtes déjà ami avec cette personne.";

@@ -64,14 +64,4 @@ public class Notification {
         this.utilisateurDestination = utilisateurDestination;
     }
 }
-enum EtatNotification {
-    LUE("lue"),
-    NON_LUE("non_lue"),
-    ARCHIVEE("archivee");
 
-    private String etatNotification;
-
-    EtatNotification(String etatNotification) {
-        this.etatNotification = etatNotification;
-    }
-}
