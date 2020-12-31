@@ -2,6 +2,8 @@ package dao;
 
 import beans.Utilisateur;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 
@@ -16,7 +18,7 @@ public interface UtilisateurDAO{
 
     boolean add(Utilisateur utilisateur);
 
-    boolean update(Utilisateur utilisateur, Object... data);
+    boolean update(Utilisateur utilisateur, InputStream finput, Object... data);
 
     boolean delete(Utilisateur utilisateur);
 

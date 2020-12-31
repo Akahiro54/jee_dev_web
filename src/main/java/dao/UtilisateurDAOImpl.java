@@ -3,12 +3,11 @@ package dao;
 import beans.Utilisateur;
 import exceptions.DAOException;
 import tools.PasswordHasher;
-
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.io.InputStream;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -46,20 +45,29 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 
     @Override
-    public boolean update(Utilisateur utilisateur, Object... data) {
+    public boolean update(Utilisateur utilisateur,InputStream finput,Object... data) {
         boolean updated = false;
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
         String request = null;
-        if(data.length == 7) { // updating user with image
-            request = "UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ?, image = ?, nomimage = ? WHERE email = ? ";
+
+        if(finput != null) { // updating user with image
+            request = "UPDATE utilisateur SET image = ?, prenom = ?, nom = ?, email = ?, date_naissance = ?, nomimage = ? WHERE email = ? ";
         } else { // normal update
-            request = "UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, date_naissance = ? WHERE email = ? ";
+            request = "UPDATE utilisateur SET prenom = ?, nom = ?, email = ?, date_naissance = ? WHERE email = ? ";
         }
         try {
+
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false, data);
+            preparedStatement.setBlob(1, finput);
+            preparedStatement.setObject(2,data[0]);
+            preparedStatement.setObject(3,data[1]);
+            preparedStatement.setObject(4,data[2]);
+            preparedStatement.setObject(5,data[3]);
+            preparedStatement.setObject(6,data[4]);
+            preparedStatement.setObject(7,data[5]);
             preparedStatement.executeUpdate();
             updated = true;
         } catch(Exception e) {

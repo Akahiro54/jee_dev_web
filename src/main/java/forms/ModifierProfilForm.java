@@ -70,12 +70,12 @@ public class ModifierProfilForm {
         if ( errors.isEmpty() ) {
             if (nomImage.equals("\"\""))
             {
-                if (!utilisateurDAO.update(utilisateur, prenom, nom, email, date2, ancienEmail)) {
+                if (!utilisateurDAO.update(utilisateur,null, prenom, nom, email, date2, ancienEmail)) {
                     addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
                 }
             }
             else{
-                if (!utilisateurDAO.update(utilisateur, prenom, nom, email, date2, ancienEmail, filePart.getInputStream(), nomImage)) {
+                if (!utilisateurDAO.update(utilisateur,filePart.getInputStream(), prenom, nom, email, date2,nomImage,ancienEmail)) {
                     addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
                 }
             }
