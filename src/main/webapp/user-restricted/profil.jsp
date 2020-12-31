@@ -17,7 +17,14 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="data:image/jpeg;base64,${imgBase}" width="300">
+                            <c:choose>
+                                <c:when test="${empty imgBase}">
+                                    <img src="<%=request.getContextPath()%>/img/profile.jpg" alt="" width="300" height="300">
+                                </c:when>
+                                <c:otherwise>
+                                    <img src="data:image/jpeg;base64,${imgBase}" width="300" height="300">
+                                </c:otherwise>
+                            </c:choose>
                             <div class="mt-3">
                                 <h4>${utilisateur.nom}</h4><h5>${utilisateur.prenom}</h5>
                             </div>

@@ -26,10 +26,14 @@ public interface UtilisateurDAO{
 
     boolean emailExists(String email);
 
-    List<Utilisateur> getAmis(int idUtilisateur);
+    List<Utilisateur> getFriends(int idUtilisateur);
 
-    List<Utilisateur> getNonAmis(int idUtilisateur);
+    List<Utilisateur> getNonFriends(int idUtilisateur);
 
-    public List<Utilisateur> searchNonAmis(int idUtilisateur, String nickname);
+    public List<Utilisateur> searchNonFriends(int idUtilisateur, String nickname);
+
+    boolean areFriends(int friend1, int friend2);
+
+    boolean addFriend(int friend1, int friend2);
 
 }

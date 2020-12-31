@@ -19,6 +19,7 @@
         </div>
         <div class="row" id="resultatsRecherche"></div>
     </div>
+    <div class="mx-auto text-center" id="resultatAjout"></div>
 </div>
 <div class="container">
     <div class="row">
@@ -38,9 +39,16 @@
                                 <div class="col-md-6 m-b-2">
                                     <div class="p-10 bg-white">
                                         <div class="media media-xs overflow-visible">
-                                            <a class="media-left" href="javascript:;">
-                                                    <img src="data:image/jpeg;base64,${listeImage.get(listeamis.id)}" alt="" width="50" height="50">
-                                            </a>
+                                            <a class="media-left" href="#">
+                                                    <c:choose>
+                                                        <c:when test="${empty listeImage.get(listeamis.id)}">
+                                                            <img src="<%=request.getContextPath()%>/img/profile.jpg" alt="" width="50" height="50">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <img src="data:image/jpeg;base64,${listeImage.get(listeamis.id)}" alt="" width="50" height="50">
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                             </a>
                                             <div class="media-body valign-middle">
                                                 <b class="text-inverse"><c:out value="${listeamis.nom}" />  <c:out value="${listeamis.prenom}" /></b>
                                             </div>
@@ -81,6 +89,25 @@
         });
     });
 
+    function addFriend(id) {
+        $.post("amis",
+            {
+                ami: id
+            },
+            function(data){
+                var resAjout = $('#resultatAjout');
+                resAjout.empty();
+                resAjout.removeClass('text-info');
+                resAjout.removeClass('text-danger');
+                if(data.includes("Impossible")) {
+                    resAjout.addClass('text-danger');
+                } else {
+                    resAjout.addClass('text-info');
+                }
+                $('#resultatsRecherche').empty();
+                resAjout.prepend(data);
+            });
+    }
     function startSearch() {
         $.post("amis",
             {
@@ -92,8 +119,9 @@
                     alert("Merci d'entrer une recherche valide : 3 à 255 caractères, lettres chiffres et tirets (- , _).");
                 } else {
                     jQuery.each(jsonData = JSON.parse(data), function(index) {
+                        idAmi = jsonData[index].id;
                         $('#resultatsRecherche').prepend(
-                            '<div class="resultat card col-12 col-sm-12 col-md-6 col-xl-4 pt-1 pb-1 text-center align-middle">'+jsonData[index].pseudo + '<a href="ajouter_ami/'+jsonData[index].id+'" class="btn btn-danger">Ajouter l\'ami</a>' +'</div>'
+                            '<div id="ami'+idAmi+'" class="resultat card col-12 col-sm-12 col-md-6 col-xl-4 pt-1 pb-1 text-center align-middle">'+jsonData[index].pseudo + '<button id="btnAmi'+idAmi+'" onclick="addFriend('+idAmi+')" class="btn btn-danger">Ajouter l\'ami</button>' +'</div>'
                         );
                     })
                 }

@@ -118,6 +118,7 @@
         <url-pattern>/user-restricted/amis</url-pattern>
     </servlet-mapping>
 
+
     <servlet>
         <servlet-name>CreerLieu</servlet-name>
         <servlet-class>servlets.CreerLieu</servlet-class>

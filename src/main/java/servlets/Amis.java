@@ -32,19 +32,16 @@ public class Amis extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur)session.getAttribute(Util.ATT_SESSION_USER);
-        ArrayList<Utilisateur> listeamis;
-        listeamis = new ArrayList<>(utilisateurDAO.getAmis(utilisateur.getId()));
-        req.setAttribute("listeamis", listeamis);
-
+        ArrayList<Utilisateur> listeAmis = new ArrayList<>(utilisateurDAO.getFriends(utilisateur.getId()));
+        req.setAttribute("listeamis", listeAmis);
         HashMap<Integer,String> listeImage = new HashMap<>();
-        for (int i = 0; i < listeamis.size(); i++) {
-            System.out.println(i);
-            listeImage.put(listeamis.get(i).getId(),Base64.getEncoder().encodeToString(listeamis.get(i).getImage()));
-            //System.out.println(Base64.getEncoder().encodeToString(listeamis.get(i).getImage()));
+        for (Utilisateur listeami : listeAmis) {
+            if (listeami.getImage() != null) {
+                listeImage.put(listeami.getId(), Base64.getEncoder().encodeToString(listeami.getImage()));
+            }
         }
         System.out.println(listeImage.get(7));
         req.setAttribute("listeImage", listeImage);
-
         req.getRequestDispatcher("/user-restricted/amis.jsp").forward(req,resp);
 
 
@@ -58,18 +55,48 @@ public class Amis extends HttpServlet {
         resp.setContentType("text/plain");
         String s = (String)req.getParameter("nickSearch");
         boolean validated = false;
-        try {
-            FormTools.validateNickname(s);
-            FormTools.validateFieldSize(s);
-            validated = true;
-        }catch(Exception e) {}
-        if(validated) {
-            List<Utilisateur> utilisateurs = utilisateurDAO.searchNonAmis(utilisateur.getId(),s);
-            Gson gson = new Gson();
-            String result = gson.toJson(utilisateurs);
-            resp.getWriter().write(result);
-        } else {
-            resp.getWriter().write("error");
+
+        /**
+         * Search friends
+         */
+        if(s != null) {
+            try {
+                FormTools.validateNickname(s);
+                FormTools.validateFieldSize(s);
+                validated = true;
+            } catch (Exception e) {
+            }
+            if (validated) {
+                List<Utilisateur> utilisateurs = utilisateurDAO.searchNonFriends(utilisateur.getId(), s);
+                Gson gson = new Gson();
+                String result = gson.toJson(utilisateurs);
+                resp.getWriter().write(result);
+            } else {
+                resp.getWriter().write("error");
+            }
+        }
+        /**
+         * Add friends
+         */
+        if(req.getParameter("ami") != null) {
+            String error = "Impossible d'ajouter l'ami";
+            String success = "Demande d'ami effectuée avec succès !";
+            if(utilisateur != null) {
+                int idUtilisateur = utilisateur.getId();
+                try {
+                    int idAmi = Integer.parseInt(req.getParameter("ami"));
+                    if(!utilisateurDAO.areFriends(idAmi,idUtilisateur)) {
+                        if(utilisateurDAO.addFriend(idUtilisateur, idAmi)) {
+                           resp.getWriter().write(success);
+                        }
+                    } else {
+                        error += ": vous êtes déjà ami avec cette personne.";
+                        resp.getWriter().write(error);
+                    }
+                }catch(Exception e) {
+                    resp.getWriter().write(error);
+                }
+            }
         }
     }
 }

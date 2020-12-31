@@ -4,6 +4,7 @@ import beans.Utilisateur;
 import exceptions.DAOException;
 import tools.PasswordHasher;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -207,7 +208,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     }
 
     @Override
-    public List<Utilisateur> getAmis(int idUtilisateur) {
+    public List<Utilisateur> getFriends(int idUtilisateur) {
         ArrayList<Utilisateur> listeAmis = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         Connection connection = null;
@@ -236,7 +237,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     //ON CASE WHEN a.ami1 = 8 THEN a.ami2 ELSE a.ami1 END = u.id
     //WHERE a.ami1 = 8 OR a.ami2 = 8)
     @Override
-    public List<Utilisateur> getNonAmis(int idUtilisateur) {
+    public List<Utilisateur> getNonFriends(int idUtilisateur) {
         ArrayList<Utilisateur> nonAmis = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         Connection connection = null;
@@ -263,7 +264,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     //INNER JOIN utilisateur u
     //ON CASE WHEN a.ami1 = 8 THEN a.ami2 ELSE a.ami1 END = u.id
     //WHERE a.ami1 = 8 OR a.ami2 = 8)
-    public List<Utilisateur> searchNonAmis(int idUtilisateur, String nickname) {
+    public List<Utilisateur> searchNonFriends(int idUtilisateur, String nickname) {
         ArrayList<Utilisateur> nonAmis = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         Connection connection = null;
@@ -289,6 +290,51 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             e.printStackTrace();
         }
         return nonAmis;
+    }
+
+    @Override
+    public boolean areFriends(int ami1, int ami2) {
+        boolean exists = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = "SELECT count(*) FROM amis WHERE (ami1 = ? AND ami2 = ?) OR (ami1 = ? AND ami2 = ?)";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, ami1, ami2, ami2, ami1);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                if(resultSet.getInt(1) >= 1) exists = true;
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot check if people are friends: " + e.getMessage());
+            System.err.println("Friend 1 : " + ami1 + ", friend 2 : " + ami2);
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return exists;
+    }
+
+    @Override
+    public boolean addFriend(int friend1, int friend2) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet generatedValue = null;
+        boolean created = false;
+        String request = "INSERT INTO amis (ami1, ami2) VALUES (?, ?)";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection, request, false, friend1,friend2);
+            preparedStatement.executeUpdate();
+            created = true;
+        } catch (Exception e) {
+            System.err.println("Cannot add friends : " + e.getMessage());
+            System.err.println("Friends IDS : " + friend1 + ", " + friend2);
+            created = false;
+        } finally {
+            SQLTools.close(connection,preparedStatement);
+        }
+        return created;
     }
 
     private static Utilisateur map(ResultSet resultSet) throws SQLException {
