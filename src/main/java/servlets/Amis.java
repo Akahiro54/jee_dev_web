@@ -9,6 +9,7 @@ import dao.DAOFactory;
 import dao.NotificationDAO;
 import dao.UtilisateurDAO;
 import tools.FormTools;
+import tools.JQueryAnswer;
 import tools.Util;
 
 import javax.servlet.ServletException;
@@ -83,8 +84,8 @@ public class Amis extends HttpServlet {
          * Add friends
          */
         if(req.getParameter("ami") != null) {
-            String error = "Impossible d'ajouter l'ami";
-            String success = "Demande d'ami effectuée avec succès !";
+            JQueryAnswer fail = new JQueryAnswer(false, "Impossible d'ajouter l'ami");
+            JQueryAnswer success = new JQueryAnswer(true, "Demande d'ami effectuée avec succès !");
             if(utilisateur != null) {
                 int idUtilisateur = utilisateur.getId();
                 try {
@@ -97,18 +98,18 @@ public class Amis extends HttpServlet {
                         if(!amisDAO.areFriends(amis) && !notificationDAO.hasAlreadyAFriendRequest(idUtilisateur, idAmi)) {
                             Notification notification = Notification.buildNotification(utilisateur, idAmi, TypeNotification.AMI);
                             if(notificationDAO.add(notification)) {
-                                    resp.getWriter().write(success);
+                                resp.getWriter().write(new Gson().toJson(success));
                             }
                         } else {
-                            error += ": vous êtes déjà ami ou possédez déjà une demande d'ami avec cette personne.";
-                            resp.getWriter().write(error);
+                            fail.appendMessage(": vous êtes déjà ami ou possédez déjà une demande d'ami avec cette personne.");
+                            resp.getWriter().write(new Gson().toJson(fail));
                         }
                     } else {
-                        error += ": l'ami que vous essayez d'ajouter n'existe pas.";
-                        resp.getWriter().write(error);
+                        fail.appendMessage(": l'ami que vous essayez d'ajouter n'existe pas.");
+                        resp.getWriter().write(new Gson().toJson(fail));
                     }
                 }catch(Exception e) {
-                    resp.getWriter().write(error);
+                    resp.getWriter().write(new Gson().toJson(fail));
                 }
             }
         }

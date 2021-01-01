@@ -100,13 +100,14 @@
                     resAjout.empty();
                     resAjout.removeClass('text-info');
                     resAjout.removeClass('text-danger');
-                    if(data.includes("Impossible")) {
-                        resAjout.addClass('text-danger');
-                    } else {
+                    jsonData = JSON.parse(data);
+                    if(jsonData.success) { // info from the server
                         resAjout.addClass('text-info');
+                    } else {
+                        resAjout.addClass('text-danger');
                     }
                     $('#resultatsRecherche').empty();
-                    resAjout.prepend(data);
+                    resAjout.prepend(jsonData.message);
                 }
             });
     }
