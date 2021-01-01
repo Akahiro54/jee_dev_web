@@ -3,15 +3,15 @@ package dao;
 import beans.Utilisateur;
 import exceptions.DAOException;
 import tools.PasswordHasher;
+
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.io.InputStream;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -207,6 +207,28 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             System.err.println("Email given : " + email);
         } finally {
             SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return exists;
+    }
+
+    @Override
+    public boolean idExists(int idUser) {
+        boolean exists = false;
+        Connection connection = null;
+        ResultSet resultat = null;
+        PreparedStatement preparedStatement = null;
+        String request = "SELECT count(*) FROM utilisateur WHERE id = ?";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request, false, idUser);
+            resultat = preparedStatement.executeQuery();
+            while(resultat.next()) {
+                if(resultat.getInt(1) >= 1) exists = true;
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot get the user : " + e);
+            System.err.println("Place ID given : " + idUser);
+            exists = false;
         }
         return exists;
     }

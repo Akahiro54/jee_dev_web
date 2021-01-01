@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import dao.AmisDAO;
 import dao.DAOFactory;
 import dao.NotificationDAO;
+import dao.UtilisateurDAO;
 import tools.FormTools;
 import tools.Util;
 
@@ -25,11 +26,13 @@ public class Amis extends HttpServlet {
 
     private AmisDAO amisDAO;
     private NotificationDAO notificationDAO;
+    private UtilisateurDAO utilisateurDAO;
 
     @Override
     public void init() throws ServletException {
         this.amisDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getAmisDAO();
         this.notificationDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getNotificationDAO();
+        this.utilisateurDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getUtilisateurDAO();
     }
 
     @Override
@@ -48,7 +51,7 @@ public class Amis extends HttpServlet {
         req.getRequestDispatcher("/user-restricted/amis.jsp").forward(req,resp);
     }
 
-    //TODO
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -86,18 +89,23 @@ public class Amis extends HttpServlet {
                 int idUtilisateur = utilisateur.getId();
                 try {
                     int idAmi = Integer.parseInt(req.getParameter("ami"));
-                    beans.Amis amis = new beans.Amis();
-                    amis.setIdAmi1(idUtilisateur);
-                    amis.setIdAmi2(idAmi);
-                    if(!amisDAO.areFriends(amis)) {
-                        Notification notification = Notification.buildNotification(utilisateur, idAmi, TypeNotification.AMI);
-                        if(notificationDAO.add(notification)) {
-                            if(amisDAO.askFriend(amis)) {
-                                resp.getWriter().write(success);
+                    if(utilisateurDAO.idExists(idAmi)) {
+                        beans.Amis amis = new beans.Amis();
+                        amis.setIdAmi1(idUtilisateur);
+                        amis.setIdAmi2(idAmi);
+                        if(!amisDAO.areFriends(amis)) {
+                            Notification notification = Notification.buildNotification(utilisateur, idAmi, TypeNotification.AMI);
+                            if(notificationDAO.add(notification)) {
+                                if(amisDAO.askFriend(amis)) {
+                                    resp.getWriter().write(success);
+                                }
                             }
+                        } else {
+                            error += ": vous êtes déjà ami avec cette personne.";
+                            resp.getWriter().write(error);
                         }
                     } else {
-                        error += ": vous êtes déjà ami avec cette personne.";
+                        error += ": l'ami que vous essayez d'ajouter n'existe pas.";
                         resp.getWriter().write(error);
                     }
                 }catch(Exception e) {

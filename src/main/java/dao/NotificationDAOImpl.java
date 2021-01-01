@@ -91,12 +91,50 @@ public class NotificationDAOImpl implements NotificationDAO{
 
     @Override
     public boolean changeState(Notification notification, EtatNotification newState) {
-        return false;
+        boolean updated = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = null;
+        try {
+            connection = daoFactory.getConnection();
+            request = "UPDATE notification SET etat = ?  WHERE id = ?";
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, newState.getEtatNotification(), notification.getId());
+            preparedStatement.executeUpdate();
+            updated = true;
+        } catch(Exception e) {
+            System.err.println("Cannot update the notification : " + e.getMessage());
+            System.err.println("Notification object : " + notification.toString());
+            System.err.println("New state : " + newState.getEtatNotification());
+            updated =false;
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return updated;
     }
 
     @Override
     public Notification get(int idNotification) {
-        return null;
+        ResultSet resultat = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "SELECT * FROM notification WHERE id = ? ";
+        Notification notification = new Notification();
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idNotification);
+            resultat = preparedStatement.executeQuery();
+            if(resultat.next()) {
+                notification = NotificationDAOImpl.map(resultat);
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot get the notification : " + e.getMessage());
+            System.err.println("Notification ID given : " + idNotification);
+            e.printStackTrace();
+        } finally {
+            SQLTools.close(connection,resultat,preparedStatement);
+        }
+        return notification;
     }
 
 

@@ -1,6 +1,7 @@
 package dao;
 
 import beans.Amis;
+import beans.EtatAmis;
 import beans.Utilisateur;
 
 import java.util.List;
@@ -17,5 +18,10 @@ public interface AmisDAO {
 
     boolean askFriend(Amis amis);
 
-    boolean update(Amis amis);
+    boolean update(Amis amis, EtatAmis etat);
+
+    Amis get(int idFriend1, int idFriend2);
+
+    boolean delete(Amis amis);
+
 }

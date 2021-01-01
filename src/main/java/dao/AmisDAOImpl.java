@@ -1,16 +1,19 @@
 package dao;
 
 import beans.Amis;
+import beans.EtatAmis;
 import beans.Utilisateur;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class AmisDAOImpl implements AmisDAO{
+
     private DAOFactory daoFactory;
 
     public AmisDAOImpl(DAOFactory daoFactory) {
@@ -40,7 +43,6 @@ public class AmisDAOImpl implements AmisDAO{
         }
         return listeAmis;
     }
-
 
     //SELECT * FROM utilisateur WHERE id != 8 AND id NOT IN (SELECT u.id
     //FROM amis a
@@ -148,8 +150,84 @@ public class AmisDAOImpl implements AmisDAO{
         return created;
     }
 
+
+
     @Override
-    public boolean update(Amis amis) {
-        return false;
+    public Amis get(int idFriend1, int idFriend2) {
+        ResultSet resultat = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "SELECT * FROM amis WHERE ami1 = ? AND ami2 = ?";
+        Amis amis = new Amis();
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idFriend1, idFriend2);
+            resultat = preparedStatement.executeQuery();
+            if(resultat.next()) {
+                amis = AmisDAOImpl.map(resultat);
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot get the friends object : " + e.getMessage());
+            System.err.println("IDs given : " +  idFriend1 + ", " + idFriend2);
+            e.printStackTrace();
+        } finally {
+            SQLTools.close(connection,resultat,preparedStatement);
+        }
+        return amis;
     }
+
+    @Override
+    public boolean delete(Amis amis) {
+        boolean deleted = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = "DELETE amis WHERE ami1 = ? AND ami2 = ?";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, amis.getIdAmi1(), amis.getIdAmi2());
+            preparedStatement.executeUpdate();
+            deleted = true;
+        } catch(Exception e) {
+            System.err.println("Cannot delete the friends : " + e.getMessage());
+            System.err.println("Friends object : " + amis.toString());
+            deleted =false;
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return deleted;
+    }
+
+    @Override
+    public boolean update(Amis amis, EtatAmis etat) {
+        boolean updated = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = null;
+        try {
+            connection = daoFactory.getConnection();
+            request = "UPDATE amis SET etat = ?  WHERE ami1 = ? AND ami2 = ?";
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, etat.getEtatAmis(), amis.getIdAmi1(), amis.getIdAmi2());
+            preparedStatement.executeUpdate();
+            updated = true;
+        } catch(Exception e) {
+            System.err.println("Cannot update the friends : " + e.getMessage());
+            System.err.println("Friends object : " + amis.toString());
+            System.err.println("New state : " + etat.getEtatAmis());
+            updated =false;
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return updated;
+    }
+
+    private static Amis map(ResultSet resultSet) throws SQLException {
+        Amis amis = new Amis();
+        amis.setIdAmi1(resultSet.getInt(1));
+        amis.setIdAmi2(resultSet.getInt(2));
+        amis.setEtatAmis(EtatAmis.valueOf(resultSet.getString(3).toUpperCase()));
+        return amis;
+    }
+
 }

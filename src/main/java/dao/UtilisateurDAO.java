@@ -2,7 +2,6 @@ package dao;
 
 import beans.Utilisateur;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
 
@@ -27,6 +26,8 @@ public interface UtilisateurDAO{
     boolean nicknameExists(String nickname);
 
     boolean emailExists(String email);
+
+    boolean idExists(int idUser);
 
 
 
