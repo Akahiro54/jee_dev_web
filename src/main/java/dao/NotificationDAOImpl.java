@@ -2,10 +2,10 @@ package dao;
 
 import beans.EtatNotification;
 import beans.Notification;
+import beans.TypeNotification;
 import exceptions.DAOException;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,20 +65,14 @@ public class NotificationDAOImpl implements NotificationDAO{
     }
 
     @Override
-    public boolean add(int idUserSource, int idUserDestination, String message) {
+    public boolean add(Notification notification) {
         boolean created = false;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet generatedValue = null;
-        Notification notification = new Notification();
         String request = "INSERT INTO notification (message, date, etat, source, destination) VALUES (?, ?, ? ,?, ?);";
         try {
             connection = daoFactory.getConnection();
-            notification.setDate(LocalDateTime.now());
-            notification.setUtilisateurSource(idUserSource);
-            notification.setUtilisateurDestination(idUserDestination);
-            notification.setMessage(message);
-            notification.setEtat(EtatNotification.NON_LUE);
             preparedStatement = SQLTools.initPreparedRequest(connection,request, true, notification.getMessage(), notification.getDate(), notification.getEtat().getEtatNotification(), notification.getUtilisateurSource(), notification.getUtilisateurDestination());
             preparedStatement.executeUpdate();
             generatedValue = preparedStatement.getGeneratedKeys();
@@ -105,14 +99,17 @@ public class NotificationDAOImpl implements NotificationDAO{
         return null;
     }
 
+
+
     private static Notification map(ResultSet resultSet) throws SQLException {
         Notification notification = new Notification();
         notification.setId(resultSet.getInt(1));
         notification.setMessage(resultSet.getString(2));
         notification.setDate(((Timestamp)resultSet.getObject(3)).toLocalDateTime());
         notification.setEtat(EtatNotification.valueOf(resultSet.getString(4).toUpperCase()));
-        notification.setUtilisateurSource(resultSet.getInt(5));
-        notification.setUtilisateurDestination(resultSet.getInt(6));
+        notification.setType(TypeNotification.valueOf(resultSet.getString(5).toUpperCase()));
+        notification.setUtilisateurSource(resultSet.getInt(6));
+        notification.setUtilisateurDestination(resultSet.getInt(7));
         return notification;
     }
 }

@@ -24,7 +24,7 @@ public class AmisDAOImpl implements AmisDAO{
         Connection connection = null;
         ResultSet resultSet = null;
         // Get the current user friends, by checking the TWO columns
-        String request = "SELECT u.nom, u.prenom, u.image, u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE a.ami1 = ? OR a.ami2 = ?";
+        String request = "SELECT u.nom, u.prenom, u.image, u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE (a.ami1 = ? OR a.ami2 = ?) AND a.etat='demande_acceptee'";
         try {
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUtilisateur, idUtilisateur, idUtilisateur);
@@ -40,6 +40,7 @@ public class AmisDAOImpl implements AmisDAO{
         }
         return listeAmis;
     }
+
 
     //SELECT * FROM utilisateur WHERE id != 8 AND id NOT IN (SELECT u.id
     //FROM amis a
@@ -103,22 +104,22 @@ public class AmisDAOImpl implements AmisDAO{
     }
 
     @Override
-    public boolean areFriends(int ami1, int ami2) {
+    public boolean areFriends(Amis amis) {
         boolean exists = false;
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
-        String request = "SELECT count(*) FROM amis WHERE (ami1 = ? AND ami2 = ?) OR (ami1 = ? AND ami2 = ?)";
+        String request = "SELECT count(*) FROM amis WHERE (ami1 = ? AND ami2 = ? AND etat='demande_acceptee') OR (ami1 = ? AND ami2 = ? AND etat='demande_acceptee')";
         try {
             connection = daoFactory.getConnection();
-            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, ami1, ami2, ami2, ami1);
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, amis.getIdAmi1(), amis.getIdAmi2(), amis.getIdAmi2(), amis.getIdAmi1());
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
                 if(resultSet.getInt(1) >= 1) exists = true;
             }
         } catch (Exception e) {
             System.err.println("Cannot check if people are friends: " + e.getMessage());
-            System.err.println("Friend 1 : " + ami1 + ", friend 2 : " + ami2);
+            System.err.println("Friend 1 : " + amis.getIdAmi1() + ", friend 2 : " + amis.getIdAmi2());
         } finally {
             SQLTools.close(connection,resultSet,preparedStatement);
         }
@@ -126,7 +127,7 @@ public class AmisDAOImpl implements AmisDAO{
     }
 
     @Override
-    public boolean addFriend(int friend1, int friend2) {
+    public boolean askFriend(Amis amis) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet generatedValue = null;
@@ -134,12 +135,12 @@ public class AmisDAOImpl implements AmisDAO{
         String request = "INSERT INTO amis (ami1, ami2) VALUES (?, ?)";
         try {
             connection = daoFactory.getConnection();
-            preparedStatement = SQLTools.initPreparedRequest(connection, request, false, friend1,friend2);
+            preparedStatement = SQLTools.initPreparedRequest(connection, request, false, amis.getIdAmi1(),amis.getIdAmi2());
             preparedStatement.executeUpdate();
             created = true;
         } catch (Exception e) {
-            System.err.println("Cannot add friends : " + e.getMessage());
-            System.err.println("Friends IDS : " + friend1 + ", " + friend2);
+            System.err.println("Cannot ask friends : " + e.getMessage());
+            System.err.println("Friends IDS : " + amis.getIdAmi1() + ", " + amis.getIdAmi2());
             created = false;
         } finally {
             SQLTools.close(connection,preparedStatement);

@@ -3,9 +3,9 @@ package servlets;
 import beans.EtatNotification;
 import beans.Notification;
 import beans.Utilisateur;
+import dao.AmisDAO;
 import dao.DAOFactory;
 import dao.NotificationDAO;
-import dao.UtilisateurDAO;
 import tools.Util;
 
 import javax.servlet.ServletException;
@@ -19,10 +19,11 @@ import java.util.ArrayList;
 public class Notifications extends HttpServlet {
 
     private NotificationDAO notificationDAO;
-
+    private AmisDAO amisDAO;
     @Override
     public void init() throws ServletException {
         this.notificationDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getNotificationDAO();
+        this.amisDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getAmisDAO();
     }
 
     @Override
@@ -39,6 +40,7 @@ public class Notifications extends HttpServlet {
         }
 
     }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

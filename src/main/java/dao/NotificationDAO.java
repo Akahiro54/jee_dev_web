@@ -11,7 +11,7 @@ public interface NotificationDAO {
 
     List<Notification> getNotifications(int idUser, EtatNotification etatNotification);
 
-    boolean add(int idUserSource, int idUserDestination, String message);
+    boolean add(Notification notification);
 
     boolean changeState(Notification notification, EtatNotification newState);
 

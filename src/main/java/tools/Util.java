@@ -10,6 +10,10 @@ public class Util {
     public static String ATT_FORM_NOTIFICATIONS = "notifications";
 
 
+    public static String NOTIF_MSG_FRIEND = "Vous avez une nouvelle demande d'ami de la part de ";
+    public static String NOTIF_MSG_COVID = "Vous avez été en contact avec une personne positive au COVID-19. Faites vous tester dès que possible !";
+
+
     public static String ATT_SESSION_USER = "sessionUtilisateur";
     public static String ATT_DAO_FACTORY = "daofactory";
 

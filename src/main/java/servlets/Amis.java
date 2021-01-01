@@ -1,5 +1,7 @@
 package servlets;
 
+import beans.Notification;
+import beans.TypeNotification;
 import beans.Utilisateur;
 import com.google.gson.Gson;
 import dao.AmisDAO;
@@ -84,9 +86,13 @@ public class Amis extends HttpServlet {
                 int idUtilisateur = utilisateur.getId();
                 try {
                     int idAmi = Integer.parseInt(req.getParameter("ami"));
-                    if(!amisDAO.areFriends(idAmi,idUtilisateur)) {
-                        if(notificationDAO.add(idUtilisateur, idAmi, "Vous avez une nouvelle demande d'ami")) {
-                            if(amisDAO.addFriend(idUtilisateur, idAmi)) {
+                    beans.Amis amis = new beans.Amis();
+                    amis.setIdAmi1(idUtilisateur);
+                    amis.setIdAmi2(idAmi);
+                    if(!amisDAO.areFriends(amis)) {
+                        Notification notification = Notification.buildNotification(utilisateur, idAmi, TypeNotification.AMI);
+                        if(notificationDAO.add(notification)) {
+                            if(amisDAO.askFriend(amis)) {
                                 resp.getWriter().write(success);
                             }
                         }

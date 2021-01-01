@@ -13,9 +13,9 @@ public interface AmisDAO {
 
     public List<Utilisateur> searchNonFriends(int idUtilisateur, String nickname);
 
-    boolean areFriends(int friend1, int friend2);
+    boolean areFriends(Amis amis);
 
-    boolean addFriend(int friend1, int friend2);
+    boolean askFriend(Amis amis);
 
     boolean update(Amis amis);
 }
