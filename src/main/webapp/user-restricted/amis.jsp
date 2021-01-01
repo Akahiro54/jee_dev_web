@@ -94,18 +94,20 @@
             {
                 ami: id
             },
-            function(data){
-                var resAjout = $('#resultatAjout');
-                resAjout.empty();
-                resAjout.removeClass('text-info');
-                resAjout.removeClass('text-danger');
-                if(data.includes("Impossible")) {
-                    resAjout.addClass('text-danger');
-                } else {
-                    resAjout.addClass('text-info');
+            function(data, status){
+                if(status === "success") {
+                    var resAjout = $('#resultatAjout');
+                    resAjout.empty();
+                    resAjout.removeClass('text-info');
+                    resAjout.removeClass('text-danger');
+                    if(data.includes("Impossible")) {
+                        resAjout.addClass('text-danger');
+                    } else {
+                        resAjout.addClass('text-info');
+                    }
+                    $('#resultatsRecherche').empty();
+                    resAjout.prepend(data);
                 }
-                $('#resultatsRecherche').empty();
-                resAjout.prepend(data);
             });
     }
     function startSearch() {
@@ -114,16 +116,18 @@
                 nickSearch: $("#recherche").val()
             },
             function(data,status){
-                $('#resultatsRecherche').empty();
-                if(data == "error") {
-                    alert("Merci d'entrer une recherche valide : 3 à 255 caractères, lettres chiffres et tirets (- , _).");
-                } else {
-                    jQuery.each(jsonData = JSON.parse(data), function(index) {
-                        idAmi = jsonData[index].id;
-                        $('#resultatsRecherche').prepend(
-                            '<div id="ami'+idAmi+'" class="resultat card col-12 col-sm-12 col-md-6 col-xl-4 pt-1 pb-1 text-center align-middle">'+jsonData[index].pseudo + '<button id="btnAmi'+idAmi+'" onclick="addFriend('+idAmi+')" class="btn btn-danger">Ajouter l\'ami</button>' +'</div>'
-                        );
-                    })
+                if(status === "success") {
+                    $('#resultatsRecherche').empty();
+                    if(data == "error") {
+                        alert("Merci d'entrer une recherche valide : 3 à 255 caractères, lettres chiffres et tirets (- , _).");
+                    } else {
+                        jQuery.each(jsonData = JSON.parse(data), function(index) {
+                            idAmi = jsonData[index].id;
+                            $('#resultatsRecherche').prepend(
+                                '<div id="ami'+idAmi+'" class="resultat card col-12 col-sm-12 col-md-6 col-xl-4 pt-1 pb-1 text-center align-middle">'+jsonData[index].pseudo + '<button id="btnAmi'+idAmi+'" onclick="addFriend('+idAmi+')" class="btn btn-danger">Ajouter l\'ami</button>' +'</div>'
+                            );
+                        })
+                    }
                 }
                 //console.log("Data: " + data + "\nStatus: " + status); //used for debug purposes
             });

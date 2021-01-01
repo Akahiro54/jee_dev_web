@@ -30,8 +30,10 @@
                 </h5>
                 <small><c:out value="${notification.date}"/></small>
             </div>
-            <p class="mb-1"><c:out value="${notification.message}"/></p>
-            <div>
+            <div id="messageNotif<c:out value="${notification.id}"/>">
+                <p  class="mb-1"><c:out value="${notification.message}"/></p>
+            </div>
+            <div id ="buttonsNotif<c:out value="${notification.id}"/>">
                 <button onclick="friendAction(<c:out value="${notification.id}"/>,<c:out value="${notification.utilisateurSource}"/>,'accept')" class="btn btn-primary">Accepter</button>
                 <button onclick="friendAction(<c:out value="${notification.id}"/>,<c:out value="${notification.utilisateurSource}"/>, 'decline')" class="btn btn-danger">Refuser</button>
             </div>
@@ -46,8 +48,18 @@
                 ami: ami,
                 action: action
             },
-            function(data){
-                alert(data);
+            function(data, status){
+                if(status === "success") { // for the ajax query
+                    jsonData = JSON.parse(data);
+                    if(jsonData.success) { // info from the server
+                        $('#messageNotif'+id).empty();
+                        $('#buttonsNotif'+id).empty();
+                        $('#messageNotif'+id).prepend('<p class="mb-1">'+ jsonData.message + '</p>');
+                    } else {
+                        $('#messageNotif'+id).empty();
+                        $('#messageNotif'+id).prepend('<p class="mb-1">'+ jsonData.message + '</p>');
+                    }
+                }
             });
     }
 </script>

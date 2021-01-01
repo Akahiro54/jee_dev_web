@@ -3,10 +3,12 @@ package servlets;
 import beans.EtatNotification;
 import beans.Notification;
 import beans.Utilisateur;
+import com.google.gson.Gson;
 import dao.AmisDAO;
 import dao.DAOFactory;
 import dao.NotificationDAO;
 import dao.UtilisateurDAO;
+import tools.JQueryAnswer;
 import tools.Util;
 
 import javax.servlet.ServletException;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Notifications extends HttpServlet {
 
@@ -44,20 +47,14 @@ public class Notifications extends HttpServlet {
 
     }
 
-    // 1. get current user
-    // 2. get the req notification id
-    // 3. check if the notification exists with the current user as destination and is unread (else error);
-    // 4. if so, get the notification type.
-    //          Case 1 : this is a friend notification
-    //              5. check if the friend request exists and if its states is EN ATTENTE (else error);
-    //              6. try to change the friend state
-    //              7. if that's okay, update the notification state
-    //          Case 2 : this is a covid notification
-    //              5. try to update the notification state
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur)session.getAttribute(Util.ATT_SESSION_USER);
+        HashMap<String, String> results = new HashMap<>();
+        JQueryAnswer success = new JQueryAnswer(true, "Demande");
+        JQueryAnswer fail = new JQueryAnswer(false, "Impossible d'accepter ou refuser la demande d'ami");
         //if the user is still logged in
         if(utilisateur != null) {
             /**
@@ -71,14 +68,12 @@ public class Notifications extends HttpServlet {
             // check if all the parameters are set to start trying to accept or decline
             if(ami != null && action != null && id != null) {
                 resp.setContentType("text/plain");          // set answer content type
-                String error = "Impossible d'accepter ou refuser la demande d'ami";
-                String success = "Demande ";
                 // try to parse int parameters, in case of failure returns an error
                 try {
                     int idAmi = Integer.parseInt(ami);
                     int idNotif = Integer.parseInt(id);
                     Notification n = notificationDAO.get(idNotif);
-                    // checks if the source of the notication is still an user of the application, otherwise returns an error
+                    // checks if the source of the notification is still an user of the application, otherwise returns an error
                     // this condition should never be thrown except if the user tries to execute the post manually
                     if(utilisateurDAO.idExists(idAmi)) {
                         // checks if the notification object with the id given exists
@@ -91,25 +86,35 @@ public class Notifications extends HttpServlet {
                             switch (action) {
                                 case "accept":  //if the user wants to accept the demand, tries to update the amis objects
                                     if(amisDAO.add(amis) && notificationDAO.changeState(n, EtatNotification.LUE)) {
-                                        resp.getWriter().write(success + " acceptée avec succès !");
+                                        success.appendMessage(" acceptée avec succès !");
+                                        resp.getWriter().write(new Gson().toJson(success));
                                     } else {
-                                        resp.getWriter().write(error + ". Merci de réessayer plus tard");
+                                        fail.appendMessage(". Merci de réessayer plus tard");
+                                        resp.getWriter().write(new Gson().toJson(fail));
                                     }
                                     break;
                                 case "decline": //if the user wants to decline the demand, tries to update the amis objects
                                     if(notificationDAO.changeState(n, EtatNotification.LUE)) {
-                                        resp.getWriter().write(success + "refusée avec succès !");
+                                        success.appendMessage(" refusée avec succès !");
+                                        resp.getWriter().write(new Gson().toJson(success));
                                     } else {
-                                        resp.getWriter().write(error + ". Merci de réessayer plus tard");
+                                        fail.appendMessage(". Merci de réessayer plus tard");
+                                        resp.getWriter().write(new Gson().toJson(fail));
                                     }
                                     break;
                                 default:
-                                    resp.getWriter().write(error + " : action inconnue.");
+                                    fail.appendMessage(" : action inconnue.");
+                                    resp.getWriter().write(new Gson().toJson(fail));
                                     break;
                             }
-                        } else { resp.getWriter().write(error + " : la notification n'existe pas ou l'ami ne correspond pas.");  }
-                    } else {  resp.getWriter().write(error + " : l'utilisateur ayant envoyé la demande n'existe pas ou plus."); }
-                } catch (Exception e) { resp.getWriter().write(error); }
+                        } else {
+                            fail.appendMessage(" : la notification n'existe pas ou l'ami ne correspond pas.");
+                            resp.getWriter().write(new Gson().toJson(fail));  }
+                    } else {
+                        fail.appendMessage(" : l'utilisateur ayant envoyé la demande n'existe pas ou plus.");
+                        resp.getWriter().write(new Gson().toJson(fail));
+                    }
+                } catch (Exception e) { resp.getWriter().write(new Gson().toJson(fail)); }
             }
         }
 
