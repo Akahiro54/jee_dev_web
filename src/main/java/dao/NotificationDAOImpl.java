@@ -137,6 +137,28 @@ public class NotificationDAOImpl implements NotificationDAO{
         return notification;
     }
 
+    @Override
+    public boolean hasAlreadyAFriendRequest(int idSource, int idDestination) {
+        boolean hasAlreadyAFriendRequest = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = "SELECT count(*) FROM notification WHERE (etat = 'non_lue' AND source = ? AND destination = ?) OR (etat = 'non_lue' AND source = ? AND destination = ?)";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idSource, idDestination, idDestination, idSource);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                if(resultSet.getInt(1) >= 1) hasAlreadyAFriendRequest = true;
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot check if users has already a friend request : " + e.getMessage());
+            System.err.println("IDs given : " + idSource + "," + idDestination);
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return hasAlreadyAFriendRequest;
+    }
 
 
     private static Notification map(ResultSet resultSet) throws SQLException {

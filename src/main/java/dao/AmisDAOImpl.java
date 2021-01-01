@@ -1,7 +1,6 @@
 package dao;
 
 import beans.Amis;
-import beans.EtatAmis;
 import beans.Utilisateur;
 
 import java.sql.Connection;
@@ -27,7 +26,7 @@ public class AmisDAOImpl implements AmisDAO{
         Connection connection = null;
         ResultSet resultSet = null;
         // Get the current user friends, by checking the TWO columns
-        String request = "SELECT u.nom, u.prenom, u.image, u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE (a.ami1 = ? OR a.ami2 = ?) AND a.etat='demande_acceptee'";
+        String request = "SELECT u.nom, u.prenom, u.image, u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE (a.ami1 = ? OR a.ami2 = ?)";
         try {
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUtilisateur, idUtilisateur, idUtilisateur);
@@ -111,7 +110,7 @@ public class AmisDAOImpl implements AmisDAO{
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
-        String request = "SELECT count(*) FROM amis WHERE (ami1 = ? AND ami2 = ? AND etat='demande_acceptee') OR (ami1 = ? AND ami2 = ? AND etat='demande_acceptee')";
+        String request = "SELECT count(*) FROM amis WHERE (ami1 = ? AND ami2 = ?) OR (ami1 = ? AND ami2 = ?)";
         try {
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false, amis.getIdAmi1(), amis.getIdAmi2(), amis.getIdAmi2(), amis.getIdAmi1());
@@ -129,7 +128,7 @@ public class AmisDAOImpl implements AmisDAO{
     }
 
     @Override
-    public boolean askFriend(Amis amis) {
+    public boolean add(Amis amis) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet generatedValue = null;
@@ -141,7 +140,7 @@ public class AmisDAOImpl implements AmisDAO{
             preparedStatement.executeUpdate();
             created = true;
         } catch (Exception e) {
-            System.err.println("Cannot ask friends : " + e.getMessage());
+            System.err.println("Cannot add friends : " + e.getMessage());
             System.err.println("Friends IDS : " + amis.getIdAmi1() + ", " + amis.getIdAmi2());
             created = false;
         } finally {
@@ -198,35 +197,35 @@ public class AmisDAOImpl implements AmisDAO{
         return deleted;
     }
 
-    @Override
-    public boolean update(Amis amis, EtatAmis etat) {
-        boolean updated = false;
-        PreparedStatement preparedStatement = null;
-        Connection connection = null;
-        ResultSet resultSet = null;
-        String request = null;
-        try {
-            connection = daoFactory.getConnection();
-            request = "UPDATE amis SET etat = ?  WHERE ami1 = ? AND ami2 = ?";
-            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, etat.getEtatAmis(), amis.getIdAmi1(), amis.getIdAmi2());
-            preparedStatement.executeUpdate();
-            updated = true;
-        } catch(Exception e) {
-            System.err.println("Cannot update the friends : " + e.getMessage());
-            System.err.println("Friends object : " + amis.toString());
-            System.err.println("New state : " + etat.getEtatAmis());
-            updated =false;
-        } finally {
-            SQLTools.close(connection,resultSet,preparedStatement);
-        }
-        return updated;
-    }
+//    @Override
+//    public boolean update(Amis amis, EtatAmis etat) {
+//        boolean updated = false;
+//        PreparedStatement preparedStatement = null;
+//        Connection connection = null;
+//        ResultSet resultSet = null;
+//        String request = null;
+//        try {
+//            connection = daoFactory.getConnection();
+//            request = "UPDATE amis SET etat = ?  WHERE ami1 = ? AND ami2 = ?";
+//            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, etat.getEtatAmis(), amis.getIdAmi1(), amis.getIdAmi2());
+//            preparedStatement.executeUpdate();
+//            updated = true;
+//        } catch(Exception e) {
+//            System.err.println("Cannot update the friends : " + e.getMessage());
+//            System.err.println("Friends object : " + amis.toString());
+//            System.err.println("New state : " + etat.getEtatAmis());
+//            updated =false;
+//        } finally {
+//            SQLTools.close(connection,resultSet,preparedStatement);
+//        }
+//        return updated;
+//    }
 
     private static Amis map(ResultSet resultSet) throws SQLException {
         Amis amis = new Amis();
         amis.setIdAmi1(resultSet.getInt(1));
         amis.setIdAmi2(resultSet.getInt(2));
-        amis.setEtatAmis(EtatAmis.valueOf(resultSet.getString(3).toUpperCase()));
+//        amis.setEtatAmis(EtatAmis.valueOf(resultSet.getString(3).toUpperCase()));
         return amis;
     }
 

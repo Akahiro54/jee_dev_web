@@ -1,6 +1,5 @@
 package servlets;
 
-import beans.EtatAmis;
 import beans.EtatNotification;
 import beans.Notification;
 import beans.Utilisateur;
@@ -85,39 +84,31 @@ public class Notifications extends HttpServlet {
                         // checks if the notification object with the id given exists
                         // and if the source and destination friends are correct
                         if(n != null && n.getUtilisateurSource() == idAmi && n.getUtilisateurDestination() == idUtilisateur) {
-                            beans.Amis amis = amisDAO.get(idAmi, idUtilisateur);
-                            // checks if the amis object with both user ids exists
-                            if(amis != null) {
-                                // checks if the amis object hasn't been already answered
-                                if(amis.getEtatAmis() == EtatAmis.DEMANDE_EN_ATTENTE) {
-                                    // checks if the action is one of the authorized actions
-                                    switch (action) {
-                                        case "accept":  //if the user wants to accept the demand, tries to update the amis objects
-                                            if(notificationDAO.changeState(n, EtatNotification.LUE)) {
-                                                if(amisDAO.update(amis, EtatAmis.DEMANDE_ACCEPTEE)) {
-                                                    resp.getWriter().write(success + " acceptée avec succès !");
-                                                    return;
-                                                }
-                                            }
-                                            resp.getWriter().write(error + ". Merci de réessayer plus tard");
-                                            break;
-                                        case "decline": //if the user wants to decline the demand, tries to update the amis objects
-                                            if(notificationDAO.changeState(n, EtatNotification.LUE)) {
-                                                if(amisDAO.delete(amis)) {
-                                                    resp.getWriter().write(success + "refusée avec succès !");
-                                                    return;
-                                                }
-                                            }
-                                            resp.getWriter().write(error + ". Merci de réessayer plus tard");
-                                            break;
-                                        default:
-                                            resp.getWriter().write(error + " : action inconnue.");
-                                            break;
+                            beans.Amis amis = new beans.Amis();
+                            amis.setIdAmi1(idAmi);
+                            amis.setIdAmi2(idUtilisateur);
+                            // checks if the action is one of the authorized actions
+                            switch (action) {
+                                case "accept":  //if the user wants to accept the demand, tries to update the amis objects
+                                    if(amisDAO.add(amis) && notificationDAO.changeState(n, EtatNotification.LUE)) {
+                                        resp.getWriter().write(success + " acceptée avec succès !");
+                                    } else {
+                                        resp.getWriter().write(error + ". Merci de réessayer plus tard");
                                     }
-                                } else { resp.getWriter().write(error + " : la demande a déjà été acceptée."); }
-                            } else { resp.getWriter().write(error + " : la demande n'existe pas ou plus."); }
+                                    break;
+                                case "decline": //if the user wants to decline the demand, tries to update the amis objects
+                                    if(notificationDAO.changeState(n, EtatNotification.LUE)) {
+                                        resp.getWriter().write(success + "refusée avec succès !");
+                                    } else {
+                                        resp.getWriter().write(error + ". Merci de réessayer plus tard");
+                                    }
+                                    break;
+                                default:
+                                    resp.getWriter().write(error + " : action inconnue.");
+                                    break;
+                            }
                         } else { resp.getWriter().write(error + " : la notification n'existe pas ou l'ami ne correspond pas.");  }
-                    } else {  resp.getWriter().write(error + " : l'utilisateur n'existe pas ou plus."); }
+                    } else {  resp.getWriter().write(error + " : l'utilisateur ayant envoyé la demande n'existe pas ou plus."); }
                 } catch (Exception e) { resp.getWriter().write(error); }
             }
         }

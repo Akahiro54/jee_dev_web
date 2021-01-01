@@ -16,4 +16,6 @@ public interface NotificationDAO {
     boolean changeState(Notification notification, EtatNotification newState);
 
     Notification get(int idNotification);
+
+    boolean hasAlreadyAFriendRequest(int idSource, int idDestination);
 }

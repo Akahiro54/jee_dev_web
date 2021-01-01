@@ -93,15 +93,14 @@ public class Amis extends HttpServlet {
                         beans.Amis amis = new beans.Amis();
                         amis.setIdAmi1(idUtilisateur);
                         amis.setIdAmi2(idAmi);
-                        if(!amisDAO.areFriends(amis)) {
+                        // if they are not friends and there is no unread friend request between the users
+                        if(!amisDAO.areFriends(amis) && !notificationDAO.hasAlreadyAFriendRequest(idUtilisateur, idAmi)) {
                             Notification notification = Notification.buildNotification(utilisateur, idAmi, TypeNotification.AMI);
                             if(notificationDAO.add(notification)) {
-                                if(amisDAO.askFriend(amis)) {
                                     resp.getWriter().write(success);
-                                }
                             }
                         } else {
-                            error += ": vous êtes déjà ami avec cette personne.";
+                            error += ": vous êtes déjà ami ou possédez déjà une demande d'ami avec cette personne.";
                             resp.getWriter().write(error);
                         }
                     } else {
