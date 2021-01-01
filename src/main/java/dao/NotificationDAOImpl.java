@@ -2,7 +2,6 @@ package dao;
 
 import beans.EtatNotification;
 import beans.Notification;
-import beans.Utilisateur;
 import exceptions.DAOException;
 
 import java.sql.*;

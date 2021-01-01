@@ -2,9 +2,9 @@ package servlets;
 
 import beans.Utilisateur;
 import com.google.gson.Gson;
+import dao.AmisDAO;
 import dao.DAOFactory;
 import dao.NotificationDAO;
-import dao.UtilisateurDAO;
 import tools.FormTools;
 import tools.Util;
 
@@ -14,19 +14,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.*;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 
 public class Amis extends HttpServlet {
 
-    private UtilisateurDAO utilisateurDAO;
+    private AmisDAO amisDAO;
     private NotificationDAO notificationDAO;
 
     @Override
     public void init() throws ServletException {
-        this.utilisateurDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getUtilisateurDAO();
+        this.amisDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getAmisDAO();
         this.notificationDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getNotificationDAO();
     }
 
@@ -34,7 +34,7 @@ public class Amis extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur)session.getAttribute(Util.ATT_SESSION_USER);
-        ArrayList<Utilisateur> listeAmis = new ArrayList<>(utilisateurDAO.getFriends(utilisateur.getId()));
+        ArrayList<Utilisateur> listeAmis = new ArrayList<>(amisDAO.getFriends(utilisateur.getId()));
         req.setAttribute("listeamis", listeAmis);
         HashMap<Integer,String> listeImage = new HashMap<>();
         for (Utilisateur listeami : listeAmis) {
@@ -66,7 +66,7 @@ public class Amis extends HttpServlet {
             } catch (Exception e) {
             }
             if (validated) {
-                List<Utilisateur> utilisateurs = utilisateurDAO.searchNonFriends(utilisateur.getId(), s);
+                List<Utilisateur> utilisateurs = amisDAO.searchNonFriends(utilisateur.getId(), s);
                 Gson gson = new Gson();
                 String result = gson.toJson(utilisateurs);
                 resp.getWriter().write(result);
@@ -84,9 +84,9 @@ public class Amis extends HttpServlet {
                 int idUtilisateur = utilisateur.getId();
                 try {
                     int idAmi = Integer.parseInt(req.getParameter("ami"));
-                    if(!utilisateurDAO.areFriends(idAmi,idUtilisateur)) {
+                    if(!amisDAO.areFriends(idAmi,idUtilisateur)) {
                         if(notificationDAO.add(idUtilisateur, idAmi, "Vous avez une nouvelle demande d'ami")) {
-                            if(utilisateurDAO.addFriend(idUtilisateur, idAmi)) {
+                            if(amisDAO.addFriend(idUtilisateur, idAmi)) {
                                 resp.getWriter().write(success);
                             }
                         }

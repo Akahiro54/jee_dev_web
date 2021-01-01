@@ -79,5 +79,7 @@ public class DAOFactory {
 
     public NotificationDAO getNotificationDAO() { return new NotificationDAOImpl(this); }
 
+    public AmisDAO getAmisDAO() { return new AmisDAOImpl(this); }
+
 
 }
