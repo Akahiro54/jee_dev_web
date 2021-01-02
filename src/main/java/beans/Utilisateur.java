@@ -2,6 +2,7 @@ package beans;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 public class Utilisateur {
 
@@ -124,5 +125,18 @@ public class Utilisateur {
 
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Utilisateur that = (Utilisateur) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

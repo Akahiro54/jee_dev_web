@@ -70,10 +70,10 @@ public class NotificationDAOImpl implements NotificationDAO{
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet generatedValue = null;
-        String request = "INSERT INTO notification (message, date, etat, source, destination) VALUES (?, ?, ? ,?, ?);";
+        String request = "INSERT INTO notification (message, date, etat, source, destination, type) VALUES (?, ?, ? ,?, ?, ?);";
         try {
             connection = daoFactory.getConnection();
-            preparedStatement = SQLTools.initPreparedRequest(connection,request, true, notification.getMessage(), notification.getDate(), notification.getEtat().getEtatNotification(), notification.getUtilisateurSource(), notification.getUtilisateurDestination());
+            preparedStatement = SQLTools.initPreparedRequest(connection,request, true, notification.getMessage(), notification.getDate(), notification.getEtat().getEtatNotification(), notification.getUtilisateurSource(), notification.getUtilisateurDestination(), notification.getType().getTypeNotification());
             preparedStatement.executeUpdate();
             generatedValue = preparedStatement.getGeneratedKeys();
             if(generatedValue.next()) notification.setId(generatedValue.getInt(1));
