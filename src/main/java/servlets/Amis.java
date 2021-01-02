@@ -50,6 +50,8 @@ public class Amis extends HttpServlet {
                     amis.setIdAmi2(idAmi);
                     if(amisDAO.areFriends(amis)) {
                         if(amisDAO.delete(amis)) {
+                            Notification n = Notification.buildNotification(utilisateur, idAmi, TypeNotification.DEL_AMI);
+                          notificationDAO.add(n);
                           resp.sendRedirect(req.getContextPath() + "/user-restricted/amis");
                           return;
                         }

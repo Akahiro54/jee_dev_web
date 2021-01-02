@@ -88,6 +88,9 @@ public class Notification {
             case COVID:
                 notification.setMessage(Util.NOTIF_MSG_COVID);
                 break;
+            case DEL_AMI:
+                notification.setMessage(source.getPseudo() + Util.NOTIF_MSG_UNFRIEND);
+                break;
         }
         notification.setEtat(EtatNotification.NON_LUE);
         notification.setDate(LocalDateTime.now());

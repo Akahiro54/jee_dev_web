@@ -23,6 +23,9 @@
                         <c:when test="${notification.type == 'COVID'}">
                             Information COVID
                         </c:when>
+                        <c:when test="${notification.type == 'DEL_AMI'}">
+                            Suppression d'ami
+                        </c:when>
                         <c:otherwise>
                             Notification
                         </c:otherwise>
@@ -39,9 +42,9 @@
                         <button onclick="friendAction(<c:out value="${notification.id}"/>,<c:out value="${notification.utilisateurSource}"/>,'accept')" class="btn btn-primary">Accepter</button>
                         <button onclick="friendAction(<c:out value="${notification.id}"/>,<c:out value="${notification.utilisateurSource}"/>, 'decline')" class="btn btn-danger">Refuser</button>
                     </c:when>
-                    <c:when test="${notification.type == 'COVID'}">
+                    <c:otherwise>
                         <button onclick="read(<c:out value="${notification.id}"/>)" class="btn btn-primary">J'ai bien vu ce message</button>
-                    </c:when>
+                    </c:otherwise>
                 </c:choose>
 
             </div>

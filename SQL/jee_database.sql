@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 02 jan. 2021 à 19:19
+-- Généré le : sam. 02 jan. 2021 à 20:45
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 8.0.0
 
@@ -74,10 +74,11 @@ CREATE TABLE `notification` (
   `message` text NOT NULL,
   `date` datetime NOT NULL,
   `etat` enum('lue','non_lue','archivee') NOT NULL,
-  `type` enum('ami','covid') NOT NULL,
+  `type` enum('ami','covid','del_ami') NOT NULL,
   `source` bigint(20) NOT NULL,
   `destination` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 
@@ -99,6 +100,7 @@ CREATE TABLE `utilisateur` (
   `image` mediumblob DEFAULT NULL,
   `nomimage` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 --
 -- Index pour les tables déchargées
@@ -150,13 +152,13 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `activite`
 --
 ALTER TABLE `activite`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `lieu`
 --
 ALTER TABLE `lieu`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `notification`

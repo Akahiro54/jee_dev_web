@@ -2,7 +2,8 @@ package beans;
 
 public enum TypeNotification {
     AMI("ami"),
-    COVID("covid");
+    COVID("covid"),
+    DEL_AMI("del_ami");
 
     private String typeNotification;
 
