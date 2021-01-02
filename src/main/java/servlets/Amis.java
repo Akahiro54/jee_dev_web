@@ -38,8 +38,25 @@ public class Amis extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur)session.getAttribute(Util.ATT_SESSION_USER);
+        String delete = (String)req.getParameter("delete");
         ArrayList<Utilisateur> listeAmis = new ArrayList<>(amisDAO.getFriends(utilisateur.getId()));
         req.setAttribute("listeamis", listeAmis);
+        if(utilisateur != null && delete != null) {
+            try {
+                int idAmi = Integer.parseInt(delete);
+                if(utilisateurDAO.idExists(idAmi)) {
+                    beans.Amis amis = new beans.Amis();
+                    amis.setIdAmi1(utilisateur.getId());
+                    amis.setIdAmi2(idAmi);
+                    if(amisDAO.areFriends(amis)) {
+                        if(amisDAO.delete(amis)) {
+                          resp.sendRedirect(req.getContextPath() + "/user-restricted/amis");
+                          return;
+                        }
+                    }
+                }
+            } catch (Exception e) { }
+        }
         req.getRequestDispatcher("/user-restricted/amis.jsp").forward(req,resp);
     }
 

@@ -152,7 +152,7 @@ public class NotificationDAOImpl implements NotificationDAO{
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
-        String request = "SELECT count(*) FROM notification WHERE (etat = 'non_lue' AND source = ? AND destination = ?) OR (etat = 'non_lue' AND source = ? AND destination = ?)";
+        String request = "SELECT count(*) FROM notification WHERE (etat = 'non_lue' AND source = ? AND destination = ? AND type='ami') OR (etat = 'non_lue' AND source = ? AND destination = ? AND type='ami')";
         try {
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idSource, idDestination, idDestination, idSource);

@@ -25,6 +25,9 @@
     <div class="row">
         <div class="col-md-12">
             <div id="content" class="content content-full-width">
+                <c:if test="${empty delete}">
+                    <p class="text-info">${delete}</p>
+                </c:if>
                 <!-- begin profile-content -->
                 <div class="profile-content">
                     <!-- begin tab-content -->
@@ -54,10 +57,10 @@
                                             </div>
                                             <div class="media-body valign-middle text-right overflow-visible">
                                                 <div class="btn-group dropdown">
-                                                    <a href="javascript:;" class="btn btn-default">Amis</a>
-                                                    <a href="javascript:;" data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-expanded="false"></a>
+                                                    <a class="btn btn-default">Amis</a>
+                                                    <a data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-expanded="false"></a>
                                                     <ul class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(101px, 34px, 0px);">
-                                                        <li><a href="javascript:;">Supprimer</a></li>
+                                                        <li><a href="<%=request.getContextPath()%>/user-restricted/amis?delete=<c:out value="${ami.id}" />">Supprimer</a></li>
                                                     </ul>
                                                 </div>
                                             </div>

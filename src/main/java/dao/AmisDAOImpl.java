@@ -181,10 +181,10 @@ public class AmisDAOImpl implements AmisDAO{
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
-        String request = "DELETE amis WHERE ami1 = ? AND ami2 = ?";
+        String request = "DELETE FROM amis WHERE (ami1 = ? AND ami2 = ?) OR (ami1 = ? AND ami2 = ?)";
         try {
             connection = daoFactory.getConnection();
-            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, amis.getIdAmi1(), amis.getIdAmi2());
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, amis.getIdAmi1(), amis.getIdAmi2(), amis.getIdAmi2(), amis.getIdAmi1());
             preparedStatement.executeUpdate();
             deleted = true;
         } catch(Exception e) {
