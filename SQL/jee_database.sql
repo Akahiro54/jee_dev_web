@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 29 déc. 2020 à 17:25
+-- Généré le : sam. 02 jan. 2021 à 19:19
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 8.0.0
 
@@ -44,8 +44,7 @@ CREATE TABLE `activite` (
 
 CREATE TABLE `amis` (
   `ami1` bigint(20) NOT NULL,
-  `ami2` bigint(20) NOT NULL,
-  `etat` enum('demande_acceptee','demande_en_attente','demande_refusee') NOT NULL DEFAULT 'demande_en_attente'
+  `ami2` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -75,6 +74,7 @@ CREATE TABLE `notification` (
   `message` text NOT NULL,
   `date` datetime NOT NULL,
   `etat` enum('lue','non_lue','archivee') NOT NULL,
+  `type` enum('ami','covid') NOT NULL,
   `source` bigint(20) NOT NULL,
   `destination` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -96,7 +96,8 @@ CREATE TABLE `utilisateur` (
   `contamine` tinyint(4) NOT NULL DEFAULT 0,
   `date_contamination` date DEFAULT NULL,
   `role` enum('admin','user') NOT NULL DEFAULT 'user',
-  `image` text DEFAULT NULL
+  `image` mediumblob DEFAULT NULL,
+  `nomimage` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -149,25 +150,25 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `activite`
 --
 ALTER TABLE `activite`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT pour la table `lieu`
 --
 ALTER TABLE `lieu`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT pour la table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Contraintes pour les tables déchargées
