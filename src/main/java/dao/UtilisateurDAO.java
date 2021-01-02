@@ -29,6 +29,6 @@ public interface UtilisateurDAO{
 
     boolean idExists(int idUser);
 
-
+    List<Utilisateur> getAllUserOnSamePlacesAtTheSameTime(Utilisateur utilisateur);
 
 }

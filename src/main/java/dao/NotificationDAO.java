@@ -13,6 +13,8 @@ public interface NotificationDAO {
 
     boolean add(Notification notification);
 
+    boolean addMultiple(List<Notification> notifications);
+
     boolean changeState(Notification notification, EtatNotification newState);
 
     Notification get(int idNotification);

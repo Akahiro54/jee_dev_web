@@ -90,6 +90,15 @@ public class NotificationDAOImpl implements NotificationDAO{
     }
 
     @Override
+    public boolean addMultiple(List<Notification> notifications) {
+        boolean success = true;
+        for(Notification n : notifications) {
+            success = add(n);
+        }
+        return success;
+    }
+
+    @Override
     public boolean changeState(Notification notification, EtatNotification newState) {
         boolean updated = false;
         PreparedStatement preparedStatement = null;

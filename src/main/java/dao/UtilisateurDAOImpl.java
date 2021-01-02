@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -233,7 +234,34 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         return exists;
     }
 
-//
+    @Override
+    public List<Utilisateur> getAllUserOnSamePlacesAtTheSameTime(Utilisateur utilisateur) {
+        ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultat = null;
+        String request =    "SELECT DISTINCT  u.* FROM utilisateur u INNER JOIN activite act ON u.id = act.utilisateur INNER JOIN " +
+                                "(SELECT l.id as lid, act.debut as adebut, act.fin as afin " +
+                                "FROM activite act INNER JOIN lieu l ON act.lieu = l.id" +
+                                "WHERE act.utilisateur = ?) AS activities" +
+                            "ON act.lieu = activities.lid WHERE act.utilisateur != ? " +
+                            "AND (act.debut < activities.afin AND activities.adebut < act.fin)";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, utilisateur.getId(), utilisateur.getId());
+            resultat = preparedStatement.executeQuery();
+            while (resultat.next()) {
+                Utilisateur u = map(resultat);
+                utilisateurs.add(u);
+            }
+        } catch(SQLException sqlException) {
+            System.err.println("Cannot get the userlist from the same place : " + sqlException);
+            System.err.println("Source user given : " + utilisateur);
+        } finally {
+            SQLTools.close(connection,resultat,preparedStatement);
+        }
+        return utilisateurs;
+    }
 
     private static Utilisateur map(ResultSet resultSet) throws SQLException {
         Utilisateur utilisateur = new Utilisateur();

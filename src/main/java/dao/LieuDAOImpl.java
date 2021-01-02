@@ -36,6 +36,8 @@ public class LieuDAOImpl implements LieuDAO{
             System.err.println("Cannot get the place : " + e);
             System.err.println("Place ID given : " + idPlace);
             exists = false;
+        } finally {
+            SQLTools.close(connection, resultat, preparedStatement);
         }
         return exists;
     }
@@ -58,6 +60,8 @@ public class LieuDAOImpl implements LieuDAO{
             System.err.println("Cannot get the place : " + e);
             System.err.println("Place name given : " + namePlace);
             exists = false;
+        } finally {
+            SQLTools.close(connection, resultat, preparedStatement);
         }
         return exists;
     }
@@ -79,6 +83,8 @@ public class LieuDAOImpl implements LieuDAO{
             }
         } catch(SQLException sqlException) {
             sqlException.printStackTrace();
+        } finally {
+            SQLTools.close(connection, resultat, preparedStatement);
         }
         return lieux;
     }
