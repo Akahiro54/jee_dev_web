@@ -53,8 +53,8 @@ public class Notifications extends HttpServlet {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur)session.getAttribute(Util.ATT_SESSION_USER);
         HashMap<String, String> results = new HashMap<>();
-        JQueryAnswer success = new JQueryAnswer(true, "Demande");
-        JQueryAnswer fail = new JQueryAnswer(false, "Impossible d'accepter ou refuser la demande d'ami");
+        JQueryAnswer success = new JQueryAnswer(true, "");
+        JQueryAnswer fail = new JQueryAnswer(false, "");
         //if the user is still logged in
         if(utilisateur != null) {
             /**
@@ -67,6 +67,8 @@ public class Notifications extends HttpServlet {
 
             // check if all the parameters are set to start trying to accept or decline
             if(ami != null && action != null && id != null) {
+                success.appendMessage("Demande");
+                fail.appendMessage("Impossible d'accepter ou refuser la demande d'ami");
                 resp.setContentType("text/plain");          // set answer content type
                 // try to parse int parameters, in case of failure returns an error
                 try {
@@ -115,6 +117,31 @@ public class Notifications extends HttpServlet {
                         resp.getWriter().write(new Gson().toJson(fail));
                     }
                 } catch (Exception e) { resp.getWriter().write(new Gson().toJson(fail)); }
+            }
+
+
+            /**
+             * Mark a notification as read
+             */
+            String notification = (String)req.getParameter("setRead");
+            if(notification != null) {
+                success.appendMessage("Message marqué comme lu.");
+                fail.appendMessage("Impossible de marquer le message comme lu, merci de réessayer plus tard");
+                try {
+                    int idNotif = Integer.parseInt(notification);
+                    Notification n = notificationDAO.get(idNotif);
+                    if(n != null && n.getUtilisateurDestination() == idUtilisateur) {
+                        if(notificationDAO.changeState(n, EtatNotification.LUE)) {
+                            resp.getWriter().write(new Gson().toJson(success));
+                        } else {
+                            resp.getWriter().write(new Gson().toJson(fail));
+                        }
+                    } else {
+                        resp.getWriter().write(new Gson().toJson(fail));
+                    }
+                } catch (Exception e) {
+                    resp.getWriter().write(new Gson().toJson(fail));
+                }
             }
         }
 

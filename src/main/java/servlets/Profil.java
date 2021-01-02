@@ -63,38 +63,43 @@ public class Profil extends HttpServlet  {
         Utilisateur utilisateur = (Utilisateur) session.getAttribute("sessionUtilisateur");
 
         String paramCovid = (String)req.getParameter("covid");
-        if(paramCovid != null && utilisateur != null) {
-            resp.setContentType("text/plain");
-            JQueryAnswer success = new JQueryAnswer(true, "");
-            JQueryAnswer fail = new JQueryAnswer(false, "Une erreur est survenue : ");
-            switch(paramCovid) {
-                case "1":
-                    int idUtilisateur = utilisateur.getId();
-                    List<Utilisateur> amis = amisDAO.getFriends(idUtilisateur);
-                    List<Utilisateur> casContacts = utilisateurDAO.getAllUserOnSamePlacesAtTheSameTime(utilisateur);
-                    Set<Utilisateur> toNotify = new HashSet<>(amis);
-                    toNotify.addAll(casContacts);
-                    ArrayList<Notification> notifications = new ArrayList<>();
-                    for(Utilisateur u : toNotify) {
-                        notifications.add(Notification.buildNotification(utilisateur, u.getId(), TypeNotification.COVID));
-                    }
-                    if(notificationDAO.addMultiple(notifications)) { // All notifications were sent
-                        utilisateur.setContamine(true);
-                        utilisateur.setDateContamination(LocalDate.now());
-                        if(utilisateurDAO.updateContamine(utilisateur)) {
-                            success.appendMessage(utilisateur.getDateContamination().toString());
-                            resp.getWriter().write(new Gson().toJson(success));
-                        } else {
-                            fail.appendMessage("impossible de modifier votre profil utilisateur. Merci de réessayer plus tard.");
+        if(utilisateur != null) {
+            if(paramCovid != null && !utilisateur.isContamine()) {
+                resp.setContentType("text/plain");
+                JQueryAnswer success = new JQueryAnswer(true, "");
+                JQueryAnswer fail = new JQueryAnswer(false, "Une erreur est survenue : ");
+                switch(paramCovid) {
+                    case "1":
+                        int idUtilisateur = utilisateur.getId();
+                        List<Utilisateur> amis = amisDAO.getFriends(idUtilisateur);
+                        List<Utilisateur> casContacts = utilisateurDAO.getAllUserOnSamePlacesAtTheSameTime(utilisateur);
+                        Set<Utilisateur> toNotify = new HashSet<>(amis);
+                        toNotify.addAll(casContacts);
+                        ArrayList<Notification> notifications = new ArrayList<>();
+                        for(Utilisateur u : toNotify) {
+                            notifications.add(Notification.buildNotification(utilisateur, u.getId(), TypeNotification.COVID));
                         }
-                    } else {
-                        fail.appendMessage("impossible d'envoyer les notifications aux autres utilisateurs'. Merci de réessayer plus tard.");
-                    }
-                break;
-                default:
-                break;
+                        if(notificationDAO.addMultiple(notifications)) { // All notifications were sent
+                            utilisateur.setContamine(true);
+                            utilisateur.setDateContamination(LocalDate.now());
+                            if(utilisateurDAO.updateContamine(utilisateur)) {
+                                success.appendMessage(utilisateur.getDateContamination().toString());
+                                resp.getWriter().write(new Gson().toJson(success));
+                            } else {
+                                utilisateur.setContamine(false);
+                                utilisateur.setDateContamination(null);
+                                fail.appendMessage("impossible de modifier votre profil utilisateur. Merci de réessayer plus tard.");
+                            }
+                        } else {
+                            fail.appendMessage("impossible d'envoyer les notifications aux autres utilisateurs'. Merci de réessayer plus tard.");
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
+
     }
 
 

@@ -34,8 +34,16 @@
                 <p  class="mb-1"><c:out value="${notification.message}"/></p>
             </div>
             <div id ="buttonsNotif<c:out value="${notification.id}"/>">
-                <button onclick="friendAction(<c:out value="${notification.id}"/>,<c:out value="${notification.utilisateurSource}"/>,'accept')" class="btn btn-primary">Accepter</button>
-                <button onclick="friendAction(<c:out value="${notification.id}"/>,<c:out value="${notification.utilisateurSource}"/>, 'decline')" class="btn btn-danger">Refuser</button>
+                <c:choose>
+                    <c:when test="${notification.type == 'AMI'}">
+                        <button onclick="friendAction(<c:out value="${notification.id}"/>,<c:out value="${notification.utilisateurSource}"/>,'accept')" class="btn btn-primary">Accepter</button>
+                        <button onclick="friendAction(<c:out value="${notification.id}"/>,<c:out value="${notification.utilisateurSource}"/>, 'decline')" class="btn btn-danger">Refuser</button>
+                    </c:when>
+                    <c:when test="${notification.type == 'COVID'}">
+                        <button onclick="read(<c:out value="${notification.id}"/>)" class="btn btn-primary">J'ai bien vu ce message</button>
+                    </c:when>
+                </c:choose>
+
             </div>
         </div>
     </c:forEach>
@@ -47,6 +55,26 @@
                 id: id,
                 ami: ami,
                 action: action
+            },
+            function(data, status){
+                if(status === "success") { // for the ajax query
+                    jsonData = JSON.parse(data);
+                    if(jsonData.success) { // info from the server
+                        $('#messageNotif'+id).empty();
+                        $('#buttonsNotif'+id).empty();
+                        $('#messageNotif'+id).prepend('<p class="mb-1">'+ jsonData.message + '</p>');
+                    } else {
+                        $('#messageNotif'+id).empty();
+                        $('#messageNotif'+id).prepend('<p class="mb-1">'+ jsonData.message + '</p>');
+                    }
+                }
+            });
+    }
+
+    function read(id) {
+        $.post("notifications",
+            {
+                setRead: id
             },
             function(data, status){
                 if(status === "success") { // for the ajax query

@@ -146,7 +146,6 @@ enum ActiviteFields {
      */
     public ActiviteFields next() {
         ActiviteFields field = values[(this.ordinal()+1) % values.length];
-//        if(field == ActiviteFields.FIELD_CONFIRMATION) field = field.next();
         return field;
     }
 }
