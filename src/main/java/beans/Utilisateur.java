@@ -14,7 +14,7 @@ public class Utilisateur {
     private String nom;
     private String prenom;
     private Date date;
-    private byte[] image;
+    private String image;
     private String nomImage;
 
 
@@ -23,13 +23,6 @@ public class Utilisateur {
 
 
     public Utilisateur() {}
-
-    public Utilisateur(int id, String nom, String prenom, byte[] image) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.image = image;
-    }
 
     public int getId() { return id; }
 
@@ -75,11 +68,11 @@ public class Utilisateur {
         this.date = date;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -126,6 +119,9 @@ public class Utilisateur {
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
     }
+
+
+
 
     @Override
     public boolean equals(Object o) {

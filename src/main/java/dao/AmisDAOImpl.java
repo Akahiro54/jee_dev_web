@@ -2,6 +2,7 @@ package dao;
 
 import beans.Amis;
 import beans.Utilisateur;
+import tools.Util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,13 +27,16 @@ public class AmisDAOImpl implements AmisDAO{
         Connection connection = null;
         ResultSet resultSet = null;
         // Get the current user friends, by checking the TWO columns
-        String request = "SELECT u.nom, u.prenom, u.image, u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE (a.ami1 = ? OR a.ami2 = ?)";
+        String request = "SELECT u.pseudo, u.image, u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE (a.ami1 = ? OR a.ami2 = ?)";
         try {
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUtilisateur, idUtilisateur, idUtilisateur);
             ResultSet result = preparedStatement.executeQuery();
             while(result.next()) {
-                Utilisateur util = new Utilisateur(result.getInt(4),result.getString(1),result.getString(2),result.getBytes(3));
+                Utilisateur util = new Utilisateur();
+                util.setPseudo(result.getString(1));
+                util.setImage(Util.convertUserImage(result.getBytes(2)));
+                util.setId(result.getInt(3));
                 listeAmis.add(util);
             }
         } catch(Exception e) {
@@ -43,24 +47,23 @@ public class AmisDAOImpl implements AmisDAO{
         return listeAmis;
     }
 
-    //SELECT * FROM utilisateur WHERE id != 8 AND id NOT IN (SELECT u.id
-    //FROM amis a
-    //INNER JOIN utilisateur u
-    //ON CASE WHEN a.ami1 = 8 THEN a.ami2 ELSE a.ami1 END = u.id
-    //WHERE a.ami1 = 8 OR a.ami2 = 8)
+
     @Override
     public List<Utilisateur> getNonFriends(int idUtilisateur) {
         ArrayList<Utilisateur> nonAmis = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
-        String request = "SELECT u.nom, u.prenom, u.image, u.id FROM utilisateur WHERE id != ? AND id NOT IN (SELECT u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE a.ami1 = ? OR a.ami2 = ?)";
+        String request = "SELECT u.pseudo, u.image, u.id FROM utilisateur WHERE id != ? AND id NOT IN (SELECT u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE a.ami1 = ? OR a.ami2 = ?)";
         try {
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUtilisateur, idUtilisateur, idUtilisateur, idUtilisateur);
             ResultSet result = preparedStatement.executeQuery();
             while(result.next()) {
-                Utilisateur util = new Utilisateur(result.getInt(4),result.getString(1),result.getString(2),result.getBytes(3));
+                Utilisateur util = new Utilisateur();
+                util.setPseudo(result.getString(1));
+                util.setImage(Util.convertUserImage(result.getBytes(2)));
+                util.setId(result.getInt(3));
                 nonAmis.add(util);
             }
         } catch(Exception e) {
@@ -71,11 +74,7 @@ public class AmisDAOImpl implements AmisDAO{
         return nonAmis;
     }
 
-    //SELECT * FROM utilisateur WHERE pseudo LIKE '%zor%' AND id != 8 AND id NOT IN (SELECT u.id
-    //FROM amis a
-    //INNER JOIN utilisateur u
-    //ON CASE WHEN a.ami1 = 8 THEN a.ami2 ELSE a.ami1 END = u.id
-    //WHERE a.ami1 = 8 OR a.ami2 = 8)
+
     public List<Utilisateur> searchNonFriends(int idUtilisateur, String nickname) {
         ArrayList<Utilisateur> nonAmis = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -93,7 +92,7 @@ public class AmisDAOImpl implements AmisDAO{
                 Utilisateur util = new Utilisateur();
                 util.setId(result.getInt(1));
                 util.setPseudo(result.getString(2));
-                util.setImage(result.getBytes(3));
+                util.setImage(Util.convertUserImage(result.getBytes(3)));
                 nonAmis.add(util);
             }
         } catch(Exception e) {
@@ -152,7 +151,6 @@ public class AmisDAOImpl implements AmisDAO{
     }
 
 
-
     @Override
     public Amis get(int idFriend1, int idFriend2) {
         ResultSet resultat = null;
@@ -199,35 +197,11 @@ public class AmisDAOImpl implements AmisDAO{
         return deleted;
     }
 
-//    @Override
-//    public boolean update(Amis amis, EtatAmis etat) {
-//        boolean updated = false;
-//        PreparedStatement preparedStatement = null;
-//        Connection connection = null;
-//        ResultSet resultSet = null;
-//        String request = null;
-//        try {
-//            connection = daoFactory.getConnection();
-//            request = "UPDATE amis SET etat = ?  WHERE ami1 = ? AND ami2 = ?";
-//            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, etat.getEtatAmis(), amis.getIdAmi1(), amis.getIdAmi2());
-//            preparedStatement.executeUpdate();
-//            updated = true;
-//        } catch(Exception e) {
-//            System.err.println("Cannot update the friends : " + e.getMessage());
-//            System.err.println("Friends object : " + amis.toString());
-//            System.err.println("New state : " + etat.getEtatAmis());
-//            updated =false;
-//        } finally {
-//            SQLTools.close(connection,resultSet,preparedStatement);
-//        }
-//        return updated;
-//    }
 
     private static Amis map(ResultSet resultSet) throws SQLException {
         Amis amis = new Amis();
         amis.setIdAmi1(resultSet.getInt(1));
         amis.setIdAmi2(resultSet.getInt(2));
-//        amis.setEtatAmis(EtatAmis.valueOf(resultSet.getString(3).toUpperCase()));
         return amis;
     }
 

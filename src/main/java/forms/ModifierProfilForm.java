@@ -1,7 +1,6 @@
 package forms;
 
 import beans.Utilisateur;
-import dao.DAOFactory;
 import dao.UtilisateurDAO;
 import tools.Util;
 
@@ -10,9 +9,10 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,7 +60,7 @@ public class ModifierProfilForm {
                 while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
                     buffer.write(data, 0, nRead);
                 }
-                utilisateur.setImage(buffer.toByteArray());
+                utilisateur.setImage(Util.convertUserImage(buffer.toByteArray()));
             }
         }
 

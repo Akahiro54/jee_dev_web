@@ -34,23 +34,23 @@
                             <h4 class="m-t-0 m-b-20">Nombre d'amis (<c:out value="${listeamis.size()}" />)</h4>
                             <!-- begin row -->
                             <div class="row row-space-2">
-                                <c:forEach items="${listeamis}" var="listeamis">
+                                <c:forEach items="${listeamis}" var="ami">
                                 <!-- begin col-6 -->
                                 <div class="col-md-6 m-b-2">
                                     <div class="p-10 bg-white">
                                         <div class="media media-xs overflow-visible">
                                             <a class="media-left" href="#">
                                                     <c:choose>
-                                                        <c:when test="${empty listeImage.get(listeamis.id)}">
+                                                        <c:when test="${empty ami.image}">
                                                             <img src="<%=request.getContextPath()%>/img/profile.jpg" alt="" width="50" height="50">
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <img src="data:image/jpeg;base64,${listeImage.get(listeamis.id)}" alt="" width="50" height="50">
+                                                            <img src="data:image/jpeg;base64,${ami.image}" alt="" width="50" height="50">
                                                         </c:otherwise>
                                                     </c:choose>
                                              </a>
                                             <div class="media-body valign-middle">
-                                                <b class="text-inverse"><c:out value="${listeamis.nom}" />  <c:out value="${listeamis.prenom}" /></b>
+                                                <b class="text-inverse"><c:out value="${ami.pseudo}" /></b>
                                             </div>
                                             <div class="media-body valign-middle text-right overflow-visible">
                                                 <div class="btn-group dropdown">
@@ -117,12 +117,18 @@
                 nickSearch: $("#recherche").val()
             },
             function(data,status){
+                console.log(data);
                 if(status === "success") {
                     $('#resultatsRecherche').empty();
                     if(data == "error") {
                         alert("Merci d'entrer une recherche valide : 3 à 255 caractères, lettres chiffres et tirets (- , _).");
                     } else {
                         jQuery.each(jsonData = JSON.parse(data), function(index) {
+                            if(jsonData.hasOwnProperty('success') && jsonData.hasOwnProperty('message')) {
+                                // alert
+                            } else {
+
+                            }
                             idAmi = jsonData[index].id;
                             $('#resultatsRecherche').prepend(
                                 '<div id="ami'+idAmi+'" class="resultat card col-12 col-sm-12 col-md-6 col-xl-4 pt-1 pb-1 text-center align-middle">'+jsonData[index].pseudo + '<button id="btnAmi'+idAmi+'" onclick="addFriend('+idAmi+')" class="btn btn-danger">Ajouter l\'ami</button>' +'</div>'

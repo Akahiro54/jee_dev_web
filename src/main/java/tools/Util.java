@@ -1,5 +1,7 @@
 package tools;
 
+import java.util.Base64;
+
 public class Util {
 
     public static String ATT_FORM = "form";
@@ -22,8 +24,14 @@ public class Util {
 
     public static String DATABASE_ERROR_MESSAGE = "Impossible de communiquer avec la base de données, merci de réessayer plus tard.";
 
-
-
     public static String GENERIC_DATABASE_FIELD = "database";
+
+    public static String convertUserImage(byte[] imageBytes) {
+        if(imageBytes != null) {
+            return Base64.getEncoder().encodeToString(imageBytes);
+
+        }
+        return "";
+    }
 
 }

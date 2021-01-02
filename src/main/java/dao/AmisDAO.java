@@ -17,8 +17,6 @@ public interface AmisDAO {
 
     boolean add(Amis amis);
 
-//    boolean update(Amis amis, EtatAmis etat);
-
     Amis get(int idFriend1, int idFriend2);
 
     boolean delete(Amis amis);

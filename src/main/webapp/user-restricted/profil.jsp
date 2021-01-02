@@ -18,11 +18,11 @@
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
                             <c:choose>
-                                <c:when test="${empty imgBase}">
+                                <c:when test="${empty user.image}">
                                     <img src="<%=request.getContextPath()%>/img/profile.jpg" alt="" width="300" height="300">
                                 </c:when>
                                 <c:otherwise>
-                                    <img src="data:image/jpeg;base64,${imgBase}" width="300" height="300">
+                                    <img src="data:image/jpeg;base64,${user.image}" width="300" height="300">
                                 </c:otherwise>
                             </c:choose>
                             <div class="mt-3">

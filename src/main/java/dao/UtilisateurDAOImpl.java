@@ -3,6 +3,7 @@ package dao;
 import beans.Utilisateur;
 import exceptions.DAOException;
 import tools.PasswordHasher;
+import tools.Util;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -295,7 +296,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         if(sqlDate != null) {
             utilisateur.setDateContamination(sqlDate.toLocalDate());
         }
-        utilisateur.setImage(resultSet.getBytes(11));
+        utilisateur.setImage(Util.convertUserImage(resultSet.getBytes(11)));
         return utilisateur;
     }
 }

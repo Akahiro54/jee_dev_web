@@ -50,7 +50,7 @@ public class CreerActivite extends HttpServlet {
             req.setAttribute(Util.ATT_FORM, form);
             req.setAttribute(Util.ATT_FORM_ACTIVITY, activite);
             if(form.getErrors().isEmpty()) {
-                resp.sendRedirect(req.getContextPath()+"/user-restricted/activites.jsp");
+                resp.sendRedirect(req.getContextPath()+"/user-restricted/activites");
             } else {
                 req.getRequestDispatcher("/user-restricted/creer_activite.jsp").forward(req,resp);
             }

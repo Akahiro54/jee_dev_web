@@ -1,7 +1,6 @@
 package servlets;
 
 import beans.Lieu;
-import dao.ActiviteDAO;
 import dao.DAOFactory;
 import dao.LieuDAO;
 import forms.LieuForm;
@@ -27,7 +26,7 @@ public class CreerLieu extends HttpServlet {
         req.getRequestDispatcher("/user-restricted/creer_lieu.jsp").forward(req, resp);
     }
 
-    //TODO
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LieuForm form = new LieuForm(lieuDAO);
@@ -35,7 +34,7 @@ public class CreerLieu extends HttpServlet {
         req.setAttribute(Util.ATT_FORM, form);
         req.setAttribute(Util.ATT_FORM_PLACE, lieu);
         if(form.getErrors().isEmpty()) {
-            resp.sendRedirect(req.getContextPath()+"/index.jsp");
+            resp.sendRedirect(req.getContextPath()+"/user-restricted/creer_activite");
         } else {
             req.getRequestDispatcher("/user-restricted/creer_lieu.jsp").forward(req, resp);
         }

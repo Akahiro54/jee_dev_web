@@ -6,8 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
-<footer>
-    Pied de page
+<footer class="mt-3">
+    <div class="text-center text-secondary font-weight-bold">Application PreventCovid</div>
 </footer>
 </body>
 </html>
