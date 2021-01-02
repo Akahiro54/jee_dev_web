@@ -42,10 +42,10 @@
                                             <a class="media-left" href="#">
                                                     <c:choose>
                                                         <c:when test="${empty ami.image}">
-                                                            <img src="<%=request.getContextPath()%>/img/profile.jpg" alt="" width="50" height="50">
+                                                            <img src="<%=request.getContextPath()%>/img/profile.jpg" alt="" width="50" height="50"/>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <img src="data:image/jpeg;base64,${ami.image}" alt="" width="50" height="50">
+                                                            <img src="data:image/jpeg;base64,${ami.image}" alt="" width="50" height="50"/>
                                                         </c:otherwise>
                                                     </c:choose>
                                              </a>
@@ -112,6 +112,7 @@
             });
     }
     function startSearch() {
+        var ctx = "<%=request.getContextPath()%>"
         $.post("amis",
             {
                 nickSearch: $("#recherche").val()
@@ -130,9 +131,11 @@
 
                             }
                             idAmi = jsonData[index].id;
-                            $('#resultatsRecherche').prepend(
-                                '<div id="ami'+idAmi+'" class="resultat card col-12 col-sm-12 col-md-6 col-xl-4 pt-1 pb-1 text-center align-middle">'+jsonData[index].pseudo + '<button id="btnAmi'+idAmi+'" onclick="addFriend('+idAmi+')" class="btn btn-danger">Ajouter l\'ami</button>' +'</div>'
-                            );
+                            var imageAmi = '<img class="mx-auto img-thumbnail" src="'+ctx+'/img/profile.jpg" alt="" width="50" height="50"/>';
+                            if(jsonData[index].image.length > 0) {
+                                imageAmi = '<img class="mx-auto img-thumbnail" src="data:image/jpeg;base64,'+jsonData[index].image+'" alt="" width="50" height="50"/>';
+                            }
+                            $('#resultatsRecherche').prepend('<div id="ami'+idAmi+'" class="resultat card col-12 col-sm-12 col-md-6 col-xl-4 pt-1 pb-1 text-center align-middle">' + imageAmi + jsonData[index].pseudo + '<button id="btnAmi'+idAmi+'" onclick="addFriend('+idAmi+')" class="btn btn-danger">Ajouter l\'ami</button>' + '</div>');
                         })
                     }
                 }
