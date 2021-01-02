@@ -45,6 +45,12 @@ public class ActiviteForm {
         if(activite.getDateDebut() != null && activite.getHeureDebut() != null && activite.getDateFin() != null && activite.getHeureFin() != null) {
             LocalDateTime debut = LocalDateTime.of(activite.getDateDebut(), activite.getHeureDebut());
             LocalDateTime fin = LocalDateTime.of(activite.getDateFin(), activite.getHeureFin());
+            if(debut.isAfter(LocalDateTime.now()) || debut.isEqual(LocalDateTime.now())) {
+                addError(ActiviteFields.FIELD_DATE_BEGIN.getFieldName(), "La date de début ne peut être après ou égale à la date actuelle.");
+            }
+            if (fin.isAfter(LocalDateTime.now())) {
+                addError(ActiviteFields.FIELD_DATE_END.getFieldName(), "La date de fin ne peut être après la date actuelle.");
+            }
             if(debut.isAfter(fin)) {
                 addError(ActiviteFields.FIELD_DATE_BEGIN.getFieldName(), "La date de début ne peut être avant la date de fin.");
             } else if(debut.isEqual(fin)) {
