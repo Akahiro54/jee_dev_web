@@ -31,4 +31,6 @@ public interface UtilisateurDAO{
 
     List<Utilisateur> getAllUserOnSamePlacesAtTheSameTime(Utilisateur utilisateur);
 
+    boolean updateContamine(Utilisateur utilisateur);
+
 }

@@ -59,34 +59,33 @@ public class Amis extends HttpServlet {
         Utilisateur utilisateur = (Utilisateur)session.getAttribute(Util.ATT_SESSION_USER);
         resp.setContentType("text/plain");
         String s = (String)req.getParameter("nickSearch");
-        boolean validated = false;
-
-        /**
-         * Search friends
-         */
-        if(s != null) {
-            try {
-                FormTools.validateNickname(s);
-                FormTools.validateFieldSize(s);
-                validated = true;
-            } catch (Exception e) {
+        if(utilisateur != null) {
+            /**
+             * Search friends
+             */
+            if(s != null) {
+                boolean validated = false;
+                try {
+                    FormTools.validateNickname(s);
+                    FormTools.validateFieldSize(s);
+                    validated = true;
+                } catch (Exception e) {
+                }
+                if (validated) {
+                    List<Utilisateur> utilisateurs = amisDAO.searchNonFriends(utilisateur.getId(), s);
+                    Gson gson = new Gson();
+                    String result = gson.toJson(utilisateurs);
+                    resp.getWriter().write(result);
+                } else {
+                    resp.getWriter().write("error");
+                }
             }
-            if (validated) {
-                List<Utilisateur> utilisateurs = amisDAO.searchNonFriends(utilisateur.getId(), s);
-                Gson gson = new Gson();
-                String result = gson.toJson(utilisateurs);
-                resp.getWriter().write(result);
-            } else {
-                resp.getWriter().write("error");
-            }
-        }
-        /**
-         * Add friends
-         */
-        if(req.getParameter("ami") != null) {
-            JQueryAnswer fail = new JQueryAnswer(false, "Impossible d'ajouter l'ami");
-            JQueryAnswer success = new JQueryAnswer(true, "Demande d'ami effectuée avec succès !");
-            if(utilisateur != null) {
+            /**
+             * Add friends
+             */
+            if(req.getParameter("ami") != null) {
+                JQueryAnswer fail = new JQueryAnswer(false, "Impossible d'ajouter l'ami");
+                JQueryAnswer success = new JQueryAnswer(true, "Demande d'ami effectuée avec succès !");
                 int idUtilisateur = utilisateur.getId();
                 try {
                     int idAmi = Integer.parseInt(req.getParameter("ami"));

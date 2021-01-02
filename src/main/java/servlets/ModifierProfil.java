@@ -8,9 +8,11 @@ import tools.Util;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.*;
-import java.io.*;
-import java.util.Base64;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @MultipartConfig
 public class ModifierProfil extends HttpServlet {
@@ -36,11 +38,12 @@ public class ModifierProfil extends HttpServlet {
         }
     }
 
-    //FIXME : check autorizations before posting
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Utilisateur utilisateur = (Utilisateur) session.getAttribute("sessionUtilisateur");
+        Utilisateur utilisateur = (Utilisateur) session.getAttribute(Util.ATT_SESSION_USER);
+
 
         ModifierProfilForm form = new ModifierProfilForm(utilisateurDAO);
         form.modifierUtilisateur(req);

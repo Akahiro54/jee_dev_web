@@ -1,7 +1,6 @@
 package beans;
 
-import javax.servlet.http.Part;
-import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Utilisateur {
@@ -16,6 +15,10 @@ public class Utilisateur {
     private Date date;
     private byte[] image;
     private String nomImage;
+
+
+    private boolean contamine;
+    private LocalDate dateContamination;
 
 
     public Utilisateur() {}
@@ -85,6 +88,22 @@ public class Utilisateur {
 
     public void setNomImage(String nomImage) {
         this.nomImage = nomImage;
+    }
+
+    public boolean isContamine() {
+        return contamine;
+    }
+
+    public void setContamine(boolean contamine) {
+        this.contamine = contamine;
+    }
+
+    public LocalDate getDateContamination() {
+        return dateContamination;
+    }
+
+    public void setDateContamination(LocalDate dateContamination) {
+        this.dateContamination = dateContamination;
     }
 
     @Override

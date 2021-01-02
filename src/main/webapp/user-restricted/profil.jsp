@@ -55,6 +55,15 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
+                                <h6 class="mb-0">Pseudonyme</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                ${user.pseudo}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
@@ -79,9 +88,32 @@
                     </div>
                 </div>
                 <div class="row gutters-sm">
-                    <div class="col-sm-6 mb-3">
-                        <div class="card h-100">
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-warning">Je suis positif au covid</a>
+                    <div class="col-sm-6 mb-3 mx-auto">
+                        <div id="covidInfoCard" class="card h-100 ">
+                            <c:choose>
+                                <c:when test="${user.contamine}">
+                                    <div class="row">
+                                        <div class="col-sm-3 text-center my-auto">
+                                            <h6>Positif au COVID-19.</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                               Vous êtes déclaré positif au covid depuis le ${user.dateContamination}.<br/>
+                                               Votre état sera réinitialisé au bout de 15 jours.
+                                        </div>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <button onclick="showConfirmation()" class="list-group-item list-group-item-action list-group-item-warning">Je suis positif au covid</button>
+                                    <div id="confirmPositive" class="text-center text-info" style="display:none;">
+                                        Cette action est irréversible pour 15 jours, êtes vous sûr de vouloir vous déclarer positif au COVID ?
+                                        <div id="fail" class="text-center text-danger"></div>
+                                        <div class="mb-1">
+                                            <button onclick="sendCovidPositive()" class="btn btn-primary">Confirmer</button>
+                                            <button onclick="hideConfirmation()" class="btn btn-danger">Annuler</button>
+                                        </div>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
@@ -89,6 +121,37 @@
         </div>
     </div>
 </div>
+<script>
+    function showConfirmation() {
+        $("#confirmPositive").show();
+    }
+    function hideConfirmation() {
+        $("#confirmPositive").hide();
+    }
+    function sendCovidPositive() {
+        $.post("profil",
+            {
+                covid: 1
+            },
+            function(data, status){
+                if(status === "success") {
+                    console.log(data);
+                    jsonData = JSON.parse(data);
+                    var covidInfoCard = $("#covidInfoCard");
+                    if(jsonData.success) { // info from the server
+                        covidInfoCard.empty();
+                        covidInfoCard.prepend(
+                               '<div class="row"><div class="col-sm-3 text-center my-auto"><h6>Positif au COVID-19.</h6></div><div class="col-sm-9 text-secondary">Vous êtes déclaré positif au covid depuis le '+jsonData.message+'.<br/>Votre état sera réinitialisé au bout de 15 jours.</div></div>'
+                        )
+                    } else {
+                        var fail = $("#fail");
+                        fail.empty();
+                        fail.prepend(jsonData.message);
+                    }
+                }
+            });
+    }
+</script>
 <jsp:include page="../footer.jsp" />
 
 

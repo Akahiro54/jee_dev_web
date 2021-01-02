@@ -5,10 +5,7 @@ import exceptions.DAOException;
 import tools.PasswordHasher;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -242,8 +239,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         ResultSet resultat = null;
         String request =    "SELECT DISTINCT  u.* FROM utilisateur u INNER JOIN activite act ON u.id = act.utilisateur INNER JOIN " +
                                 "(SELECT l.id as lid, act.debut as adebut, act.fin as afin " +
-                                "FROM activite act INNER JOIN lieu l ON act.lieu = l.id" +
-                                "WHERE act.utilisateur = ?) AS activities" +
+                                "FROM activite act INNER JOIN lieu l ON act.lieu = l.id " +
+                                "WHERE act.utilisateur = ?) AS activities " +
                             "ON act.lieu = activities.lid WHERE act.utilisateur != ? " +
                             "AND (act.debut < activities.afin AND activities.adebut < act.fin)";
         try {
@@ -263,6 +260,28 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         return utilisateurs;
     }
 
+    @Override
+    public boolean updateContamine(Utilisateur utilisateur) {
+        boolean updated = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = "UPDATE utilisateur SET contamine = ?, date_contamination = ? WHERE id = ? ";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, utilisateur.isContamine(), utilisateur.getDateContamination(), utilisateur.getId());
+            preparedStatement.executeUpdate();
+            updated = true;
+        } catch(Exception e) {
+            System.err.println("Cannot update the user contamination state : " + e.getMessage());
+            System.err.println("User object : " + utilisateur.toString());
+            updated =false;
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return updated;
+    }
+
     private static Utilisateur map(ResultSet resultSet) throws SQLException {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setId(resultSet.getInt(1));
@@ -271,6 +290,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         utilisateur.setNom(resultSet.getString(5));
         utilisateur.setPrenom(resultSet.getString(6));
         utilisateur.setDate(resultSet.getDate(7));
+        utilisateur.setContamine(resultSet.getBoolean(8));
+        Date sqlDate = resultSet.getDate(9);
+        if(sqlDate != null) {
+            utilisateur.setDateContamination(sqlDate.toLocalDate());
+        }
         utilisateur.setImage(resultSet.getBytes(11));
         return utilisateur;
     }
