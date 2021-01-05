@@ -104,6 +104,15 @@
         <url-pattern>/user-restricted/modifier_profil</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PannelAdmin</servlet-name>
+        <servlet-class>servlets.PannelAdmin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PannelAdmin</servlet-name>
+        <url-pattern>/user-restricted/pannel_admin</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>CreerActivite</servlet-name>
