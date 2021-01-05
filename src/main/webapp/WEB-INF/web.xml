@@ -141,6 +141,14 @@
         <servlet-name>CreerLieu</servlet-name>
         <url-pattern>/user-restricted/creer_lieu</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Lieu</servlet-name>
+        <servlet-class>servlets.Lieu</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Lieu</servlet-name>
+        <url-pattern>/user-restricted/lieu</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>Notifications</servlet-name>

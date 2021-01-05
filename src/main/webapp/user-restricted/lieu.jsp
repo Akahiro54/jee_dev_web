@@ -9,5 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="pageTitle" scope="request" value="Lieu"/>
 <jsp:include page="../header.jsp" />
-<p>Lieu</p>
+<div class="mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6">
+
+</div>
 <jsp:include page="../footer.jsp" />
