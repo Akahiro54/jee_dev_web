@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/site.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/amis.css"/>
 
+
     <script src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.js"></script>
@@ -50,6 +51,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/amis">Mes amis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/pannel_admin">Panel Admin</a>
                     </li>
                     <c:choose>
                         <c:when test="${hasNotifications == true}">

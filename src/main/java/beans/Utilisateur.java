@@ -16,6 +16,8 @@ public class Utilisateur {
     private Date date;
     private String image;
     private String nomImage;
+    private String role;
+
 
 
     private boolean contamine;
@@ -98,6 +100,14 @@ public class Utilisateur {
 
     public void setDateContamination(LocalDate dateContamination) {
         this.dateContamination = dateContamination;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

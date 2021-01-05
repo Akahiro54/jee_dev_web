@@ -81,5 +81,7 @@ public class DAOFactory {
 
     public AmisDAO getAmisDAO() { return new AmisDAOImpl(this); }
 
-
+    public AdminDAO getAdminDAO() {
+        return new AdminDAOImpl(this);
+    }
 }
