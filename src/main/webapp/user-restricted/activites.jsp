@@ -9,7 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="pageTitle" scope="request" value="Mes activités"/>
 <jsp:include page="../header.jsp" />
-    <div class="p-lg-5 p-sm-1 p-xl-5">
+    <div class="px-lg-5 px-sm-1 px-xl-5">
         <h1 class="text-center">Mes activités</h1>
         <div class="row">
             <c:forEach items="${activites}" var="activite">

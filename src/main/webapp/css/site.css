@@ -1,7 +1,17 @@
+@font-face {
+    font-family: Inter;
+    src: url("../fonts/Inter/Inter-VariableFont_slnt,wght.ttf");
+}
+
+
+html, body {
+    font-family: Inter;
+}
+
+
 .fond-element {
     background: rgba(255, 255, 255, 0.6) !important;
 }
-
 
 .fond {
     background-image: url("../img/background.png");+

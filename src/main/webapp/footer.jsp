@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <footer class="mt-3 footer fixed-bottom fond-element">
-    <div class="text-center font-weight-bold">Application PreventCovid</div>
+    <div class="text-center font-weight-bold">2021 &copy; Application PreventCovid</div>
 </footer>
 </body>
 </html>
