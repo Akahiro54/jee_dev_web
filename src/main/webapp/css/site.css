@@ -4,6 +4,7 @@
 
 .fond {
     background-image: url("../img/background.png");+
-    background-attachment: fixed;
+    /*background-attachment: fixed;*/
     background-size:cover;
+    background-repeat: no-repeat;
 }
