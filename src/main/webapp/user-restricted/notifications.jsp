@@ -13,7 +13,7 @@
 
 <div class="list-group">
     <c:forEach items="${notifications}" var="notification">
-        <div class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="fond-element list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">
                     <c:choose>

@@ -14,7 +14,7 @@
         <div class="row">
          <div class="col text-center">
             <input type="text" name="roll_no" id="recherche" class="form-control" placeholder="Chercher des amis ...">
-            <button name="save" class="btn btn-primary mx-auto">Rechercher des amis</button>
+            <button name="save" class="mt-1 btn btn-dark mx-auto">Rechercher des amis</button>
          </div>
         </div>
         <div class="row" id="resultatsRecherche"></div>
@@ -138,7 +138,7 @@
                             if(jsonData[index].image.length > 0) {
                                 imageAmi = '<img class="mx-auto img-thumbnail" src="data:image/jpeg;base64,'+jsonData[index].image+'" alt="" width="50" height="50"/>';
                             }
-                            $('#resultatsRecherche').prepend('<div id="ami'+idAmi+'" class="resultat card col-12 col-sm-12 col-md-6 col-xl-4 pt-1 pb-1 text-center align-middle">' + imageAmi + jsonData[index].pseudo + '<button id="btnAmi'+idAmi+'" onclick="addFriend('+idAmi+')" class="btn btn-danger">Ajouter l\'ami</button>' + '</div>');
+                            $('#resultatsRecherche').prepend('<div id="ami'+idAmi+'" class="fond-element resultat card col-12 col-sm-12 col-md-6 col-xl-4 pt-1 pb-1 text-center align-middle">' + imageAmi + jsonData[index].pseudo + '<button id="btnAmi'+idAmi+'" onclick="addFriend('+idAmi+')" class="btn btn-dark">Ajouter l\'ami</button>' + '</div>');
                         })
                     }
                 }

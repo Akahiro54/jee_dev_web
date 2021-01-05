@@ -9,7 +9,7 @@
 <div class="mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6">
     <h1>Inscription</h1>
     <p>Créez votre compte maintenant et soyez prévenu immédiatement si vous êtes un cas contact !</p>
-        <form method="post" class="mx-auto text-center rounded formulaire pt-1" action="inscription">
+        <form method="post" class="mx-auto text-center rounded fond-element pt-1" action="inscription">
             <p>${form.errors['database']}</p>
 
             <div class="form-group ml-1 mr-2">

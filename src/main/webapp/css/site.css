@@ -1,0 +1,9 @@
+.fond-element {
+    background: rgba(255, 255, 255, 0.6) !important;
+}
+
+.fond {
+    background-image: url("../img/background.png");+
+    background-attachment: fixed;
+    background-size:cover;
+}

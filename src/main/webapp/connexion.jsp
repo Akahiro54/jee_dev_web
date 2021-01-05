@@ -9,7 +9,7 @@
 <div class="mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6">
     <h1>Connexion</h1>
     <p>Connectez-vous !</p>
-    <form method="post" class="mx-auto text-center rounded formulaire pt-2" action="connexion">
+    <form method="post" class="mx-auto text-center rounded fond-element pt-2" action="connexion">
         <div class="form-group ml-1 mr-2">
             <div class="mx-auto row">
                 <label class="col-form-label col-2" for="email">Adresse email : </label>

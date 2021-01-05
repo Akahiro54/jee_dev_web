@@ -11,7 +11,7 @@
 <jsp:include page="../header.jsp" />
 <div class="mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6">
     <h1>Créer une activité</h1>
-    <form method="post" class="mx-auto text-center rounded formulaire pt-1" action="creer_activite">
+    <form method="post" class="mx-auto text-center rounded fond-element pt-1" action="creer_activite">
         <p>${form.errors['database']}</p>
 
         <div class="form-group ml-1 mr-2">

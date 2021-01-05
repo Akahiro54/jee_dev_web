@@ -9,20 +9,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="pageTitle" scope="request" value="Mon profil"/>
 <jsp:include page="../header.jsp" />
-</br>
-<div class="container">
+<div class="container mt-3">
     <div class="main-body">
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
-                <div class="card">
-                    <div class="card-body">
+                <div class="fond-element card">
+                    <div class="rounded card-body">
                         <div class="d-flex flex-column align-items-center text-center">
                             <c:choose>
                                 <c:when test="${empty user.image}">
-                                    <img src="<%=request.getContextPath()%>/img/profile.jpg" alt="" width="300" height="300">
+                                    <img class="img-thumbnail" src="<%=request.getContextPath()%>/img/profile.jpg" alt="" width="300" height="300">
                                 </c:when>
                                 <c:otherwise>
-                                    <img src="data:image/jpeg;base64,${user.image}" width="300" height="300">
+                                    <img class="img-thumbnail" src="data:image/jpeg;base64,${user.image}" width="300" height="300">
                                 </c:otherwise>
                             </c:choose>
                             <div class="mt-3">
@@ -33,7 +32,7 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card mb-3">
+                <div class="fond-element card mb-3">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
@@ -81,30 +80,25 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-sm-9 text-secondary">
-                                <a href="<%=request.getContextPath()%>/user-restricted/modifier_profil" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Modifier</a>
-                            </div>
+                                <a href="<%=request.getContextPath()%>/user-restricted/modifier_profil" class="btn btn-dark btn-lg mx-auto" role="button" aria-pressed="true">Modifier</a>
                         </div>
                     </div>
                 </div>
-                <div class="row gutters-sm">
-                    <div class="col-sm-6 mb-3 mx-auto">
-                        <div id="covidInfoCard" class="card h-100 ">
+
+                <div id="covidInfoCard" class="fond-element rounded mb-2 mx-auto row">
                             <c:choose>
                                 <c:when test="${user.contamine}">
-                                    <div class="row">
                                         <div class="col-sm-3 text-center my-auto">
-                                            <h6>Positif au COVID-19.</h6>
+                                            <h6 class="mb-0">Positif au COVID-19.</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
                                                Vous êtes déclaré positif au covid depuis le ${user.dateContamination}.<br/>
                                                Votre état sera réinitialisé au bout de 15 jours.
                                         </div>
-                                    </div>
                                 </c:when>
                                 <c:otherwise>
-                                    <button onclick="showConfirmation()" class="list-group-item list-group-item-action list-group-item-warning">Je suis positif au covid</button>
-                                    <div id="confirmPositive" class="text-center text-info" style="display:none;">
+                                    <button onclick="showConfirmation()" class="mx-auto btn btn-warning mt-1 mb-1">Je suis positif au covid</button>
+                                    <div id="confirmPositive" class="mx-auto text-center text-info" style="display:none;">
                                         Cette action est irréversible pour 15 jours, êtes vous sûr de vouloir vous déclarer positif au COVID ?
                                         <div id="fail" class="text-center text-danger"></div>
                                         <div class="mb-1">
@@ -114,8 +108,6 @@
                                     </div>
                                 </c:otherwise>
                             </c:choose>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
