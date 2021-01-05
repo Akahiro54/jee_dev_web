@@ -199,8 +199,8 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Nom</th>
                     <th>Pseudo</th>
+                    <th>Nom</th>
                     <th>Email</th>
                     <th>Date Inscription</th>
                     <th>Rôle</th>
@@ -221,10 +221,13 @@
                                 <img src="data:image/jpeg;base64,${ami.image}" alt="" width="50" height="50"/>
                             </c:otherwise>
                         </c:choose>
+                    <c:out value="${listutil.pseudo}" />
                     </td>
-                    <td><c:out value="${listutil.nom}" /><c:out value="${listutil.prenom}" /></td>
+                    <td><c:out value="${listutil.nom}" />  <c:out value="${listutil.prenom}" /></td>
+                    <td><c:out value="${listutil.email}" /></td>
                     <td><c:out value="${listutil.date}" /></td>
                     <td><c:out value="${listutil.role}" /></td>
+                    <td></td>
                     <td><span class="status text-success">&bull;</span> Active</td>
                     <td>
                         <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
