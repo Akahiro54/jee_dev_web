@@ -1,5 +1,7 @@
 package servlets;
 
+import beans.Notification;
+import beans.TypeNotification;
 import beans.Utilisateur;
 import dao.AdminDAO;
 import dao.AmisDAO;
@@ -32,12 +34,22 @@ public class PannelAdmin extends HttpServlet {
         req.setAttribute("listeUtilisateur", listeUtilisateur);
 
 
-        if(utilisateur == null) { // if no user, redirect to home page
-            resp.sendRedirect(req.getContextPath()+"/index.jsp");
+        if (utilisateur == null) { // if no user, redirect to home page
+            resp.sendRedirect(req.getContextPath() + "/index.jsp");
         } else {
-            req.setAttribute(Util.ATT_FORM_USER,utilisateur);
-            this.getServletContext().getRequestDispatcher( "/user-restricted/pannel_admin.jsp" ).forward( req, resp );
+            req.setAttribute(Util.ATT_FORM_USER, utilisateur);
+            this.getServletContext().getRequestDispatcher("/user-restricted/pannel_admin.jsp").forward(req, resp);
         }
+
+        String delete = (String) req.getParameter("delete");
+        if (utilisateur != null && delete != null) {
+                int idUtilisateur = Integer.parseInt(delete);
+
+                if (adminDAO.delete(idUtilisateur)) {
+                    resp.sendRedirect(req.getContextPath() + "/user-restricted/pannel_admin");
+                }
+            }
+
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

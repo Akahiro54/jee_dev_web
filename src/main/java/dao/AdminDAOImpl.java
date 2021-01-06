@@ -23,10 +23,10 @@ public class AdminDAOImpl implements AdminDAO{
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
-        String request = "SELECT id,email,pseudo,nom,prenom,date_naissance,role,image FROM utilisateur";
+        String request = "SELECT id,email,pseudo,nom,prenom,date_naissance,role,image FROM utilisateur WHERE id <> ?";
         try {
             connection = daoFactory.getConnection();
-            preparedStatement = SQLTools.initPreparedRequest(connection,request,false);
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false,idUtilisateur);
             ResultSet result = preparedStatement.executeQuery();
             while(result.next()) {
                 Utilisateur util = new Utilisateur();
@@ -45,5 +45,24 @@ public class AdminDAOImpl implements AdminDAO{
             System.err.println("ID user: " + idUtilisateur);
         }
         return listeUtilisateur;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = "DELETE FROM utilisateur WHERE id = ?";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false,id);
+            preparedStatement.executeUpdate();
+            return true;
+
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        }
+        return false;
+
     }
 }
