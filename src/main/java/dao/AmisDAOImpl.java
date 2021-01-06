@@ -81,11 +81,17 @@ public class AmisDAOImpl implements AmisDAO{
         Connection connection = null;
         ResultSet resultSet = null;
         String request = "SELECT  id, pseudo, image FROM utilisateur " +
-                "WHERE pseudo LIKE ? AND id != ? " +
-                "AND id NOT IN (SELECT u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE a.ami1 = ? OR a.ami2 = ?)";
+                         "WHERE pseudo LIKE ? AND id != ? " +
+                         "AND id NOT IN " +
+                         "( " +
+                             "SELECT u.id FROM amis a INNER JOIN utilisateur u ON CASE WHEN a.ami1 = ? THEN a.ami2 ELSE a.ami1 END = u.id WHERE a.ami1 = ? OR a.ami2 = ? " +
+                             "UNION " +
+                             "SELECT u.id FROM notification n INNER JOIN utilisateur u ON CASE WHEN n.source = ? THEN n.destination ELSE n.source END = u.id WHERE " +
+                             "(n.source = ? OR n.destination = ?) AND n.type='ami' AND n.etat='non_lue'" +
+                         ")";
         try {
             connection = daoFactory.getConnection();
-            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, nickname, idUtilisateur, idUtilisateur, idUtilisateur, idUtilisateur);
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, nickname, idUtilisateur, idUtilisateur, idUtilisateur, idUtilisateur, idUtilisateur, idUtilisateur, idUtilisateur);
             preparedStatement.setString(1, "%" + nickname + "%");
             ResultSet result = preparedStatement.executeQuery();
             while(result.next()) {
