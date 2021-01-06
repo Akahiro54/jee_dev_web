@@ -113,6 +113,15 @@
         <url-pattern>/user-restricted/pannel_admin</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AjouterUtilisateur</servlet-name>
+        <servlet-class>servlets.AjouterUtilisateur</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjouterUtilisateur</servlet-name>
+        <url-pattern>/user-restricted/ajout_utilisateur</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>CreerActivite</servlet-name>

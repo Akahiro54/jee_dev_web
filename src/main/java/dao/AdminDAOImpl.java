@@ -23,7 +23,7 @@ public class AdminDAOImpl implements AdminDAO{
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
-        String request = "SELECT id,email,pseudo,nom,prenom,date_naissance,role FROM utilisateur";
+        String request = "SELECT id,email,pseudo,nom,prenom,date_naissance,role,image FROM utilisateur";
         try {
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false);
@@ -37,6 +37,7 @@ public class AdminDAOImpl implements AdminDAO{
                 util.setPrenom(result.getString(5));
                 util.setDate(result.getDate(6));
                 util.setRole(result.getString(7));
+                util.setImage(Util.convertUserImage(result.getBytes(8)));
                 listeUtilisateur.add(util);
             }
         } catch(Exception e) {
