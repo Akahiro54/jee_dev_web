@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 02 jan. 2021 à 20:45
+-- Généré le : mer. 06 jan. 2021 à 23:49
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 8.0.0
 
@@ -79,7 +79,6 @@ CREATE TABLE `notification` (
   `destination` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
 -- --------------------------------------------------------
 
 --
@@ -100,7 +99,6 @@ CREATE TABLE `utilisateur` (
   `image` mediumblob DEFAULT NULL,
   `nomimage` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 
 --
 -- Index pour les tables déchargées
@@ -164,13 +162,13 @@ ALTER TABLE `lieu`
 -- AUTO_INCREMENT pour la table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées
@@ -180,22 +178,22 @@ ALTER TABLE `utilisateur`
 -- Contraintes pour la table `activite`
 --
 ALTER TABLE `activite`
-  ADD CONSTRAINT `fk_activite` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE NO ACTION,
-  ADD CONSTRAINT `fk_lieu` FOREIGN KEY (`lieu`) REFERENCES `lieu` (`id`) ON DELETE NO ACTION;
+  ADD CONSTRAINT `fk_activite` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_lieu` FOREIGN KEY (`lieu`) REFERENCES `lieu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `amis`
 --
 ALTER TABLE `amis`
-  ADD CONSTRAINT `fk_ami1` FOREIGN KEY (`ami1`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_ami2` FOREIGN KEY (`ami2`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_ami1` FOREIGN KEY (`ami1`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_ami2` FOREIGN KEY (`ami2`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `notification`
 --
 ALTER TABLE `notification`
-  ADD CONSTRAINT `fk_destination` FOREIGN KEY (`destination`) REFERENCES `utilisateur` (`id`),
-  ADD CONSTRAINT `fk_source` FOREIGN KEY (`source`) REFERENCES `utilisateur` (`id`);
+  ADD CONSTRAINT `fk_destination` FOREIGN KEY (`destination`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_source` FOREIGN KEY (`source`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
