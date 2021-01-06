@@ -29,17 +29,50 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         return null;
     }
 
-    //TODO implement method
+
     @Override
-    public List<Utilisateur> getAll() {
-        return null;
+    public List<Utilisateur> getOtherUsers(int idUser) {
+        ArrayList<Utilisateur> listeUtilisateur = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = "SELECT * FROM utilisateur WHERE id <> ?";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false,idUser);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                Utilisateur util = UtilisateurDAOImpl.map(resultSet);
+                listeUtilisateur.add(util);
+            }
+        } catch(Exception e) {
+            System.err.println("Cannot get other users : " + e.toString());
+            System.err.println("ID user: " + idUser);
+        } finally {
+            SQLTools.close(connection, resultSet, preparedStatement);
+        }
+        return listeUtilisateur;
     }
 
 
-    //TODO implement method
+
     @Override
-    public boolean delete(Utilisateur utilisateur) {
-        return false;
+    public boolean delete(int idUtilisateur) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "DELETE FROM utilisateur WHERE id = ?";
+        boolean deleted = false;
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false,idUtilisateur);
+            preparedStatement.executeUpdate();
+            deleted = true;
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        } finally {
+            SQLTools.close(connection,preparedStatement);
+        }
+        return deleted;
     }
 
 

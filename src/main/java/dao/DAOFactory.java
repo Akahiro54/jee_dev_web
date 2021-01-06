@@ -77,11 +77,12 @@ public class DAOFactory {
         return new LieuDAOImpl(this);
     }
 
-    public NotificationDAO getNotificationDAO() { return new NotificationDAOImpl(this); }
-
-    public AmisDAO getAmisDAO() { return new AmisDAOImpl(this); }
-
-    public AdminDAO getAdminDAO() {
-        return new AdminDAOImpl(this);
+    public NotificationDAO getNotificationDAO() {
+        return new NotificationDAOImpl(this);
     }
+
+    public AmisDAO getAmisDAO() {
+        return new AmisDAOImpl(this);
+    }
+
 }

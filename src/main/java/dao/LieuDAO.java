@@ -18,4 +18,6 @@ public interface LieuDAO {
 
     boolean delete(Lieu place);
 
+    Lieu get(int idPlace);
+
 }

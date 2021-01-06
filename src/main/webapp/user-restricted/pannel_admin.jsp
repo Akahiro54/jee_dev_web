@@ -11,7 +11,7 @@
                         <h2><b>Utilisateurs</b></h2>
                     </div>
                     <div class="col-sm-7">
-                        <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>Ajouter un utilisateur</span></a>
+                        <a href="<%=request.getContextPath()%>/user-restricted/ajout_utilisateur" class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>Ajouter un utilisateur</span></a>
                     </div>
                 </div>
             </div>
@@ -44,10 +44,9 @@
                             <c:out value="${listutil.pseudo}" />
                         </td>
                         <td><c:out value="${listutil.nom}" />  <c:out value="${listutil.prenom}" /></td>
-                        <td><c:out value="${listutil.email}" /></td>
-                        <td><c:out value="${listutil.date}" /></td>
-                        <td><c:out value="${listutil.role}" /></td>
-                        <td></td>
+                        <td><c:out value="${listutil.email}" /> </td>
+                        <td><c:out value="${listutil.date}" /> </td>
+                        <td><c:out value="${listutil.role}" /> </td>
                         <td><span class="status text-success">&bull;</span> Active</td>
                         <td>
                             <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>

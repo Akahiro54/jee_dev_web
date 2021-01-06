@@ -13,13 +13,13 @@ public interface UtilisateurDAO{
 
     Utilisateur getByEmail(String email);
 
-    List<Utilisateur> getAll();
+    List<Utilisateur> getOtherUsers(int idUser);
 
     boolean add(Utilisateur utilisateur);
 
     boolean update(Utilisateur utilisateur, InputStream finput, Object... data);
 
-    boolean delete(Utilisateur utilisateur);
+    boolean delete(int idUser);
 
     boolean canLogin(Utilisateur utilisateur);
 

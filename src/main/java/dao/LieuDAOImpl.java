@@ -124,6 +124,30 @@ public class LieuDAOImpl implements LieuDAO{
         return false;
     }
 
+    @Override
+    public Lieu get(int idPlace) {
+        ResultSet resultat = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "SELECT * FROM lieu WHERE id = ? ";
+        Lieu lieu = new Lieu();
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idPlace);
+            resultat = preparedStatement.executeQuery();
+            if(resultat.next()) {
+                lieu = LieuDAOImpl.map(resultat);
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot get the place : " + e.getMessage());
+            System.err.println("ID given : " + idPlace);
+            e.printStackTrace();
+        } finally {
+            SQLTools.close(connection,resultat,preparedStatement);
+        }
+        return lieu;
+    }
+
 
     private static Lieu map(ResultSet resultSet) throws SQLException {
         Lieu lieu = new Lieu();

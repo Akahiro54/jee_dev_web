@@ -1,11 +1,8 @@
 package servlets;
 
-import beans.Notification;
-import beans.TypeNotification;
 import beans.Utilisateur;
-import dao.AdminDAO;
-import dao.AmisDAO;
 import dao.DAOFactory;
+import dao.UtilisateurDAO;
 import tools.Util;
 
 import javax.servlet.ServletException;
@@ -18,38 +15,32 @@ import java.util.ArrayList;
 
 public class PannelAdmin extends HttpServlet {
 
-    private AdminDAO adminDAO;
+    private UtilisateurDAO utilisateurDAO;
 
     @Override
     public void init() throws ServletException {
-        this.adminDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getAdminDAO();
+        this.utilisateurDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getUtilisateurDAO();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur) session.getAttribute(Util.ATT_SESSION_USER);
-
-        ArrayList<Utilisateur> listeUtilisateur = new ArrayList<>(adminDAO.getUtilisateur(utilisateur.getId()));
-        req.setAttribute("listeUtilisateur", listeUtilisateur);
-
-
-        if (utilisateur == null) { // if no user, redirect to home page
-            resp.sendRedirect(req.getContextPath() + "/index.jsp");
-        } else {
-            req.setAttribute(Util.ATT_FORM_USER, utilisateur);
+        if (utilisateur != null) {
+            ArrayList<Utilisateur> listeUtilisateur = new ArrayList<>(utilisateurDAO.getOtherUsers(utilisateur.getId()));
+            req.setAttribute("listeUtilisateur", listeUtilisateur);
+            String delete = (String) req.getParameter("delete");
+            if (delete != null) {
+                try {
+                    int idUtilisateur = Integer.parseInt(delete);
+                    if (utilisateurDAO.delete(idUtilisateur)) {
+                        resp.sendRedirect(req.getContextPath() + "/user-restricted/pannel_admin");
+                        return;
+                    }
+                } catch (Exception e) { }
+            }
             this.getServletContext().getRequestDispatcher("/user-restricted/pannel_admin.jsp").forward(req, resp);
         }
-
-        String delete = (String) req.getParameter("delete");
-        if (utilisateur != null && delete != null) {
-                int idUtilisateur = Integer.parseInt(delete);
-
-                if (adminDAO.delete(idUtilisateur)) {
-                    resp.sendRedirect(req.getContextPath() + "/user-restricted/pannel_admin");
-                }
-            }
-
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
