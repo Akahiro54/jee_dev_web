@@ -17,8 +17,12 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-datepicker.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/site.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/amis.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin_panel.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/material-icons.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/material-icons.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/font-awesome.min.css">
 
-
+    <script src="<%=request.getContextPath()%>/js/popper.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.js"></script>
