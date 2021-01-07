@@ -24,5 +24,7 @@ public interface ActiviteDAO {
 
     boolean delete(int idActivity);
 
+    boolean isPlaceInActivity(int idActivity, int idPlace);
+
 
 }

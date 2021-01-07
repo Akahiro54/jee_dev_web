@@ -94,7 +94,6 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         boolean exists = false;
         PreparedStatement preparedStatement = null;
         Connection connection = null;
-        ResultSet resultSet = null;
         String request = "SELECT count(*) FROM activite WHERE id = ?";
         try {
             connection = daoFactory.getConnection();
@@ -108,6 +107,8 @@ public class ActiviteDAOImpl implements ActiviteDAO{
             System.err.println("Cannot check if activity exists : " + e.getMessage());
             System.err.println("Activity ID : " + idActivity);
             exists = false;
+        } finally {
+            SQLTools.close(connection,preparedStatement);
         }
         return exists;
     }
@@ -185,6 +186,30 @@ public class ActiviteDAOImpl implements ActiviteDAO{
             SQLTools.close(connection,preparedStatement);
         }
         return deleted;
+    }
+
+    @Override
+    public boolean isPlaceInActivity(int idActivity, int idPlace) {
+        boolean isInActivity = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "SELECT count(*) FROM activite WHERE id = ? AND lieu = ?";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false,idActivity, idPlace);
+            preparedStatement.setInt(1,idActivity);
+            ResultSet resultat = preparedStatement.executeQuery();
+            while(resultat.next()) {
+                if(resultat.getInt(1) >= 1) isInActivity = isInActivity;
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot check if place is in activity : " + e.getMessage());
+            System.err.println("Activity ID : " + idActivity);
+            isInActivity = false;
+        } finally {
+            SQLTools.close(connection,preparedStatement);
+        }
+        return isInActivity;
     }
 
     private static Activite mapActivity(ResultSet resultSet) throws SQLException {
