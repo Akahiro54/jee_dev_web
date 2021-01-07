@@ -10,9 +10,6 @@
                     <div class="col-sm-5">
                         <h2><b>Utilisateurs</b></h2>
                     </div>
-                    <div class="col-sm-7">
-                        <a href="<%=request.getContextPath()%>/user-restricted/ajout_utilisateur" class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>Ajouter un utilisateur</span></a>
-                    </div>
                 </div>
             </div>
             <table class="table table-striped table-hover">
