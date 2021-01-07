@@ -136,6 +136,21 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         return activite;
     }
 
+    @Override
+    public boolean isPlaceInActivity(int idActivity, int idPlace) {
+        return false;
+    }
+
+    @Override
+    public Activite get(int idActivity) {
+        return null;
+    }
+
+    @Override
+    public boolean isUserInActivity(int idActivity, int idUser) {
+        return false;
+    }
+
 
     @Override
     public Map<Activite, Lieu> getUserActivitiesWithPlaces(int idUtilisateur) {
@@ -241,9 +256,11 @@ public class ActiviteDAOImpl implements ActiviteDAO{
     private static Activite mapActivity(ResultSet resultSet) throws SQLException {
         Activite activite = new Activite();
         activite.setId(resultSet.getInt(1));
+        activite.setIdUtilisateur(resultSet.getInt(2));
         activite.setNom(resultSet.getString(3));
         LocalDateTime debut = ((Timestamp)resultSet.getObject(4)).toLocalDateTime();
         LocalDateTime fin = ((Timestamp)resultSet.getObject(5)).toLocalDateTime();
+        activite.setIdLieu(resultSet.getInt(6));
         activite.setDateDebut(debut.toLocalDate());
         activite.setHeureDebut(debut.toLocalTime());
         activite.setDateFin(fin.toLocalDate());
