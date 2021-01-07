@@ -120,7 +120,7 @@
                         <td><c:out value="${listLieux.description}" /> </td>
                         <td><c:out value="${listLieux.adresse}" /> </td>
                         <td>
-                            <a href="<%=request.getContextPath()%>/user-restricted/modifier_utilisateur?u=<c:out value="${listutil.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="<%=request.getContextPath()%>/user-restricted/modifier_lieu?l=<c:out value="${listLieux.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
                             <a href="<%=request.getContextPath()%>/user-restricted/pannel_admin?deleteLieu=<c:out value="${listLieux.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
                         </td>
                     </tr>

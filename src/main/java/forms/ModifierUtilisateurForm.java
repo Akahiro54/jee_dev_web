@@ -1,5 +1,6 @@
 package forms;
 
+import beans.Activite;
 import beans.Utilisateur;
 import dao.UtilisateurDAO;
 import tools.Util;
@@ -29,15 +30,14 @@ public class ModifierUtilisateurForm {
         this.utilisateurDAO = utilisateurDAO;
     }
 
-    public void modifierUtilisateur(HttpServletRequest request ) throws IOException, ServletException {
-        Utilisateur utilisateur = (Utilisateur) request.getAttribute(Util.ATT_FORM_USER);
+    public void modifierUtilisateur(HttpServletRequest request, int idUtilisateur) throws IOException, ServletException {
+        Utilisateur utilisateur = new Utilisateur(); // initialize utilisateur
 
-        String prenom = request.getParameter("modifUserprenom");
-        String nom = request.getParameter("modifUsernom");
-        String email = request.getParameter("modifUseremail");
-        String date = request.getParameter("modifUserdate");
-        String role = request.getParameter("modifUserrole");
-        //String ancienEmail = utilisateur.getEmail();
+        String prenom = request.getParameter("modifprenom");
+        String nom = request.getParameter("modifnom");
+        String email = request.getParameter("modifemail");
+        String date = request.getParameter("modifdate");
+        String role = request.getParameter("modifrole");
 
         InputStream inputStream = null;
 
@@ -75,12 +75,12 @@ public class ModifierUtilisateurForm {
         if ( errors.isEmpty() ) {
             if (nomImage.equals("\"\""))
             {
-                if (!utilisateurDAO.updateFromAdmin(utilisateur,null, prenom, nom, email, date2,role, utilisateur.getId())) {
+                if (!utilisateurDAO.updateFromAdmin(utilisateur,null, prenom, nom, email, date2,role, idUtilisateur)) {
                     addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
                 }
             }
             else{
-                if (!utilisateurDAO.updateFromAdmin(utilisateur,filePart.getInputStream(), prenom, nom, email, date2,nomImage,role,utilisateur.getId())) {
+                if (!utilisateurDAO.updateFromAdmin(utilisateur,filePart.getInputStream(), prenom, nom, email, date2,nomImage,role,idUtilisateur)) {
                     addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
                 }
             }

@@ -41,7 +41,6 @@ public class PannelAdmin extends HttpServlet {
 
             List<Activite> listeActivite = activiteDAO.getAllActivities();
             req.setAttribute("listeActivite",listeActivite);
-            System.out.println(listeActivite.toString());
 
             List<Lieu> listeLieux = lieuDAO.getAllPlaces();
             req.setAttribute("listeLieux",listeLieux);

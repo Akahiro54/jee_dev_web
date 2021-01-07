@@ -1,8 +1,11 @@
 package servlets;
 
+import beans.Activite;
+import beans.Lieu;
 import beans.Utilisateur;
 import dao.DAOFactory;
 import dao.UtilisateurDAO;
+import forms.ActiviteForm;
 import forms.ModifierUtilisateurForm;
 import tools.Util;
 
@@ -10,7 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ModifierUtilisateur extends HttpServlet {
 
@@ -42,13 +47,13 @@ public class ModifierUtilisateur extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Utilisateur utilisateur = utilisateurDAO.getById(idUtil);
-
-        req.setAttribute(Util.ATT_FORM_USER, utilisateur);
 
         ModifierUtilisateurForm form = new ModifierUtilisateurForm(utilisateurDAO);
+        form.modifierUtilisateur(req,idUtil);
         req.setAttribute(Util.ATT_FORM, form);
-        form.modifierUtilisateur(req);
+        Utilisateur utilisateur = utilisateurDAO.getById(idUtil);
+        req.setAttribute(Util.ATT_FORM_USER, utilisateur);
+
 
         if(form.getErrors().isEmpty()) {
             resp.sendRedirect(req.getContextPath()+"/user-restricted/pannel_admin"); // Returns to the main page

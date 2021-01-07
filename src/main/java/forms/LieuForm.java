@@ -1,9 +1,11 @@
 package forms;
 
+import beans.Activite;
 import beans.Lieu;
 import dao.LieuDAO;
 import tools.Util;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +47,31 @@ public class LieuForm {
         }
         return lieu;
     }
+
+    public Lieu modifierLieu(HttpServletRequest request, int idLieu) {
+        Lieu lieu = new Lieu(); // initialize activity
+        LieuFields fields = LieuFields.FIELD_NAME; //initialize fields to first field
+        for(int i = 0 ; i < LieuFields.values().length; i++) { // iterate over fields
+            try {
+                String currentField = fields.getFieldName();
+                String currentFieldValue = getFieldValue(request, currentField);
+                validateField(fields, lieu, currentFieldValue);
+            } catch (Exception e) {
+                addError(fields.getFieldName(), e.getMessage());
+            }
+            fields = fields.next();
+        }
+
+        // if there are no errors
+        if ( errors.isEmpty() ) {
+//          Tries to save the activity to the database
+            if (!lieuDAO.update(lieu,idLieu)) {
+                addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
+            }
+        }
+        return lieu;
+    }
+
 
     public Map<String, String> getErrors() {
         return errors;

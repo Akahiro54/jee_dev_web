@@ -128,8 +128,15 @@ public class LieuDAOImpl implements LieuDAO{
         try {
             connection = daoFactory.getConnection();
             request = "UPDATE lieu SET nom = ?, description = ?, adresse = ?, latitude = ?, longitude = ? WHERE id = ? ";
-            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, data, place.getId());
+            preparedStatement = connection.prepareStatement(request);
+            preparedStatement.setObject(1,place.getNom());
+            preparedStatement.setObject(2,place.getDescription());
+            preparedStatement.setObject(3,place.getAdresse());
+            preparedStatement.setObject(4,place.getLatitude());
+            preparedStatement.setObject(5,place.getLongitude());
+            preparedStatement.setObject(6,data[0]);
             preparedStatement.executeUpdate();
+
             updated = true;
         } catch(Exception e) {
             System.err.println("Cannot update the place : " + e.getMessage());

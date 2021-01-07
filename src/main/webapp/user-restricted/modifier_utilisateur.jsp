@@ -20,43 +20,43 @@
                                 <div><p></p></div>
                                 <hr>
                                 <div class="form-inline col-md-10 col-sm-9 col-xs-12">
-                                    <input name = "modifphotouser" type="file" class="file-uploader pull-left">
+                                    <input name = "modifphoto" type="file" class="file-uploader pull-left">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Prénom</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input name = "modifUserprenom" type="text" class="form-control" value="${user.prenom}">
+                                    <input name = "modifprenom" type="text" class="form-control" value="${user.prenom}">
                                     <span class="erreur text-danger text-center">${form.errors['prenom']}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Nom</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input name = "modifUsernom" type="text" class="form-control" value="${user.nom}">
+                                    <input name = "modifnom" type="text" class="form-control" value="${user.nom}">
                                     <span class="erreur text-danger text-center">${form.errors['nom']}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2  col-sm-3 col-xs-12 control-label">Email</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input name = "modifUseremail" type="email" class="form-control" value="${user.email}">
+                                    <input name = "modifemail" type="email" class="form-control" value="${user.email}">
                                     <span class="erreur text-danger text-center">${form.errors['email']}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Date de naissance</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input name = "modifUserdate" type="date" class="form-control" value="${user.date}">
+                                    <input name = "modifdate" type="date" class="form-control" value="${user.date}">
                                     <span class="erreur text-danger text-center">${form.errors['date_naissance']}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Rôle de l'utilisateur</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <select name="modifUserrole" id="modifUserrole">
-                                        <option value="utilisateur">Utilisateur</option>
-                                        <option value="admin">Admin</option>
+                                    <select name="modifrole" >
+                                        <option value="USER">Utilisateur</option>
+                                        <option value="ADMIN">Admin</option>
                                     </select>
                                 </div>
                             </div>

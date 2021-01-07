@@ -133,6 +133,16 @@
         <url-pattern>/user-restricted/modifier_activite</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ModifLieu</servlet-name>
+        <servlet-class>servlets.ModifierLieu</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifLieu</servlet-name>
+        <url-pattern>/user-restricted/modifier_lieu</url-pattern>
+    </servlet-mapping>
+
+
 
     <servlet>
         <servlet-name>PannelAdmin</servlet-name>
