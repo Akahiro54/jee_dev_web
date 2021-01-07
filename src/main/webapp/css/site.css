@@ -8,6 +8,11 @@ html, body {
     font-family: Inter;
 }
 
+.map {
+    height: 400px;
+    width: 100%;
+}
+
 .desac-lien {
     color:inherit !important;
     text-decoration: none !important;
