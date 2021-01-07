@@ -44,7 +44,16 @@
                         <td><c:out value="${listutil.email}" /> </td>
                         <td><c:out value="${listutil.date}" /> </td>
                         <td><c:out value="${listutil.role}" /> </td>
-                        <td><span class="status text-success">&bull;</span> Active</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${listutil.contamine == false}">
+                                    <span class="status text-success">&bull;</span> Covid
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="status text-danger">&bull;</span> Covid
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                         <td>
                             <a href="<%=request.getContextPath()%>/user-restricted/modifier_utilisateur?u=<c:out value="${listutil.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
                             <a href="<%=request.getContextPath()%>/user-restricted/pannel_admin?delete=<c:out value="${listutil.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
