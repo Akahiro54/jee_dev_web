@@ -6,7 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
-<footer class="mt-3 footer fixed-bottom fond-element">
+<div id="page-container">
+    <div id="content-wrap">
+
+    </div>
+</div>
+    <footer class="fond-element" id="pied-page">
     <div class="text-center font-weight-bold">2021 &copy; Application PreventCovid</div>
 </footer>
 </body>

@@ -32,7 +32,7 @@
 
 
 </head>
-<body class="fond">
+<body class="fond" id="page">
 <nav class="fond-element barre navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">Accueil</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
