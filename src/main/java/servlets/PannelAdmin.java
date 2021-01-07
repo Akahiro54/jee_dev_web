@@ -1,9 +1,11 @@
 package servlets;
 
 import beans.Activite;
+import beans.Lieu;
 import beans.Utilisateur;
 import dao.ActiviteDAO;
 import dao.DAOFactory;
+import dao.LieuDAO;
 import dao.UtilisateurDAO;
 import tools.Util;
 
@@ -20,11 +22,13 @@ public class PannelAdmin extends HttpServlet {
 
     private UtilisateurDAO utilisateurDAO;
     private ActiviteDAO activiteDAO;
+    private LieuDAO lieuDAO;
 
     @Override
     public void init() throws ServletException {
         this.utilisateurDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getUtilisateurDAO();
         this.activiteDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getActiviteDAO();
+        this.lieuDAO = ((DAOFactory)getServletContext().getAttribute(Util.ATT_DAO_FACTORY)).getLieuDAO();
     }
 
     @Override
@@ -38,8 +42,12 @@ public class PannelAdmin extends HttpServlet {
             List<Activite> listeActivite = activiteDAO.getAllActivities();
             req.setAttribute("listeActivite",listeActivite);
 
+            List<Lieu> listeLieux = lieuDAO.getAllPlaces();
+            req.setAttribute("listeLieux",listeLieux);
+
             String delete = (String) req.getParameter("delete");
             String deleteActivite = req.getParameter("deleteActivite");
+            String deleteLieu = req.getParameter("deleteLieu");
 
             if (delete != null) {
                 try {
@@ -55,6 +63,16 @@ public class PannelAdmin extends HttpServlet {
                 try {
                     int idActivite = Integer.parseInt(deleteActivite);
                     if (activiteDAO.delete(idActivite)) {
+                        resp.sendRedirect(req.getContextPath() + "/user-restricted/pannel_admin");
+                        return;
+                    }
+                } catch (Exception e) { }
+            }
+
+            if (deleteLieu != null) {
+                try {
+                    int idLieu = Integer.parseInt(deleteLieu);
+                    if (lieuDAO.delete(idLieu)) {
                         resp.sendRedirect(req.getContextPath() + "/user-restricted/pannel_admin");
                         return;
                     }
