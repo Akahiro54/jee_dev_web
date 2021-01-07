@@ -38,12 +38,14 @@ public class PannelAdmin extends HttpServlet {
         if (utilisateur != null) {
             ArrayList<Utilisateur> listeUtilisateur = new ArrayList<>(utilisateurDAO.getOtherUsers(utilisateur.getId()));
             req.setAttribute("listeUtilisateur", listeUtilisateur);
+            req.setAttribute("nbUtilisateur",listeUtilisateur.size());
 
             List<Activite> listeActivite = activiteDAO.getAllActivities();
             req.setAttribute("listeActivite",listeActivite);
 
             List<Lieu> listeLieux = lieuDAO.getAllPlaces();
             req.setAttribute("listeLieux",listeLieux);
+            req.setAttribute("nbLieux",listeLieux.size());
 
             String delete = (String) req.getParameter("delete");
             String deleteActivite = req.getParameter("deleteActivite");
