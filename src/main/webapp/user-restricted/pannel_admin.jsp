@@ -43,7 +43,16 @@
                         <td><c:out value="${listutil.nom}" />  <c:out value="${listutil.prenom}" /></td>
                         <td><c:out value="${listutil.email}" /> </td>
                         <td><c:out value="${listutil.date}" /> </td>
-                        <td><c:out value="${listutil.role}" /> </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${listutil.role == 'admin'}">
+                                    Admin
+                                </c:when>
+                                <c:otherwise>
+                                    Utilisateur
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                         <td>
                             <c:choose>
                                 <c:when test="${listutil.contamine == false}">

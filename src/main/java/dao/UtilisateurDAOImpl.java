@@ -372,6 +372,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         return updated;
     }
 
+
     private static Utilisateur map(ResultSet resultSet) throws SQLException {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setId(resultSet.getInt(1));
