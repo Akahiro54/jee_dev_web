@@ -176,12 +176,12 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         try {
             connection = daoFactory.getConnection();
             request = "UPDATE activite SET utilisateur = ?, nom = ?, debut = ?, fin = ?, lieu = ? WHERE id = ? ";
-            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, data);
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, data, activite.getId());
             preparedStatement.executeUpdate();
             updated = true;
         } catch(Exception e) {
             System.err.println("Cannot update the activity : " + e.getMessage());
-            System.err.println("User object : " + activite.toString());
+            System.err.println("Activity object : " + activite.toString());
             System.err.println("New data : " + Arrays.toString(data));
             updated = false;
         } finally {

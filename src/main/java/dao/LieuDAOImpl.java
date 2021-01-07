@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LieuDAOImpl implements LieuDAO{
@@ -116,7 +117,25 @@ public class LieuDAOImpl implements LieuDAO{
 
     @Override
     public boolean update(Lieu place, Object... data) {
-        return false;
+        boolean updated = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = null;
+        try {
+            connection = daoFactory.getConnection();
+            request = "UPDATE lieu SET nom = ?, description = ?, adresse = ?, latitude = ?, longitude = ? WHERE id = ? ";
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, data, place.getId());
+            preparedStatement.executeUpdate();
+            updated = true;
+        } catch(Exception e) {
+            System.err.println("Cannot update the place : " + e.getMessage());
+            System.err.println("Place object : " + place.toString());
+            System.err.println("New data : " + Arrays.toString(data));
+            updated = false;
+        } finally {
+            SQLTools.close(connection,preparedStatement);
+        }
+        return updated;
     }
 
     @Override
