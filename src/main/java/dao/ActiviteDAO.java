@@ -26,5 +26,7 @@ public interface ActiviteDAO {
 
     boolean isPlaceInActivity(int idActivity, int idPlace);
 
+    Activite get(int idActivity);
+
 
 }

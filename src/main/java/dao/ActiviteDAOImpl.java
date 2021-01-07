@@ -212,6 +212,30 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         return isInActivity;
     }
 
+    @Override
+    public Activite get(int idActivity) {
+        ResultSet resultat = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "SELECT * FROM activite WHERE id = ? ";
+        Activite activite = new Activite();
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idActivity);
+            resultat = preparedStatement.executeQuery();
+            if(resultat.next()) {
+                activite = ActiviteDAOImpl.mapActivity(resultat);
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot get the activity : " + e.getMessage());
+            System.err.println("ID given : " + idActivity);
+            e.printStackTrace();
+        } finally {
+            SQLTools.close(connection,resultat,preparedStatement);
+        }
+        return activite;
+    }
+
     private static Activite mapActivity(ResultSet resultSet) throws SQLException {
         Activite activite = new Activite();
         activite.setId(resultSet.getInt(1));
