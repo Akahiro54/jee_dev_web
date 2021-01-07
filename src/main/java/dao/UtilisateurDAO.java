@@ -33,4 +33,6 @@ public interface UtilisateurDAO{
 
     boolean updateContamine(Utilisateur utilisateur);
 
+    boolean updateFromAdmin(Utilisateur utilisateur,InputStream finput,Object... data);
+
 }

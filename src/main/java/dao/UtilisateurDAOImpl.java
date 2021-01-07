@@ -29,7 +29,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         ResultSet resultat = null;
         PreparedStatement preparedStatement = null;
         Connection connection = null;
-        String request = "SELECT * FROM lieu WHERE id = ? ";
+        String request = "SELECT * FROM utilisateur WHERE id = ? ";
         Utilisateur utilisateur = new Utilisateur();
         try {
             connection = daoFactory.getConnection();
@@ -328,6 +328,44 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         } catch(Exception e) {
             System.err.println("Cannot update the user contamination state : " + e.getMessage());
             System.err.println("User object : " + utilisateur.toString());
+            updated =false;
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return updated;
+    }
+
+    @Override
+    public boolean updateFromAdmin(Utilisateur utilisateur,InputStream finput,Object... data) {
+        System.out.println("testtttttttttttttttttttttttttttttttttt");
+        boolean updated = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = null;
+        try {
+            connection = daoFactory.getConnection();
+            if(finput != null) { // updating user with image
+                request = "UPDATE utilisateur SET image = ?, prenom = ?, nom = ?, email = ?, date_naissance = ?, nomimage = ?, role = ? WHERE id = ? ";
+                preparedStatement = connection.prepareStatement(request);
+                preparedStatement.setBlob(1, finput);
+                preparedStatement.setObject(2,data[0]);
+                preparedStatement.setObject(3,data[1]);
+                preparedStatement.setObject(4,data[2]);
+                preparedStatement.setObject(5,data[3]);
+                preparedStatement.setObject(6,data[4]);
+                preparedStatement.setObject(7,data[5]);
+                preparedStatement.setObject(8,data[6]);
+            } else { // normal update
+                request = "UPDATE utilisateur SET prenom = ?, nom = ?, email = ?, date_naissance = ?, role = ? WHERE id = ? ";
+                preparedStatement = SQLTools.initPreparedRequest(connection,request,false, data);
+            }
+            preparedStatement.executeUpdate();
+            updated = true;
+        } catch(Exception e) {
+            System.err.println("Cannot update the user : " + e.getMessage());
+            System.err.println("User object : " + utilisateur.toString());
+            System.err.println("New data : " + Arrays.toString(data));
             updated =false;
         } finally {
             SQLTools.close(connection,resultSet,preparedStatement);

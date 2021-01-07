@@ -105,21 +105,22 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ModifUtilisateur</servlet-name>
+        <servlet-class>servlets.ModifierUtilisateur</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifUtilisateur</servlet-name>
+        <url-pattern>/user-restricted/modifier_utilisateur</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>PannelAdmin</servlet-name>
         <servlet-class>servlets.PannelAdmin</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PannelAdmin</servlet-name>
         <url-pattern>/user-restricted/pannel_admin</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>AjouterUtilisateur</servlet-name>
-        <servlet-class>servlets.AjouterUtilisateur</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AjouterUtilisateur</servlet-name>
-        <url-pattern>/user-restricted/ajout_utilisateur</url-pattern>
     </servlet-mapping>
 
 

@@ -46,7 +46,7 @@
                         <td><c:out value="${listutil.role}" /> </td>
                         <td><span class="status text-success">&bull;</span> Active</td>
                         <td>
-                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="<%=request.getContextPath()%>/user-restricted/modifier_utilisateur?u=<c:out value="${listutil.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
                             <a href="<%=request.getContextPath()%>/user-restricted/pannel_admin?delete=<c:out value="${listutil.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
                         </td>
                     </tr>
