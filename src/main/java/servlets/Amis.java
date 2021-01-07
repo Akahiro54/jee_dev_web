@@ -58,6 +58,8 @@ public class Amis extends HttpServlet {
                     }
                 }
             } catch (Exception e) { }
+        } else {
+
         }
         req.getRequestDispatcher("/user-restricted/amis.jsp").forward(req,resp);
     }

@@ -12,11 +12,12 @@ public class ActiviteDAOImpl implements ActiviteDAO{
 
     private DAOFactory daoFactory;
 
+
     public ActiviteDAOImpl(DAOFactory factory) {
         this.daoFactory = factory;
     }
 
-    //TODO
+
     @Override
     public List<Activite> getAllActivities() {
         ArrayList<Activite> activities = new ArrayList<>();
@@ -137,6 +138,7 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         return activities;
     }
 
+
     @Override
     public boolean add(Activite activite) {
         boolean created = false;
@@ -164,9 +166,28 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         return created;
     }
 
+
     @Override
     public boolean update(Activite activite, Object... data) {
-        return false;
+        boolean updated = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = null;
+        try {
+            connection = daoFactory.getConnection();
+            request = "UPDATE activite SET utilisateur = ?, nom = ?, debut = ?, fin = ?, lieu = ? WHERE id = ? ";
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, data);
+            preparedStatement.executeUpdate();
+            updated = true;
+        } catch(Exception e) {
+            System.err.println("Cannot update the activity : " + e.getMessage());
+            System.err.println("User object : " + activite.toString());
+            System.err.println("New data : " + Arrays.toString(data));
+            updated = false;
+        } finally {
+            SQLTools.close(connection,preparedStatement);
+        }
+        return updated;
     }
 
     @Override
@@ -187,6 +208,7 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         }
         return deleted;
     }
+
 
     @Override
     public boolean isPlaceInActivity(int idActivity, int idPlace) {
@@ -212,6 +234,7 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         return isInActivity;
     }
 
+
     @Override
     public Activite get(int idActivity) {
         ResultSet resultat = null;
@@ -235,6 +258,7 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         }
         return activite;
     }
+
 
     @Override
     public boolean isUserInActivity(int idActivity, int idUser) {
@@ -260,6 +284,7 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         return isLinkedToActivity;
     }
 
+
     private static Activite mapActivity(ResultSet resultSet) throws SQLException {
         Activite activite = new Activite();
         activite.setId(resultSet.getInt(1));
@@ -272,6 +297,7 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         activite.setHeureFin(fin.toLocalTime());
         return activite;
     }
+
 
     private static Map<Activite, Lieu> mapActivityAndPlace(ResultSet resultSet) throws SQLException {
         Activite activite = new Activite();
@@ -291,7 +317,6 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         lieu.setAdresse(resultSet.getString(10));
         lieu.setLatitude(resultSet.getDouble(11));
         lieu.setLongitude(resultSet.getDouble(12));
-        // TODO getImage
         return Collections.singletonMap(activite,lieu);
     }
 }
