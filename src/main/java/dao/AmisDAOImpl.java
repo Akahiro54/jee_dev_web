@@ -20,6 +20,7 @@ public class AmisDAOImpl implements AmisDAO{
         this.daoFactory = daoFactory;
     }
 
+
     @Override
     public List<Utilisateur> getFriends(int idUtilisateur) {
         ArrayList<Utilisateur> listeAmis = new ArrayList<>();
@@ -111,6 +112,7 @@ public class AmisDAOImpl implements AmisDAO{
         return nonAmis;
     }
 
+
     @Override
     public boolean areFriends(Amis amis) {
         boolean exists = false;
@@ -133,6 +135,7 @@ public class AmisDAOImpl implements AmisDAO{
         }
         return exists;
     }
+
 
     @Override
     public boolean add(Amis amis) {
@@ -180,6 +183,7 @@ public class AmisDAOImpl implements AmisDAO{
         }
         return amis;
     }
+
 
     @Override
     public boolean delete(Amis amis) {

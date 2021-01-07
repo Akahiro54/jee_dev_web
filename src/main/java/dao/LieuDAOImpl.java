@@ -43,6 +43,7 @@ public class LieuDAOImpl implements LieuDAO{
         return exists;
     }
 
+
     @Override
     public boolean placeExistsByName(String namePlace) {
         boolean exists = false;
@@ -67,6 +68,7 @@ public class LieuDAOImpl implements LieuDAO{
         return exists;
     }
 
+
     @Override
     public List<Lieu> getAllPlaces() {
         ArrayList<Lieu> lieux = new ArrayList<>();
@@ -89,6 +91,7 @@ public class LieuDAOImpl implements LieuDAO{
         }
         return lieux;
     }
+
 
     @Override
     public boolean add(Lieu place) {
@@ -115,6 +118,7 @@ public class LieuDAOImpl implements LieuDAO{
         return created;
     }
 
+
     @Override
     public boolean update(Lieu place, Object... data) {
         boolean updated = false;
@@ -138,6 +142,7 @@ public class LieuDAOImpl implements LieuDAO{
         return updated;
     }
 
+
     @Override
     public boolean delete(int idLieu) {
         PreparedStatement preparedStatement = null;
@@ -156,6 +161,7 @@ public class LieuDAOImpl implements LieuDAO{
         }
         return deleted;
     }
+
 
     @Override
     public Lieu get(int idPlace) {

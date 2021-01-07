@@ -16,7 +16,7 @@ public class Utilisateur {
     private Date date;
     private String image;
     private String nomImage;
-    private String role;
+    private TypeUtilisateur role;
 
 
 
@@ -102,11 +102,11 @@ public class Utilisateur {
         this.dateContamination = dateContamination;
     }
 
-    public String getRole() {
+    public TypeUtilisateur getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(TypeUtilisateur role) {
         this.role = role;
     }
 
