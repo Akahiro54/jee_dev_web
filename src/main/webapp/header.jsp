@@ -21,12 +21,15 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/material-icons.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/material-icons.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/ol.css">
 
     <script src="<%=request.getContextPath()%>/js/popper.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.fr.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/ol.js"></script>
+
 
 </head>
 <body class="fond">
