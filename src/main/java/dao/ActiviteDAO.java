@@ -23,6 +23,7 @@ public interface ActiviteDAO {
     boolean update(Activite activite, Object... data);
 
     boolean delete(int idActivity);
+
     Activite getActivityById(int idActivite);
 
     boolean isPlaceInActivity(int idActivity, int idPlace);

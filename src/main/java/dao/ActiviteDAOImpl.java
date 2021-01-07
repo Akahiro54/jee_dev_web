@@ -2,7 +2,6 @@ package dao;
 
 import beans.Activite;
 import beans.Lieu;
-import beans.Utilisateur;
 import exceptions.DAOException;
 
 import java.sql.*;
@@ -138,17 +137,75 @@ public class ActiviteDAOImpl implements ActiviteDAO{
 
     @Override
     public boolean isPlaceInActivity(int idActivity, int idPlace) {
-        return false;
+        boolean isInActivity = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "SELECT count(*) FROM activite WHERE id = ? AND lieu = ?";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false,idActivity, idPlace);
+            preparedStatement.setInt(1,idActivity);
+            ResultSet resultat = preparedStatement.executeQuery();
+            while(resultat.next()) {
+                if(resultat.getInt(1) >= 1) isInActivity = isInActivity;
+                if(resultat.getInt(1) >= 1) isInActivity = true;
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot check if place is in activity : " + e.getMessage());
+            System.err.println("Activity ID : " + idActivity);
+            isInActivity = false;
+        } finally {
+            SQLTools.close(connection,preparedStatement);
+        }
+        return isInActivity;
     }
 
     @Override
     public Activite get(int idActivity) {
-        return null;
+        ResultSet resultat = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "SELECT * FROM activite WHERE id = ? ";
+        Activite activite = new Activite();
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idActivity);
+            resultat = preparedStatement.executeQuery();
+            if(resultat.next()) {
+                activite = ActiviteDAOImpl.mapActivity(resultat);
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot get the activity : " + e.getMessage());
+            System.err.println("ID given : " + idActivity);
+            e.printStackTrace();
+        } finally {
+            SQLTools.close(connection,resultat,preparedStatement);
+        }
+        return activite;
     }
 
     @Override
     public boolean isUserInActivity(int idActivity, int idUser) {
-        return false;
+        boolean isLinkedToActivity = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "SELECT count(*) FROM activite WHERE id = ? AND utilisateur = ?";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false,idActivity, idUser);
+            preparedStatement.setInt(1,idActivity);
+            ResultSet resultat = preparedStatement.executeQuery();
+            while(resultat.next()) {
+                if(resultat.getInt(1) >= 1) isLinkedToActivity = true;
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot check if user is in activity : " + e.getMessage());
+            System.err.println("Activity ID : " + idActivity + ", user ID : " + idUser);
+            isLinkedToActivity = false;
+        } finally {
+            SQLTools.close(connection,preparedStatement);
+        }
+        return isLinkedToActivity;
     }
 
 
