@@ -28,7 +28,7 @@ public interface ActiviteDAO {
 
     Activite get(int idActivity);
 
-    boolean isUserActivity(int idActivity, int idUser);
+    boolean isUserInActivity(int idActivity, int idUser);
 
 
 }

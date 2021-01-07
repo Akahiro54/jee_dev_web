@@ -16,7 +16,7 @@
                 <div class="fond-element card col-12 col-sm-12 col-md-6 col-xl-4">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <a class="desac-lien" href="<%=request.getContextPath()%>/user-restricted/activite?activite=<c:out value="${activite.key.id}"/>">
+                            <a class="desac-lien" href="<%=request.getContextPath()%>/user-restricted/activite?activite=<c:out value="${activite.key.id}"/>&lieu=<c:out value="${activite.value.id}"/>">
                                 Nom : <c:out value="${activite.key.nom}"/>
                             </a>
                         </h5>

@@ -9,10 +9,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="pageTitle" scope="request" value="Mes activités"/>
 <jsp:include page="../header.jsp"/>
-<div class="fond-element rounded mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6 mt-2 pb-2">
+<div class="fond-element rounded mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6 mt-2 pt-1 pb-2">
     <h1><c:out value="${activite.nom}"/></h1>
     <dl class="row">
-        <dt class="col-sm-3">Lieu :</dt>
+        <dt class="col-sm-3">Lieu : </dt>
         <dd class="col-sm-9">
             <a class="desac-lien"
                href="<%=request.getContextPath()%>/user-restricted/lieu?lieu=<c:out value="${lieu.id}"/>">
@@ -21,11 +21,11 @@
         </dd>
     </dl>
     <dl class="row">
-        <dt class="col-sm-3">Date de début :</dt>
+        <dt class="col-sm-3">Date de début : </dt>
         <dd class="col-sm-9"><c:out value="${activite.dateDebut}"/> à <c:out value="${activite.heureDebut}"/></dd>
     </dl>
     <dl class="row">
-        <dt class="col-sm-3">Date de fin : :</dt>
+        <dt class="col-sm-3">Date de fin : </dt>
         <dd class="col-sm-9"><c:out value="${activite.dateFin}"/> à <c:out value="${activite.heureFin}"/></dd>
     </dl>
 </div>

@@ -237,7 +237,7 @@ public class ActiviteDAOImpl implements ActiviteDAO{
     }
 
     @Override
-    public boolean isUserActivity(int idActivity, int idUser) {
+    public boolean isUserInActivity(int idActivity, int idUser) {
         boolean isLinkedToActivity = false;
         PreparedStatement preparedStatement = null;
         Connection connection = null;

@@ -42,7 +42,8 @@ public class Activite extends HttpServlet {
 
                     if(lieuDAO.placeExistsById(idLieu)
                        && activiteDAO.activityExists(idActivite)
-                       && activiteDAO.isPlaceInActivity(idActivite, idLieu)) {
+                       && activiteDAO.isPlaceInActivity(idActivite, idLieu)
+                       && activiteDAO.isUserInActivity(idActivite, utilisateur.getId()) ) {
                         beans.Activite activite = activiteDAO.get(idActivite);
                         beans.Lieu lieu = lieuDAO.get(idLieu);
                         if(activite != null && lieu != null) {

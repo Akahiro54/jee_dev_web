@@ -143,6 +143,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>Activite</servlet-name>
+        <servlet-class>servlets.Activite</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Activite</servlet-name>
+        <url-pattern>/user-restricted/activite</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>Amis</servlet-name>
         <servlet-class>servlets.Amis</servlet-class>
     </servlet>
