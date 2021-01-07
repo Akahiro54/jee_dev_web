@@ -23,10 +23,29 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     }
 
 
-    //TODO implement method
+
     @Override
     public Utilisateur getById(int id) {
-        return null;
+        ResultSet resultat = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "SELECT * FROM lieu WHERE id = ? ";
+        Utilisateur utilisateur = new Utilisateur();
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, id);
+            resultat = preparedStatement.executeQuery();
+            if(resultat.next()) {
+                utilisateur = UtilisateurDAOImpl.map(resultat);
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot get the user : " + e.getMessage());
+            System.err.println("ID given : " + id);
+            e.printStackTrace();
+        } finally {
+            SQLTools.close(connection,resultat,preparedStatement);
+        }
+        return utilisateur;
     }
 
 

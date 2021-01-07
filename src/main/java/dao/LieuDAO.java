@@ -16,7 +16,7 @@ public interface LieuDAO {
 
     boolean update(Lieu place, Object... data);
 
-    boolean delete(Lieu place);
+    boolean delete(int idPlace);
 
     Lieu get(int idPlace);
 

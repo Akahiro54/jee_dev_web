@@ -22,7 +22,7 @@ public interface ActiviteDAO {
 
     boolean update(Activite activite, Object... data);
 
-    boolean delete(Activite activite);
+    boolean delete(int idActivity);
 
 
 }

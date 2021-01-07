@@ -120,8 +120,22 @@ public class LieuDAOImpl implements LieuDAO{
     }
 
     @Override
-    public boolean delete(Lieu place) {
-        return false;
+    public boolean delete(int idLieu) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "DELETE FROM lieu WHERE id = ?";
+        boolean deleted = false;
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false,idLieu);
+            preparedStatement.executeUpdate();
+            deleted = true;
+        } catch(Exception e) {
+            System.err.println("Cannot delete place with id " + idLieu + " : " + e.getMessage());
+        } finally {
+            SQLTools.close(connection,preparedStatement);
+        }
+        return deleted;
     }
 
     @Override

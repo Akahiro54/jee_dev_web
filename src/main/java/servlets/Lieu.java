@@ -26,25 +26,27 @@ public class Lieu extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur)session.getAttribute(Util.ATT_SESSION_USER);
-
         if(utilisateur == null)  {
             resp.sendRedirect(req.getContextPath()+"/index.jsp");
         }  else  {
-            String strLieu = (String)req.getParameter("place");
+            String strLieu = (String)req.getParameter("lieu");
             if(strLieu == null) {
                 resp.sendRedirect(req.getContextPath()+"/user-restricted/activites");
             } else {
                 try {
                     int idLieu = Integer.parseInt(strLieu);
                     if(lieuDAO.placeExistsById(idLieu)) {
-//                        lieuDAO.get();
-//                        req.setAttribute("")
+                        req.setAttribute("lieu",lieuDAO.get(idLieu));
+                        req.getRequestDispatcher("/user-restricted/lieu.jsp").forward(req,resp);
+                    } else {
+                        resp.sendRedirect(req.getContextPath()+"/user-restricted/activites");
                     }
                 } catch (Exception e) {
                     resp.sendRedirect(req.getContextPath()+"/user-restricted/activites");
                 }
             }
         }
+
     }
 
     @Override

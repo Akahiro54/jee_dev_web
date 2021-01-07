@@ -15,8 +15,16 @@
             <c:forEach items="${activites}" var="activite">
                 <div class="fond-element card col-12 col-sm-12 col-md-6 col-xl-4">
                     <div class="card-body">
-                        <h5 class="card-title">Nom : <c:out value="${activite.key.nom}"/></h5>
-                        <h6 class="card-subtitle text-muted">Lieu : <c:out value="${activite.value.nom}"/></h6>
+                        <h5 class="card-title">
+                            <a class="desac-lien" href="<%=request.getContextPath()%>/user-restricted/activite?activite=<c:out value="${activite.key.id}"/>">
+                                Nom : <c:out value="${activite.key.nom}"/>
+                            </a>
+                        </h5>
+                        <h6 class="card-subtitle text-muted">
+                            <a class="desac-lien" href="<%=request.getContextPath()%>/user-restricted/lieu?lieu=<c:out value="${activite.value.id}"/>">
+                                Lieu : <c:out value="${activite.value.nom}"/>
+                            </a>
+                        </h6>
                         <p class="card-text"><br/>
                             Dates de l'activité :
                         <ul>

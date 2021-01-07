@@ -6,10 +6,7 @@ import exceptions.DAOException;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ActiviteDAOImpl implements ActiviteDAO{
 
@@ -22,19 +19,73 @@ public class ActiviteDAOImpl implements ActiviteDAO{
     //TODO
     @Override
     public List<Activite> getAllActivities() {
-        return null;
+        ArrayList<Activite> activities = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String request ="SELECT a.* FROM activite a";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                activities.add(mapActivity(resultSet));
+            }
+        } catch(Exception e) {
+            System.err.println("Cannot create the activities list : " + e.getMessage());
+            System.err.println("List Object : " + activities.toString());
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return activities;
     }
 
-    //TODO
+
     @Override
     public List<Activite> getUserActivites(int idUtilisateur) {
-        return null;
+        ArrayList<Activite> activities = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String request ="SELECT a.* FROM activite a WHERE a.utilisateur = ?";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUtilisateur);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                activities.add(mapActivity(resultSet));
+            }
+        } catch(Exception e) {
+            System.err.println("Cannot create the activities list : " + e.getMessage());
+            System.err.println("List Object : " + activities.toString());
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return activities;
     }
 
-    //TODO
+
     @Override
     public Map<Activite, Lieu> getAllActivitiesWithPlaces() {
-        return null;
+        HashMap<Activite, Lieu> activities = new HashMap<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String request ="SELECT a.* , l.* FROM activite a INNER JOIN lieu l ON a.lieu = l.id";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                activities.putAll(mapActivityAndPlace(resultSet));
+            }
+        } catch(Exception e) {
+            System.err.println("Cannot create the activities and places list : " + e.getMessage());
+            System.err.println("HashMap Object : " + activities.toString());
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return activities;
     }
 
 
@@ -118,8 +169,22 @@ public class ActiviteDAOImpl implements ActiviteDAO{
     }
 
     @Override
-    public boolean delete(Activite activite) {
-        return false;
+    public boolean delete(int idActivite) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "DELETE FROM activite WHERE id = ?";
+        boolean deleted = false;
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false,idActivite);
+            preparedStatement.executeUpdate();
+            deleted = true;
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        } finally {
+            SQLTools.close(connection,preparedStatement);
+        }
+        return deleted;
     }
 
     private static Activite mapActivity(ResultSet resultSet) throws SQLException {
