@@ -1,22 +1,19 @@
 package servlets;
 
-import beans.Activite;
-import beans.Lieu;
 import beans.Utilisateur;
 import dao.DAOFactory;
 import dao.UtilisateurDAO;
-import forms.ActiviteForm;
 import forms.ModifierUtilisateurForm;
 import tools.Util;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 
+@MultipartConfig
 public class ModifierUtilisateur extends HttpServlet {
 
     private UtilisateurDAO utilisateurDAO;

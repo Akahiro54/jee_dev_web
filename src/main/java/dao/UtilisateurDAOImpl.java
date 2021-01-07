@@ -1,6 +1,5 @@
 package dao;
 
-import beans.TypeUtilisateur;
 import beans.Utilisateur;
 import exceptions.DAOException;
 import tools.PasswordHasher;
@@ -22,6 +21,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     public UtilisateurDAOImpl(DAOFactory factory) {
         this.daoFactory = factory;
     }
+
 
 
     @Override
@@ -72,6 +72,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         }
         return listeUtilisateur;
     }
+
 
 
     @Override
@@ -156,6 +157,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     }
 
 
+
     @Override
     public boolean add(Utilisateur user) {
         Connection connection = null;
@@ -214,7 +216,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         return logged;
     }
 
-
     @Override
     public boolean nicknameExists(String nickname) {
         boolean exists = false;
@@ -237,7 +238,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         }
         return exists;
     }
-
 
     @Override
     public boolean emailExists(String email) {
@@ -262,7 +262,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         return exists;
     }
 
-
     @Override
     public boolean idExists(int idUser) {
         boolean exists = false;
@@ -284,7 +283,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         }
         return exists;
     }
-
 
     @Override
     public List<Utilisateur> getAllUserOnSamePlacesAtTheSameTime(Utilisateur utilisateur) {
@@ -315,7 +313,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         return utilisateurs;
     }
 
-
     @Override
     public boolean updateContamine(Utilisateur utilisateur) {
         boolean updated = false;
@@ -338,10 +335,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         return updated;
     }
 
-
     @Override
     public boolean updateFromAdmin(Utilisateur utilisateur,InputStream finput,Object... data) {
-        System.out.println("testtttttttttttttttttttttttttttttttttt");
         boolean updated = false;
         PreparedStatement preparedStatement = null;
         Connection connection = null;
@@ -390,7 +385,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         if(sqlDate != null) {
             utilisateur.setDateContamination(sqlDate.toLocalDate());
         }
-        utilisateur.setRole(TypeUtilisateur.valueOf(resultSet.getString(10).toUpperCase()));
         utilisateur.setImage(Util.convertUserImage(resultSet.getBytes(11)));
         return utilisateur;
     }

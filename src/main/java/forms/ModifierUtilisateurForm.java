@@ -14,6 +14,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,11 +43,7 @@ public class ModifierUtilisateurForm {
 
         InputStream inputStream = null;
 
-        System.out.println(prenom);
-        System.out.println(nom);
-        System.out.println(email);
-        Part filePart = request.getPart("modifphotouser");
-        System.out.println(filePart);
+        Part filePart = request.getPart("modifphoto");
         String nomImage = getNomFichier(filePart);
 
         if (filePart != null) {

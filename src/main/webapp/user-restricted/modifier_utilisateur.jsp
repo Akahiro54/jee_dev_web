@@ -14,7 +14,7 @@
         <section class="module">
             <div class="module-inner">
                 <div class="content-panel">
-                    <form method="post" action="<%=request.getContextPath()%>/user-restricted/modifier_utilisateur" class="form-horizontal" enctype="multipart/form-data">
+                    <form method="post" action="modifier_utilisateur" class="form-horizontal" enctype="multipart/form-data">
                         <fieldset class="fieldset">
                             <div class="form-group avatar">
                                 <div><p></p></div>

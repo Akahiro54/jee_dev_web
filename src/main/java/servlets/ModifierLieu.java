@@ -1,6 +1,5 @@
 package servlets;
 
-import beans.Activite;
 import beans.Lieu;
 import dao.DAOFactory;
 import dao.LieuDAO;
