@@ -113,6 +113,15 @@
         <url-pattern>/user-restricted/modifier_utilisateur</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ModifActivite</servlet-name>
+        <servlet-class>servlets.ModifierActivite</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifActivite</servlet-name>
+        <url-pattern>/user-restricted/modifier_activite</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>PannelAdmin</servlet-name>

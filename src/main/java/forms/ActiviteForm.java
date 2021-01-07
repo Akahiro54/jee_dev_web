@@ -68,6 +68,46 @@ public class ActiviteForm {
         return activite;
     }
 
+    public Activite modifierActivite(HttpServletRequest request, int idActivite) {
+        Activite activite = new Activite(); // initialize activity
+        ActiviteFields fields = ActiviteFields.FIELD_NAME; //initialize fields to first field
+        for(int i = 0 ; i < ActiviteFields.values().length; i++) { // iterate over fields
+            try {
+                String currentField = fields.getFieldName();
+                String currentFieldValue = getFieldValue(request, currentField);
+                validateField(fields, activite, currentFieldValue);
+            } catch (Exception e) {
+                addError(fields.getFieldName(), e.getMessage());
+            }
+            fields = fields.next();
+        }
+        // if all fields are set correctly, compare dates + times and check
+        if(activite.getDateDebut() != null && activite.getHeureDebut() != null && activite.getDateFin() != null && activite.getHeureFin() != null) {
+            LocalDateTime debut = LocalDateTime.of(activite.getDateDebut(), activite.getHeureDebut());
+            LocalDateTime fin = LocalDateTime.of(activite.getDateFin(), activite.getHeureFin());
+            if(debut.isAfter(LocalDateTime.now()) || debut.isEqual(LocalDateTime.now())) {
+                addError(ActiviteFields.FIELD_DATE_BEGIN.getFieldName(), "La date de début ne peut être après ou égale à la date actuelle.");
+            }
+            if (fin.isAfter(LocalDateTime.now())) {
+                addError(ActiviteFields.FIELD_DATE_END.getFieldName(), "La date de fin ne peut être après la date actuelle.");
+            }
+            if(debut.isAfter(fin)) {
+                addError(ActiviteFields.FIELD_DATE_BEGIN.getFieldName(), "La date de début ne peut être avant la date de fin.");
+            } else if(debut.isEqual(fin)) {
+                addError(ActiviteFields.FIELD_DATE_BEGIN.getFieldName(), "Les dates de début et de fin ne peuvent être identiques.");
+            }
+        }
+
+        // if there are no errors
+        if ( errors.isEmpty() ) {
+//          Tries to save the activity to the database
+            if (!activiteDAO.update(activite,idActivite)) {
+                addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
+            }
+        }
+        return activite;
+    }
+
     public Map<String, String> getErrors() {
         return errors;
     }

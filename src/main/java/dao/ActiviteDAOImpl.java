@@ -2,6 +2,7 @@ package dao;
 
 import beans.Activite;
 import beans.Lieu;
+import beans.Utilisateur;
 import exceptions.DAOException;
 
 import java.sql.*;
@@ -112,6 +113,29 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         return exists;
     }
 
+    @Override
+    public Activite getActivityById(int idActivite) {
+        ResultSet resultat = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "SELECT * FROM activite WHERE id = ? ";
+        Activite activite = new Activite();
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idActivite);
+            resultat = preparedStatement.executeQuery();
+            if(resultat.next()) {
+                activite = ActiviteDAOImpl.mapActivity(resultat);
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot get the activity : " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            SQLTools.close(connection,resultat,preparedStatement);
+        }
+        return activite;
+    }
+
 
     @Override
     public Map<Activite, Lieu> getUserActivitiesWithPlaces(int idUtilisateur) {
@@ -165,7 +189,34 @@ public class ActiviteDAOImpl implements ActiviteDAO{
 
     @Override
     public boolean update(Activite activite, Object... data) {
-        return false;
+
+        boolean updated = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String request = null;
+        try {
+            connection = daoFactory.getConnection();
+            LocalDateTime debut = LocalDateTime.of(activite.getDateDebut(), activite.getHeureDebut());
+            LocalDateTime fin = LocalDateTime.of(activite.getDateFin(), activite.getHeureFin());
+                request = "UPDATE activite SET nom = ?, debut = ?, fin = ?, lieu = ? WHERE id = ? ";
+                preparedStatement = connection.prepareStatement(request);
+                preparedStatement.setObject(1,activite.getNom());
+                preparedStatement.setObject(2,debut);
+                preparedStatement.setObject(3,fin);
+                preparedStatement.setObject(4,activite.getIdLieu());
+                preparedStatement.setObject(5,data[0]);
+
+
+            preparedStatement.executeUpdate();
+            updated = true;
+        } catch(Exception e) {
+            System.err.println("Cannot update the activity : " + e.getMessage());
+            updated =false;
+        } finally {
+            SQLTools.close(connection,resultSet,preparedStatement);
+        }
+        return updated;
     }
 
     @Override

@@ -85,7 +85,7 @@
                         <td><c:out value="${listactivite.dateFin}" /> à <c:out value="${listactivite.heureFin}" /></td>
                         <td><c:out value="${listactivite.idLieu}" /> </td>
                         <td>
-                            <a href="<%=request.getContextPath()%>/user-restricted/modifier_utilisateur?u=<c:out value="${listutil.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="<%=request.getContextPath()%>/user-restricted/modifier_activite?a=<c:out value="${listactivite.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
                             <a href="<%=request.getContextPath()%>/user-restricted/pannel_admin?deleteActivite=<c:out value="${listactivite.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
                         </td>
                     </tr>

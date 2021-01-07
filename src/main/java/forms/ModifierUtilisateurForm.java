@@ -31,7 +31,7 @@ public class ModifierUtilisateurForm {
 
     public void modifierUtilisateur(HttpServletRequest request ) throws IOException, ServletException {
         Utilisateur utilisateur = (Utilisateur) request.getAttribute(Util.ATT_FORM_USER);
-        System.out.println(utilisateur.toString());
+
         String prenom = request.getParameter("modifUserprenom");
         String nom = request.getParameter("modifUsernom");
         String email = request.getParameter("modifUseremail");

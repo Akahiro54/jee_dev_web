@@ -41,11 +41,12 @@ public class PannelAdmin extends HttpServlet {
 
             List<Activite> listeActivite = activiteDAO.getAllActivities();
             req.setAttribute("listeActivite",listeActivite);
+            System.out.println(listeActivite.toString());
 
             List<Lieu> listeLieux = lieuDAO.getAllPlaces();
             req.setAttribute("listeLieux",listeLieux);
 
-            String delete = (String) req.getParameter("delete");
+            String delete = req.getParameter("delete");
             String deleteActivite = req.getParameter("deleteActivite");
             String deleteLieu = req.getParameter("deleteLieu");
 
