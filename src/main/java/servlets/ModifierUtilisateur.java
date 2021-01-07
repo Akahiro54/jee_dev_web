@@ -26,10 +26,8 @@ public class ModifierUtilisateur extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
         String id = req.getParameter("u");
         idUtil = Integer.parseInt(id);
-        session.setAttribute("sessionModifUtilisateur",idUtil);
 
         Utilisateur utilisateur = utilisateurDAO.getById(idUtil);
 
@@ -37,7 +35,7 @@ public class ModifierUtilisateur extends HttpServlet {
             resp.sendRedirect(req.getContextPath()+"/connexion");
         } else {
             req.setAttribute(Util.ATT_FORM_USER,utilisateur);
-            this.getServletContext().getRequestDispatcher( "/user-restricted/modifier_utilisateur.jsp" ).forward( req, resp );
+            this.getServletContext().getRequestDispatcher( "/user-restricted/modifier_utilisateur.jsp").forward( req, resp );
         }
     }
 
@@ -47,10 +45,11 @@ public class ModifierUtilisateur extends HttpServlet {
 
         Utilisateur utilisateur = utilisateurDAO.getById(idUtil);
 
-        ModifierUtilisateurForm form = new ModifierUtilisateurForm(utilisateurDAO);
-        form.modifierUtilisateur(req);
-        req.setAttribute(Util.ATT_FORM, form);
         req.setAttribute(Util.ATT_FORM_USER, utilisateur);
+
+        ModifierUtilisateurForm form = new ModifierUtilisateurForm(utilisateurDAO);
+        req.setAttribute(Util.ATT_FORM, form);
+        form.modifierUtilisateur(req);
 
         if(form.getErrors().isEmpty()) {
             resp.sendRedirect(req.getContextPath()+"/user-restricted/pannel_admin"); // Returns to the main page

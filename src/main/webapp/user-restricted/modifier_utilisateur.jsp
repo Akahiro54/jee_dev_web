@@ -7,14 +7,14 @@
 --%>
 <%@ page contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="pageTitle" scope="request" value="Modifier utilisateur"/>
+<c:set var="pageTitle" scope="request" value="Modifierutilisateur"/>
 <jsp:include page="../header.jsp" />
 <div class="container">
     <div class="view-account">
         <section class="module">
             <div class="module-inner">
                 <div class="content-panel">
-                    <form method="post" action="<%=request.getContextPath()%>/user-restricted/modifier_utilisateur?u=<c:out value="${user.id}"/>" class="form-horizontal" enctype="multipart/form-data">
+                    <form method="post" action="<%=request.getContextPath()%>/user-restricted/modifier_utilisateur" class="form-horizontal" enctype="multipart/form-data">
                         <fieldset class="fieldset">
                             <div class="form-group avatar">
                                 <div><p></p></div>

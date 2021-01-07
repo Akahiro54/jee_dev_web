@@ -30,9 +30,8 @@ public class ModifierUtilisateurForm {
     }
 
     public void modifierUtilisateur(HttpServletRequest request ) throws IOException, ServletException {
-        HttpSession session = request.getSession();
-        int idUtil = (int) session.getAttribute("sessionModifUtilisateur");
-        Utilisateur utilisateur = utilisateurDAO.getById(idUtil);
+        Utilisateur utilisateur = (Utilisateur) request.getAttribute(Util.ATT_FORM_USER);
+        System.out.println(utilisateur.toString());
         String prenom = request.getParameter("modifUserprenom");
         String nom = request.getParameter("modifUsernom");
         String email = request.getParameter("modifUseremail");
@@ -76,12 +75,12 @@ public class ModifierUtilisateurForm {
         if ( errors.isEmpty() ) {
             if (nomImage.equals("\"\""))
             {
-                if (!utilisateurDAO.updateFromAdmin(utilisateur,null, prenom, nom, email, date2,role, idUtil)) {
+                if (!utilisateurDAO.updateFromAdmin(utilisateur,null, prenom, nom, email, date2,role, utilisateur.getId())) {
                     addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
                 }
             }
             else{
-                if (!utilisateurDAO.updateFromAdmin(utilisateur,filePart.getInputStream(), prenom, nom, email, date2,nomImage,role,idUtil)) {
+                if (!utilisateurDAO.updateFromAdmin(utilisateur,filePart.getInputStream(), prenom, nom, email, date2,nomImage,role,utilisateur.getId())) {
                     addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
                 }
             }
