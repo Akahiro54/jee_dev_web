@@ -135,3 +135,4 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
+<jsp:include page="../footer.jsp" />
