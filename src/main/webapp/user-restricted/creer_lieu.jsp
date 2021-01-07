@@ -56,8 +56,6 @@
                 <span class="erreur text-danger text-center">${form.errors['longitude']}</span>
             </div>
         </div>
-
-        <p style="color:red"> TODO : button to add an image if we have time </p>
         <input type="submit" value="Créer le lieu" class="btn btn-dark mb-2"/>
     </form>
 </div>

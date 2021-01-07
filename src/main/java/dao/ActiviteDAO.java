@@ -25,5 +25,11 @@ public interface ActiviteDAO {
     boolean delete(int idActivity);
     Activite getActivityById(int idActivite);
 
+    boolean isPlaceInActivity(int idActivity, int idPlace);
+
+    Activite get(int idActivity);
+
+    boolean isUserInActivity(int idActivity, int idUser);
+
 
 }

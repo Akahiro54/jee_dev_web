@@ -9,7 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="pageTitle" scope="request" value="Lieu"/>
 <jsp:include page="../header.jsp" />
-<div class="fond-element rounded mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6 mt-2 pb-2">
+<div class="fond-element rounded mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6 mt-2 pt-1 pb-2">
     <h1><c:out value="${lieu.nom}"/></h1>
     <c:if test="${not empty lieu.description}">
         <dl class="row">

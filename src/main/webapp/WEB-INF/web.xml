@@ -38,6 +38,17 @@
         <url-pattern>/user-restricted/*</url-pattern>
     </filter-mapping>
 
+
+    <filter>
+        <filter-name>AdminRestrictionFilter</filter-name>
+        <filter-class>filters.AdminRestrictionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminRestrictionFilter</filter-name>
+        <url-pattern>/admin-restricted/*</url-pattern>
+    </filter-mapping>
+
+
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
         <filter-class>filters.CharacterEncodingFilter</filter-class>
@@ -132,6 +143,14 @@
         <url-pattern>/user-restricted/pannel_admin</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AdminRestricted</servlet-name>
+        <servlet-class>servlets.Restricted</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminRestricted</servlet-name>
+        <url-pattern>/admin-restricted/restricted</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>CreerActivite</servlet-name>
@@ -149,6 +168,15 @@
     <servlet-mapping>
         <servlet-name>Activites</servlet-name>
         <url-pattern>/user-restricted/activites</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Activite</servlet-name>
+        <servlet-class>servlets.Activite</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Activite</servlet-name>
+        <url-pattern>/user-restricted/activite</url-pattern>
     </servlet-mapping>
 
     <servlet>
