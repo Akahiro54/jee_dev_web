@@ -200,7 +200,7 @@ public class ActiviteDAOImpl implements ActiviteDAO{
             preparedStatement.setInt(1,idActivity);
             ResultSet resultat = preparedStatement.executeQuery();
             while(resultat.next()) {
-                if(resultat.getInt(1) >= 1) isInActivity = isInActivity;
+                if(resultat.getInt(1) >= 1) isInActivity = true;
             }
         } catch (Exception e) {
             System.err.println("Cannot check if place is in activity : " + e.getMessage());
@@ -234,6 +234,30 @@ public class ActiviteDAOImpl implements ActiviteDAO{
             SQLTools.close(connection,resultat,preparedStatement);
         }
         return activite;
+    }
+
+    @Override
+    public boolean isUserActivity(int idActivity, int idUser) {
+        boolean isLinkedToActivity = false;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        String request = "SELECT count(*) FROM activite WHERE id = ? AND utilisateur = ?";
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false,idActivity, idUser);
+            preparedStatement.setInt(1,idActivity);
+            ResultSet resultat = preparedStatement.executeQuery();
+            while(resultat.next()) {
+                if(resultat.getInt(1) >= 1) isLinkedToActivity = true;
+            }
+        } catch (Exception e) {
+            System.err.println("Cannot check if user is in activity : " + e.getMessage());
+            System.err.println("Activity ID : " + idActivity + ", user ID : " + idUser);
+            isLinkedToActivity = false;
+        } finally {
+            SQLTools.close(connection,preparedStatement);
+        }
+        return isLinkedToActivity;
     }
 
     private static Activite mapActivity(ResultSet resultSet) throws SQLException {
