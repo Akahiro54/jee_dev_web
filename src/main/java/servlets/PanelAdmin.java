@@ -47,7 +47,6 @@ public class PanelAdmin extends HttpServlet {
                 Utilisateur util = utilisateurDAO.getById(a.getIdUtilisateur());
                 activite.put(a,util.getPseudo());
             }
-            System.out.println(activite.toString());
             req.setAttribute("listeActivite",activite);
 
             List<Lieu> listeLieux = lieuDAO.getAllPlaces();
