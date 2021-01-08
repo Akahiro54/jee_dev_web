@@ -94,6 +94,7 @@ public class ModifierProfilForm {
 
         try {
             validateName(prenom);
+            validateFieldSize(prenom);
             utilisateur.setPrenom(prenom);
         } catch (Exception e) {
             addError("modifprenom", e.getMessage());
@@ -101,13 +102,14 @@ public class ModifierProfilForm {
 
         try {
             validateName(nom);
+            validateFieldSize(nom);
             utilisateur.setNom(nom);
         } catch (Exception e) {
             addError("modifnom", e.getMessage());
         }
 
         try {
-           if(validateBirthdate(date) != null);
+            if(validateBirthdate(date) != null);
             Date date3 = Date.valueOf(date);
             utilisateur.setDate(date3);
         } catch (Exception e) {

@@ -71,6 +71,7 @@ public class ModifierUtilisateurForm {
         validerChamps(utilisateur,prenom,nom,date,email,pseudo);
         Date date2 = Date.valueOf(date);
 
+
         if ( errors.isEmpty() ) {
             if (nomImage.equals("\"\""))
             {
@@ -98,6 +99,7 @@ public class ModifierUtilisateurForm {
 
         try {
             validateName(prenom);
+            validateFieldSize(prenom);
             utilisateur.setPrenom(prenom);
         } catch (Exception e) {
             addError("modifprenom", e.getMessage());
@@ -105,6 +107,7 @@ public class ModifierUtilisateurForm {
 
         try {
             validateName(pseudo);
+            validateFieldSize(pseudo);
             utilisateur.setPseudo(pseudo);
         } catch (Exception e) {
             addError("modifpseudo", e.getMessage());
@@ -113,6 +116,7 @@ public class ModifierUtilisateurForm {
 
         try {
             validateName(nom);
+            validateFieldSize(nom);
             utilisateur.setNom(nom);
         } catch (Exception e) {
             addError("modifnom", e.getMessage());
