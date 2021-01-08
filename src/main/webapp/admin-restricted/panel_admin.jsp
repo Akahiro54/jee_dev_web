@@ -44,14 +44,14 @@
                         <td><c:out value="${listutil.email}" /> </td>
                         <td><c:out value="${listutil.date}" /> </td>
                         <td>
-                            <c:choose>
-                                <c:when test="${listutil.role == 'admin'}">
-                                    Admin
-                                </c:when>
-                                <c:otherwise>
-                                    Utilisateur
-                                </c:otherwise>
-                            </c:choose>
+<%--                            <c:choose>--%>
+<%--                                <c:when test="${listutil.role == 'admin'}">--%>
+<%--                                    Admin--%>
+<%--                                </c:when>--%>
+<%--                                <c:otherwise>--%>
+<%--                                    Utilisateur--%>
+<%--                                </c:otherwise>--%>
+<%--                            </c:choose>--%>
                         </td>
                         <td>
                             <c:choose>
@@ -64,8 +64,8 @@
                             </c:choose>
                         </td>
                         <td>
-                            <a href="<%=request.getContextPath()%>/user-restricted/modifier_utilisateur?u=<c:out value="${listutil.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                            <a href="<%=request.getContextPath()%>/user-restricted/pannel_admin?delete=<c:out value="${listutil.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
+                            <a href="<%=request.getContextPath()%>/admin-restricted/modifier_utilisateur?u=<c:out value="${listutil.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="<%=request.getContextPath()%>/admin-restricted/panel_admin?delete=<c:out value="${listutil.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -103,8 +103,8 @@
                         <td><c:out value="${listactivite.dateFin}" /> à <c:out value="${listactivite.heureFin}" /></td>
                         <td><c:out value="${listactivite.idLieu}" /> </td>
                         <td>
-                            <a href="<%=request.getContextPath()%>/user-restricted/modifier_activite?a=<c:out value="${listactivite.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                            <a href="<%=request.getContextPath()%>/user-restricted/pannel_admin?deleteActivite=<c:out value="${listactivite.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
+                            <a href="<%=request.getContextPath()%>/admin-restricted/modifier_activite?a=<c:out value="${listactivite.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="<%=request.getContextPath()%>/admin-restricted/panel_admin?deleteActivite=<c:out value="${listactivite.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -138,8 +138,8 @@
                         <td><c:out value="${listLieux.description}" /> </td>
                         <td><c:out value="${listLieux.adresse}" /> </td>
                         <td>
-                            <a href="<%=request.getContextPath()%>/user-restricted/modifier_lieu?l=<c:out value="${listLieux.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                            <a href="<%=request.getContextPath()%>/user-restricted/pannel_admin?deleteLieu=<c:out value="${listLieux.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
+                            <a href="<%=request.getContextPath()%>/admin-restricted/modifier_lieu?l=<c:out value="${listLieux.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="<%=request.getContextPath()%>/admin-restricted/panel_admin?deleteLieu=<c:out value="${listLieux.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
                         </td>
                     </tr>
                 </c:forEach>

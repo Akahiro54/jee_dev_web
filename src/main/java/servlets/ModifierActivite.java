@@ -1,7 +1,6 @@
 package servlets;
 
 import beans.Activite;
-import beans.Lieu;
 import beans.Utilisateur;
 import dao.ActiviteDAO;
 import dao.DAOFactory;
@@ -40,10 +39,10 @@ public class ModifierActivite extends HttpServlet {
 
         Activite activite = activiteDAO.getActivityById(idActivite);
         if(activite == null) { // if no user, redirect to login page
-            resp.sendRedirect(req.getContextPath()+"/user-restricted/pannel_admin");
+            resp.sendRedirect(req.getContextPath()+"/admin-restricted/panel_admin");
         } else {
             req.setAttribute(Util.ATT_FORM_ACTIVITY,activite);
-            this.getServletContext().getRequestDispatcher( "/user-restricted/modifier_activite.jsp").forward( req, resp );
+            this.getServletContext().getRequestDispatcher( "/admin-restricted/modifier_activite.jsp").forward( req, resp );
 
         }
     }

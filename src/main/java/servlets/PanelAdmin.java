@@ -80,7 +80,7 @@ public class PanelAdmin extends HttpServlet {
             }
 
 
-            this.getServletContext().getRequestDispatcher("/user-restricted/panel_admin.jsp").forward(req, resp);
+            this.getServletContext().getRequestDispatcher("/admin-restricted/panel_admin.jsp").forward(req, resp);
         }
     }
 
