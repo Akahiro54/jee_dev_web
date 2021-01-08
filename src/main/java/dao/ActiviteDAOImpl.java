@@ -147,7 +147,6 @@ public class ActiviteDAOImpl implements ActiviteDAO{
             preparedStatement.setInt(1,idActivity);
             ResultSet resultat = preparedStatement.executeQuery();
             while(resultat.next()) {
-                if(resultat.getInt(1) >= 1) isInActivity = isInActivity;
                 if(resultat.getInt(1) >= 1) isInActivity = true;
             }
         } catch (Exception e) {

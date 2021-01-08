@@ -98,8 +98,9 @@
                                 </c:when>
                                 <c:otherwise>
                                     <button onclick="showConfirmation()" class="mx-auto btn btn-warning mt-1 mb-1">Je suis positif au covid</button>
-                                    <div id="confirmPositive" class="mx-auto text-center text-info" style="display:none;">
-                                        Cette action est irréversible pour 15 jours, êtes vous sûr de vouloir vous déclarer positif au COVID ?
+                                    <div id="confirmPositive" class="mx-auto text-center text-danger" style="display:none;">
+                                        Cette action est irréversible pour 15 jours, et vous devez entrer l'ensemble de vos activités avant de vous déclarer positif,
+                                        êtes vous sûr de vouloir vous déclarer positif au COVID ?
                                         <div id="fail" class="text-center text-danger"></div>
                                         <div class="mb-1">
                                             <button onclick="sendCovidPositive()" class="btn btn-primary">Confirmer</button>
