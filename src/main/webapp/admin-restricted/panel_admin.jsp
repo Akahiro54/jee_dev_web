@@ -56,10 +56,10 @@
                         <td>
                             <c:choose>
                                 <c:when test="${listutil.contamine == false}">
-                                    <span class="status text-success">&bull;</span> Covid
+                                    <span class="status text-success">&bull;</span>Contaminé
                                 </c:when>
                                 <c:otherwise>
-                                    <span class="status text-danger">&bull;</span> Covid
+                                    <span class="status text-danger">&bull;</span>Non Contaminé
                                 </c:otherwise>
                             </c:choose>
                         </td>
@@ -96,15 +96,15 @@
                 <tbody>
                 <c:forEach items="${listeActivite}" var="listactivite">
                     <tr>
-                        <td><c:out value="${listactivite.id}" /></td>
-                        <td><c:out value="${listactivite.nom}" /></td>
-                        <td><c:out value="${listactivite.idUtilisateur}" /> </td>
-                        <td><c:out value="${listactivite.dateDebut}" /> à <c:out value="${listactivite.heureDebut}" /> </td>
-                        <td><c:out value="${listactivite.dateFin}" /> à <c:out value="${listactivite.heureFin}" /></td>
-                        <td><c:out value="${listactivite.idLieu}" /> </td>
+                        <td><c:out value="${listactivite.key.id}" /></td>
+                        <td><c:out value="${listactivite.key.nom}" /></td>
+                        <td><c:out value="${listactivite.value}" /> </td>
+                        <td><c:out value="${listactivite.key.dateDebut}" /> à <c:out value="${listactivite.key.heureDebut}" /> </td>
+                        <td><c:out value="${listactivite.key.dateFin}" /> à <c:out value="${listactivite.key.heureFin}" /></td>
+                        <td><c:out value="${listactivite.key.idLieu}" /> </td>
                         <td>
-                            <a href="<%=request.getContextPath()%>/admin-restricted/modifier_activite?a=<c:out value="${listactivite.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                            <a href="<%=request.getContextPath()%>/admin-restricted/panel_admin?deleteActivite=<c:out value="${listactivite.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
+                            <a href="<%=request.getContextPath()%>/admin-restricted/modifier_activite?a=<c:out value="${listactivite.key.id}"/>" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="<%=request.getContextPath()%>/admin-restricted/panel_admin?deleteActivite=<c:out value="${listactivite.key.id}"/>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i>  </a>
                         </td>
                     </tr>
                 </c:forEach>
