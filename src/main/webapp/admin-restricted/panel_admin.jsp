@@ -33,7 +33,7 @@
                         <td>
                             <c:choose>
                                 <c:when test="${empty listutil.image}">
-                                    <img src="<%=request.getContextPath()%>/img/profile.jpg" alt="" width="50" height="50"/>
+                                    <img src="<%=request.getContextPath()%>/img/profile.jpg" class="rounded-circle"  alt="" width="50" height="50"/>
                                 </c:when>
                                 <c:otherwise>
                                     <img src="data:image/jpeg;base64,${listutil.image}" alt="" width="50" height="50"/>
