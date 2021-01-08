@@ -11,6 +11,9 @@
 <jsp:include page="../header.jsp" />
 <div class="fond-element rounded mx-auto text-center col-auto col-sm-12 col-md-9 col-xl-6 mt-2 pt-1 pb-2">
     <h1>Lieux</h1>
+    <div class="text-center">
+        <a class="mt-1 mb-2 btn btn-dark" href="<%=request.getContextPath()%>/user-restricted/creer_lieu" role="button">Créer un lieu</a>
+    </div>
     <div class="list-group">
         <c:forEach items="${places}" var="lieu">
             <a href="<%=request.getContextPath()%>/user-restricted/lieu?lieu=<c:out value="${lieu.id}"/>" class="list-group-item list-group-item-action"><c:out value="${lieu.nom}"/></a>

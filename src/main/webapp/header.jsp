@@ -50,12 +50,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/profil">Mon compte</a>
                     </li>
-<%--                    <li class="nav-item">--%>
-<%--                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/creer_activite">Créer une activité</a>--%>
-<%--                    </li>--%>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/creer_lieu">Créer un lieu</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/activites">Mes activités</a>
                     </li>
