@@ -134,7 +134,7 @@
                     if(jsonData.success) { // info from the server
                         covidInfoCard.empty();
                         covidInfoCard.prepend(
-                               '<div class="row"><div class="col-sm-3 text-center my-auto"><h6>Positif au COVID-19.</h6></div><div class="col-sm-9 text-secondary">Vous êtes déclaré positif au covid depuis le '+jsonData.message+'.<br/>Votre état sera réinitialisé au bout de 15 jours.</div></div>'
+                               '<div class="row"><div class="col-sm-3 text-center my-auto"><h6  class="mb-0">Positif au COVID-19.</h6></div><div class="col-sm-9 text-secondary">Vous êtes déclaré positif au covid depuis le '+jsonData.message+'.<br/>Votre état sera réinitialisé au bout de 15 jours.</div></div>'
                         )
                     } else {
                         var fail = $("#fail");
