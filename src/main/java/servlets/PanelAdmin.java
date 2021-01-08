@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PanelAdmin extends HttpServlet {
@@ -40,7 +41,13 @@ public class PanelAdmin extends HttpServlet {
             req.setAttribute("listeUtilisateur", listeUtilisateur);
 
             List<Activite> listeActivite = activiteDAO.getAllActivities();
-            req.setAttribute("listeActivite",listeActivite);
+            HashMap<Activite,String> activite = new HashMap<Activite,String>();
+            for (Activite a:listeActivite)
+            {
+                Utilisateur util = utilisateurDAO.getById(a.getIdUtilisateur());
+                activite.put(a,util.getPseudo());
+            }
+            req.setAttribute("listeActivite",activite);
 
             List<Lieu> listeLieux = lieuDAO.getAllPlaces();
             req.setAttribute("listeLieux",listeLieux);
