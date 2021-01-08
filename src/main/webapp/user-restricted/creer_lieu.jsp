@@ -63,6 +63,7 @@
     </form>
 </div>
 <script>
+
     var map = new ol.Map({
         target: 'map',
         layers: [
@@ -80,6 +81,32 @@
         var coordinates = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
         $("#longitude").val(coordinates[0]);
         $("#latitude").val(coordinates[1]);
+        var layers = map.getLayers().getArray()
+        var layerSize = layers.length
+        while(layerSize > 1) {
+            var removeLayer = layers[layerSize - 1];
+            map.removeLayer(removeLayer);
+            layerSize = layers.length;
+        }
+        var feature = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.fromLonLat([coordinates[0], coordinates[1]]))
+        });
+        feature.setStyle(
+            new ol.style.Style({
+                image: new ol.style.Circle({
+                    fill: new ol.style.Fill({ color: [0,0,200,0.5] }),
+                    stroke: new ol.style.Stroke({ color: [0,0,255,1] }),
+                    radius: 5
+                })
+            })
+        );
+        var layer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [feature],
+            }),
+        });
+        map.addLayer(layer);
     });
+    
 </script>
 <jsp:include page="../footer.jsp" />
