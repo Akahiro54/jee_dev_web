@@ -64,9 +64,9 @@ public class ModifierActivite extends HttpServlet {
             Activite activite = activiteDAO.getActivityById(idActivite);
             req.setAttribute(Util.ATT_FORM_ACTIVITY, activite);
             if(form.getErrors().isEmpty()) {
-                resp.sendRedirect(req.getContextPath()+"/user-restricted/pannel_admin");
+                resp.sendRedirect(req.getContextPath()+"/admin-restricted/panel_admin");
             } else {
-                req.getRequestDispatcher("/user-restricted/modifier_activite.jsp").forward(req,resp);
+                req.getRequestDispatcher("/admin-restricted/modifier_activite.jsp").forward(req,resp);
             }
         }
     }
