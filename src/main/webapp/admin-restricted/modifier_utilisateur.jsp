@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="beans.TypeUtilisateur" %>
 <c:set var="pageTitle" scope="request" value="Modifierutilisateur"/>
 <jsp:include page="../header.jsp" />
 <div class="container">
@@ -54,10 +55,20 @@
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Rôle de l'utilisateur</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <select name="modifrole" >
-                                        <option value="USER">Utilisateur</option>
-                                        <option value="ADMIN">Admin</option>
-                                    </select>
+                                    <c:choose>
+                                        <c:when test="${user.role eq TypeUtilisateur.ADMIN}">
+                                            <select name="modifrole" >
+                                                <option value="USER">Utilisateur</option>
+                                                <option selected="selected" value="ADMIN">Admin</option>
+                                            </select>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <select name="modifrole" >
+                                                <option selected="selected" value="USER">Utilisateur</option>
+                                                <option value="ADMIN">Admin</option>
+                                            </select>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </fieldset>
