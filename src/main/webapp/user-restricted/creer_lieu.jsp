@@ -56,7 +56,7 @@
                 <span class="erreur text-danger text-center">${form.errors['longitude']}</span>
             </div>
         </div>
-        <div class="ml-1 mr-2">
+        <div class="ml-1 mr-2 mb-2">
             <div id="map" class="map"></div>
         </div>
         <input type="submit" value="Créer le lieu" class="btn btn-dark mb-2"/>

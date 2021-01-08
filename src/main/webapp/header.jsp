@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="beans.TypeUtilisateur" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,9 +60,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/amis">Mes amis</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=request.getContextPath()%>/admin-restricted/panel_admin">Panel Admin</a>
-                    </li>
+                    <c:if test="${sessionUtilisateur.role eq TypeUtilisateur.ADMIN}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%=request.getContextPath()%>/admin-restricted/panel_admin">Panel Admin</a>
+                        </li>
+                    </c:if>
                     <c:choose>
                         <c:when test="${hasNotifications == true}">
                             <li class="nav-item">
