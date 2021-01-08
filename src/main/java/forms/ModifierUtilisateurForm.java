@@ -94,7 +94,7 @@ public class ModifierUtilisateurForm {
             validateMail(email);
             utilisateur.setEmail(email);
         } catch (Exception e) {
-            addError("modifemail", e.getMessage());
+            addError("email", e.getMessage());
         }
 
         try {
@@ -102,7 +102,7 @@ public class ModifierUtilisateurForm {
             validateFieldSize(prenom);
             utilisateur.setPrenom(prenom);
         } catch (Exception e) {
-            addError("modifprenom", e.getMessage());
+            addError("prenom", e.getMessage());
         }
 
         try {
@@ -110,7 +110,7 @@ public class ModifierUtilisateurForm {
             validateFieldSize(pseudo);
             utilisateur.setPseudo(pseudo);
         } catch (Exception e) {
-            addError("modifpseudo", e.getMessage());
+            addError("pseudo", e.getMessage());
         }
 
 
@@ -119,7 +119,7 @@ public class ModifierUtilisateurForm {
             validateFieldSize(nom);
             utilisateur.setNom(nom);
         } catch (Exception e) {
-            addError("modifnom", e.getMessage());
+            addError("nom", e.getMessage());
         }
 
         try {
@@ -127,7 +127,7 @@ public class ModifierUtilisateurForm {
             Date date3 = Date.valueOf(date);
             utilisateur.setDate(date3);
         } catch (Exception e) {
-            addError("modifdate", e.getMessage());
+            addError("date", e.getMessage());
         }
 
     }

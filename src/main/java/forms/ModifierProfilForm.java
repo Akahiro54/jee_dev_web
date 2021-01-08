@@ -89,7 +89,7 @@ public class ModifierProfilForm {
             validateMail(email);
             utilisateur.setEmail(email);
         } catch (Exception e) {
-            addError("modifemail", e.getMessage());
+            addError("email", e.getMessage());
         }
 
         try {
@@ -97,7 +97,7 @@ public class ModifierProfilForm {
             validateFieldSize(prenom);
             utilisateur.setPrenom(prenom);
         } catch (Exception e) {
-            addError("modifprenom", e.getMessage());
+            addError("prenom", e.getMessage());
         }
 
         try {
@@ -105,7 +105,7 @@ public class ModifierProfilForm {
             validateFieldSize(nom);
             utilisateur.setNom(nom);
         } catch (Exception e) {
-            addError("modifnom", e.getMessage());
+            addError("nom", e.getMessage());
         }
 
         try {
@@ -113,7 +113,7 @@ public class ModifierProfilForm {
             Date date3 = Date.valueOf(date);
             utilisateur.setDate(date3);
         } catch (Exception e) {
-            addError("modifdate", e.getMessage());
+            addError("date", e.getMessage());
         }
 
     }
