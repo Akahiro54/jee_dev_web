@@ -11,6 +11,9 @@
 <jsp:include page="../header.jsp" />
     <div class="px-lg-5 px-sm-1 px-xl-5">
         <h1 class="text-center">Mes activités</h1>
+        <div class="text-center">
+            <a class="mt-1 mb-1 btn btn-dark" href="<%=request.getContextPath()%>/user-restricted/creer_activite" role="button">Créer une activité</a>
+        </div>
         <div class="row">
             <c:forEach items="${activites}" var="activite">
                 <div class="fond-element card col-12 col-sm-12 col-md-6 col-xl-4">
