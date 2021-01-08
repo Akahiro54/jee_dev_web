@@ -20,7 +20,7 @@
                     <th>Pseudo</th>
                     <th>Nom</th>
                     <th>Email</th>
-                    <th>Date Inscription</th>
+                    <th>Date de naissance</th>
                     <th>Rôle</th>
                     <th>Status</th>
                     <th>Action</th>
