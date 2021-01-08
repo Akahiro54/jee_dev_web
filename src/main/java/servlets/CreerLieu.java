@@ -34,7 +34,7 @@ public class CreerLieu extends HttpServlet {
         req.setAttribute(Util.ATT_FORM, form);
         req.setAttribute(Util.ATT_FORM_PLACE, lieu);
         if(form.getErrors().isEmpty()) {
-            resp.sendRedirect(req.getContextPath()+"/user-restricted/creer_activite");
+            resp.sendRedirect(req.getContextPath()+"/user-restricted/lieux");
         } else {
             req.getRequestDispatcher("/user-restricted/creer_lieu.jsp").forward(req, resp);
         }
