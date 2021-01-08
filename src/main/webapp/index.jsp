@@ -49,25 +49,25 @@
             <p>Le Covid19 touche de plus en plus de personnes en France, voici, à titre informatif, les dernières informations concernant le virus dans le pays.</p>
             <br/>
                     <div class="col-auto col-sm-12 col-md-9 col-xl-6  mx-auto">
-                        <div class="card text-center">
+                        <div class="card bg-info text-center mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Nombre total d'hospitalisations</h5>
                                 <p id="total_hos" class="card-text"></p>
                             </div>
                         </div>
-                        <div class="card text-center">
+                        <div class="card bg-info text-center mb-2">
                             <div class="card-body">
-                                <h5 class="card-title">Nombre total de guéris</h5>
+                                <h5 class="card-title">Nombre total de patients guéris</h5>
                                 <p  id="total_guer" class="card-text"></p>
                             </div>
                         </div>
-                        <div class="card text-center">
+                        <div class="card bg-info text-center mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Nombre d'hospitalisations aujourd'hui</h5>
                                 <p  id="hos" class="card-text"></p>
                             </div>
                         </div>
-                        <div class="card text-center">
+                        <div class="card bg-info text-center">
                             <div class="card-body">
                                 <h5 class="card-title">Nombre de patients en réanimation aujourd'hui</h5>
                                 <p id="rea" class="card-text"></p>
