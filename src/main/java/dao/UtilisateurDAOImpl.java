@@ -1,5 +1,6 @@
 package dao;
 
+import beans.TypeUtilisateur;
 import beans.Utilisateur;
 import exceptions.DAOException;
 import tools.PasswordHasher;
@@ -386,6 +387,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         if(sqlDate != null) {
             utilisateur.setDateContamination(sqlDate.toLocalDate());
         }
+        utilisateur.setRole(TypeUtilisateur.valueOf(resultSet.getString(10).toUpperCase()));
         utilisateur.setImage(Util.convertUserImage(resultSet.getBytes(11)));
         return utilisateur;
     }
