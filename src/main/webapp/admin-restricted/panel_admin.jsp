@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="beans.TypeUtilisateur" %>
 <jsp:include page="../header.jsp" />
 <c:set var="pageTitle" scope="request" value="Panel Admin"/>
 <div class="container-xl">
@@ -44,22 +45,22 @@
                         <td><c:out value="${listutil.email}" /> </td>
                         <td><c:out value="${listutil.date}" /> </td>
                         <td>
-<%--                            <c:choose>--%>
-<%--                                <c:when test="${listutil.role == 'admin'}">--%>
-<%--                                    Admin--%>
-<%--                                </c:when>--%>
-<%--                                <c:otherwise>--%>
-<%--                                    Utilisateur--%>
-<%--                                </c:otherwise>--%>
-<%--                            </c:choose>--%>
+                            <c:choose>
+                                <c:when test="${listutil.role eq TypeUtilisateur.ADMIN}">
+                                    Admin
+                                </c:when>
+                                <c:otherwise>
+                                    Utilisateur
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                         <td>
                             <c:choose>
                                 <c:when test="${listutil.contamine == false}">
-                                    <span class="status text-success">&bull;</span>Contaminé
+                                    <span class="status text-success">&bull;</span>Non Contaminé
                                 </c:when>
                                 <c:otherwise>
-                                    <span class="status text-danger">&bull;</span>Non Contaminé
+                                    <span class="status text-danger">&bull;</span>Contaminé
                                 </c:otherwise>
                             </c:choose>
                         </td>
