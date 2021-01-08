@@ -25,6 +25,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Pseudo</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input name = "modifpseudo" type="text" class="form-control" value="${user.pseudo}">
+                                    <span class="erreur text-danger text-center">${form.errors['pseudo']}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Prénom</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <input name = "modifprenom" type="text" class="form-control" value="${user.prenom}">

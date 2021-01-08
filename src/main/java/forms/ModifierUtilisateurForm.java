@@ -40,6 +40,7 @@ public class ModifierUtilisateurForm {
         String email = request.getParameter("modifemail");
         String date = request.getParameter("modifdate");
         String role = request.getParameter("modifrole");
+        String pseudo = request.getParameter("modifpseudo");
 
         InputStream inputStream = null;
 
@@ -67,18 +68,18 @@ public class ModifierUtilisateurForm {
             }
         }
 
-        validerChamps(utilisateur,prenom,nom,date,email);
+        validerChamps(utilisateur,prenom,nom,date,email,pseudo);
         Date date2 = Date.valueOf(date);
 
         if ( errors.isEmpty() ) {
             if (nomImage.equals("\"\""))
             {
-                if (!utilisateurDAO.updateFromAdmin(utilisateur,null, prenom, nom, email, date2,role, idUtilisateur)) {
+                if (!utilisateurDAO.updateFromAdmin(utilisateur,null, prenom, nom, email, date2,role,pseudo, idUtilisateur)) {
                     addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
                 }
             }
             else{
-                if (!utilisateurDAO.updateFromAdmin(utilisateur,filePart.getInputStream(), prenom, nom, email, date2,nomImage,role,idUtilisateur)) {
+                if (!utilisateurDAO.updateFromAdmin(utilisateur,filePart.getInputStream(), prenom, nom, email, date2,nomImage,role,pseudo,idUtilisateur)) {
                     addError(Util.GENERIC_DATABASE_FIELD, Util.DATABASE_ERROR_MESSAGE);
                 }
             }
@@ -86,7 +87,7 @@ public class ModifierUtilisateurForm {
 
     }
 
-    private void validerChamps(Utilisateur utilisateur,String prenom, String nom, String date, String email)
+    private void validerChamps(Utilisateur utilisateur,String prenom, String nom, String date, String email, String pseudo)
     {
         try {
             validateMail(email);
@@ -101,6 +102,14 @@ public class ModifierUtilisateurForm {
         } catch (Exception e) {
             addError("modifprenom", e.getMessage());
         }
+
+        try {
+            validateName(pseudo);
+            utilisateur.setPseudo(pseudo);
+        } catch (Exception e) {
+            addError("modifpseudo", e.getMessage());
+        }
+
 
         try {
             validateName(nom);

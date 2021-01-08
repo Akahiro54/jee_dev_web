@@ -346,7 +346,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         try {
             connection = daoFactory.getConnection();
             if(finput != null) { // updating user with image
-                request = "UPDATE utilisateur SET image = ?, prenom = ?, nom = ?, email = ?, date_naissance = ?, nomimage = ?, role = ? WHERE id = ? ";
+                request = "UPDATE utilisateur SET image = ?, prenom = ?, nom = ?, email = ?, date_naissance = ?, nomimage = ?, role = ?, pseudo = ? WHERE id = ? ";
                 preparedStatement = connection.prepareStatement(request);
                 preparedStatement.setBlob(1, finput);
                 preparedStatement.setObject(2,data[0]);
@@ -356,8 +356,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                 preparedStatement.setObject(6,data[4]);
                 preparedStatement.setObject(7,data[5]);
                 preparedStatement.setObject(8,data[6]);
+                preparedStatement.setObject(9,data[7]);
             } else { // normal update
-                request = "UPDATE utilisateur SET prenom = ?, nom = ?, email = ?, date_naissance = ?, role = ? WHERE id = ? ";
+                request = "UPDATE utilisateur SET prenom = ?, nom = ?, email = ?, date_naissance = ?, role = ?, pseudo = ? WHERE id = ? ";
                 preparedStatement = SQLTools.initPreparedRequest(connection,request,false, data);
             }
             preparedStatement.executeUpdate();
