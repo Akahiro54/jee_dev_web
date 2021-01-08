@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PannelAdmin extends HttpServlet {
+public class PanelAdmin extends HttpServlet {
 
     private UtilisateurDAO utilisateurDAO;
     private ActiviteDAO activiteDAO;
@@ -80,7 +80,7 @@ public class PannelAdmin extends HttpServlet {
             }
 
 
-            this.getServletContext().getRequestDispatcher("/user-restricted/pannel_admin.jsp").forward(req, resp);
+            this.getServletContext().getRequestDispatcher("/user-restricted/panel_admin.jsp").forward(req, resp);
         }
     }
 

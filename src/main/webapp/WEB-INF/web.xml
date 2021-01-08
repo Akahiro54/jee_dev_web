@@ -146,7 +146,7 @@
 
     <servlet>
         <servlet-name>PannelAdmin</servlet-name>
-        <servlet-class>servlets.PannelAdmin</servlet-class>
+        <servlet-class>servlets.PanelAdmin</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PannelAdmin</servlet-name>
