@@ -3,7 +3,7 @@ package beans;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Activite {
+public class Activite implements Comparable<Activite> {
 
     private int id;
     private int idUtilisateur;
@@ -92,5 +92,19 @@ public class Activite {
                 ", heureFin=" + heureFin +
                 ", idLieu=" + idLieu +
                 '}';
+    }
+
+
+    @Override
+    public int compareTo(Activite o) {
+        int diffDebut = this.dateDebut.compareTo(o.getDateDebut());
+        int diffFin = this.dateFin.compareTo(o.getDateFin());
+        if(diffDebut == 0 && diffFin == 0) { // les dates de début  et de fin sont les memes
+            return 1;
+        } else if(diffDebut == 0) { // dates de début sont les memes, on retourne les dates de fin
+            return diffFin;
+        } else { // les dates de debut ne sont pas les memes
+            return diffDebut;
+        }
     }
 }

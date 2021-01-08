@@ -52,7 +52,7 @@ public class ActiviteForm {
                 addError(ActiviteFields.FIELD_DATE_END.getFieldName(), "La date de fin ne peut être après la date actuelle.");
             }
             if(debut.isAfter(fin)) {
-                addError(ActiviteFields.FIELD_DATE_BEGIN.getFieldName(), "La date de début ne peut être avant la date de fin.");
+                addError(ActiviteFields.FIELD_DATE_BEGIN.getFieldName(), "La date de début ne peut être après la date de fin.");
             } else if(debut.isEqual(fin)) {
                 addError(ActiviteFields.FIELD_DATE_BEGIN.getFieldName(), "Les dates de début et de fin ne peuvent être identiques.");
             }

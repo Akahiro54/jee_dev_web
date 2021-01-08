@@ -47,7 +47,7 @@ public class ActiviteDAOImpl implements ActiviteDAO{
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String request ="SELECT a.* FROM activite a WHERE a.utilisateur = ?";
+        String request ="SELECT a.* FROM activite a WHERE a.utilisateur = ? ORDER BY debut DESC, fin DESC";
         try {
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUtilisateur);
@@ -211,11 +211,11 @@ public class ActiviteDAOImpl implements ActiviteDAO{
 
     @Override
     public Map<Activite, Lieu> getUserActivitiesWithPlaces(int idUtilisateur) {
-        HashMap<Activite, Lieu> activities = new HashMap<>();
+        TreeMap<Activite, Lieu> activities = new TreeMap<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String request ="SELECT a.* , l.* FROM activite a INNER JOIN lieu l ON a.lieu = l.id WHERE a.utilisateur = ?";
+        String request ="SELECT a.* , l.* FROM activite a INNER JOIN lieu l ON a.lieu = l.id WHERE a.utilisateur = ?  ORDER BY a.debut, a.fin";
         try {
             connection = daoFactory.getConnection();
             preparedStatement = SQLTools.initPreparedRequest(connection,request,false, idUtilisateur);
