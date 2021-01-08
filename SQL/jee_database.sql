@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 06 jan. 2021 à 23:49
+-- Généré le : ven. 08 jan. 2021 à 15:43
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 8.0.0
 
@@ -59,8 +59,7 @@ CREATE TABLE `lieu` (
   `description` text DEFAULT NULL,
   `adresse` text NOT NULL,
   `latitude` double NOT NULL,
-  `longitude` double NOT NULL,
-  `image` text DEFAULT NULL
+  `longitude` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
