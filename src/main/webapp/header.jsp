@@ -14,6 +14,8 @@
     <meta charset="utf-8" />
     <title>${pageTitle}</title>
 
+
+    <link rel="icon" href="<%=request.getContextPath()%>/favicon.ico"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-datepicker.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/site.css"/>
