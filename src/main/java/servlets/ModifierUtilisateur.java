@@ -36,7 +36,7 @@ public class ModifierUtilisateur extends HttpServlet {
             resp.sendRedirect(req.getContextPath()+"/connexion");
         } else {
             req.setAttribute(Util.ATT_FORM_USER,utilisateur);
-            this.getServletContext().getRequestDispatcher( "/user-restricted/modifier_utilisateur.jsp").forward( req, resp );
+            this.getServletContext().getRequestDispatcher( "/admin-restricted/modifier_utilisateur.jsp").forward( req, resp );
         }
     }
 
@@ -53,9 +53,9 @@ public class ModifierUtilisateur extends HttpServlet {
 
 
         if(form.getErrors().isEmpty()) {
-            resp.sendRedirect(req.getContextPath()+"/user-restricted/pannel_admin"); // Returns to the main page
+            resp.sendRedirect(req.getContextPath()+"/admin-restricted/panel_admin"); // Returns to the main page
         } else {
-            req.getRequestDispatcher("/user-restricted/modifier_utilisateur.jsp").forward(req, resp);
+            req.getRequestDispatcher("/admin-restricted/modifier_utilisateur.jsp").forward(req, resp);
         }
     }
 

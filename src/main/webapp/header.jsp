@@ -60,7 +60,7 @@
                         <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/amis">Mes amis</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/pannel_admin">Panel Admin</a>
+                        <a class="nav-link" href="<%=request.getContextPath()%>/admin-restricted/panel_admin">Panel Admin</a>
                     </li>
                     <c:choose>
                         <c:when test="${hasNotifications == true}">

@@ -29,6 +29,11 @@
         <listener-class>init.DaoFactoryInitializer</listener-class>
     </listener>
 
+
+
+
+    <!--  ACCESS CONTROL AND FILTERS  -->
+
     <filter>
         <filter-name>RestrictionFilter</filter-name>
         <filter-class>filters.UserRestrictionFilter</filter-class>
@@ -38,7 +43,6 @@
         <url-pattern>/user-restricted/*</url-pattern>
     </filter-mapping>
 
-
     <filter>
         <filter-name>AdminRestrictionFilter</filter-name>
         <filter-class>filters.AdminRestrictionFilter</filter-class>
@@ -47,7 +51,6 @@
         <filter-name>AdminRestrictionFilter</filter-name>
         <url-pattern>/admin-restricted/*</url-pattern>
     </filter-mapping>
-
 
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
@@ -67,6 +70,11 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+
+
+
+    <!--  PUBLIC AREA SERVLETS  -->
+
     <servlet>
         <servlet-name>Inscription</servlet-name>
         <servlet-class>servlets.Inscription</servlet-class>
@@ -75,7 +83,6 @@
         <servlet-name>Inscription</servlet-name>
         <url-pattern>/inscription</url-pattern>
     </servlet-mapping>
-
 
     <servlet>
         <servlet-name>Connecter</servlet-name>
@@ -96,7 +103,6 @@
         <url-pattern>/deconnexion</url-pattern>
     </servlet-mapping>
 
-
     <servlet>
         <servlet-name>Profil</servlet-name>
         <servlet-class>servlets.Profil</servlet-class>
@@ -110,9 +116,25 @@
         <servlet-name>ModifProfil</servlet-name>
         <servlet-class>servlets.ModifierProfil</servlet-class>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>ModifProfil</servlet-name>
         <url-pattern>/user-restricted/modifier_profil</url-pattern>
+    </servlet-mapping>
+
+
+
+
+    <!--  ADMIN AREA SERVLETS  -->
+
+    <servlet>
+        <servlet-name>PanelAdmin</servlet-name>
+        <servlet-class>servlets.PanelAdmin</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PanelAdmin</servlet-name>
+        <url-pattern>/admin-restricted/panel_admin</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -121,7 +143,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ModifUtilisateur</servlet-name>
-        <url-pattern>/user-restricted/modifier_utilisateur</url-pattern>
+        <url-pattern>/admin-restricted/modifier_utilisateur</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -130,37 +152,24 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ModifActivite</servlet-name>
-        <url-pattern>/user-restricted/modifier_activite</url-pattern>
+        <url-pattern>/admin-restricted/modifier_activite</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>ModifLieu</servlet-name>
         <servlet-class>servlets.ModifierLieu</servlet-class>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>ModifLieu</servlet-name>
-        <url-pattern>/user-restricted/modifier_lieu</url-pattern>
+        <url-pattern>/admin-restricted/modifier_lieu</url-pattern>
     </servlet-mapping>
 
 
 
-    <servlet>
-        <servlet-name>PannelAdmin</servlet-name>
-        <servlet-class>servlets.PanelAdmin</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>PannelAdmin</servlet-name>
-        <url-pattern>/user-restricted/pannel_admin</url-pattern>
-    </servlet-mapping>
 
-    <servlet>
-        <servlet-name>AdminRestricted</servlet-name>
-        <servlet-class>servlets.Restricted</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AdminRestricted</servlet-name>
-        <url-pattern>/admin-restricted/restricted</url-pattern>
-    </servlet-mapping>
+
+    <!--  USER AREA SERVLETS  -->
 
     <servlet>
         <servlet-name>CreerActivite</servlet-name>
@@ -198,7 +207,6 @@
         <url-pattern>/user-restricted/amis</url-pattern>
     </servlet-mapping>
 
-
     <servlet>
         <servlet-name>CreerLieu</servlet-name>
         <servlet-class>servlets.CreerLieu</servlet-class>
@@ -207,6 +215,7 @@
         <servlet-name>CreerLieu</servlet-name>
         <url-pattern>/user-restricted/creer_lieu</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>Lieu</servlet-name>
         <servlet-class>servlets.Lieu</servlet-class>

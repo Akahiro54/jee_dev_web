@@ -28,7 +28,7 @@ public class ModifierLieu extends HttpServlet {
         idLieu = Integer.parseInt(id);
         Lieu lieu = lieuDAO.get(idLieu);
         req.setAttribute(Util.ATT_FORM_PLACE,lieu);
-        this.getServletContext().getRequestDispatcher( "/user-restricted/modifier_lieu.jsp").forward( req, resp );
+        this.getServletContext().getRequestDispatcher( "/admin-restricted/modifier_lieu.jsp").forward( req, resp );
 
     }
 
@@ -40,9 +40,9 @@ public class ModifierLieu extends HttpServlet {
         req.setAttribute(Util.ATT_FORM, form);
         req.setAttribute(Util.ATT_FORM_PLACE, lieu);
         if(form.getErrors().isEmpty()) {
-            resp.sendRedirect(req.getContextPath()+"/user-restricted/pannel_admin");
+            resp.sendRedirect(req.getContextPath()+"/admin-restricted/panel_admin");
         } else {
-            req.getRequestDispatcher("/user-restricted/modifier_lieu.jsp").forward(req, resp);
+            req.getRequestDispatcher("/admin-restricted/modifier_lieu.jsp").forward(req, resp);
         }
     }
 }

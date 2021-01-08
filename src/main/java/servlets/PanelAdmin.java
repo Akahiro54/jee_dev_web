@@ -53,7 +53,7 @@ public class PanelAdmin extends HttpServlet {
                 try {
                     int idUtilisateur = Integer.parseInt(delete);
                     if (utilisateurDAO.delete(idUtilisateur)) {
-                        resp.sendRedirect(req.getContextPath() + "/user-restricted/pannel_admin");
+                        resp.sendRedirect(req.getContextPath() + "/admin-restricted/panel_admin");
                         return;
                     }
                 } catch (Exception e) { }
@@ -63,7 +63,7 @@ public class PanelAdmin extends HttpServlet {
                 try {
                     int idActivite = Integer.parseInt(deleteActivite);
                     if (activiteDAO.delete(idActivite)) {
-                        resp.sendRedirect(req.getContextPath() + "/user-restricted/pannel_admin");
+                        resp.sendRedirect(req.getContextPath() + "/admin-restricted/panel_admin");
                         return;
                     }
                 } catch (Exception e) { }
@@ -73,7 +73,7 @@ public class PanelAdmin extends HttpServlet {
                 try {
                     int idLieu = Integer.parseInt(deleteLieu);
                     if (lieuDAO.delete(idLieu)) {
-                        resp.sendRedirect(req.getContextPath() + "/user-restricted/pannel_admin");
+                        resp.sendRedirect(req.getContextPath() + "/admin-restricted/panel_admin");
                         return;
                     }
                 } catch (Exception e) { }
