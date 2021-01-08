@@ -91,7 +91,7 @@ public class FormTools {
 
     public static void validateMail( String email ) throws Exception {
         if ( email != null ) {
-            if ( !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
+            if ( !email.matches( "^[A-Za-z0-9_.+-]+@[A-Za-z0-9-]+\\.[A-Za-z0-9-.]+$" ) ) {
                 throw new Exception( "Merci de saisir une adresse mail valide." );
             }
         } else {
