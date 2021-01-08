@@ -26,6 +26,12 @@
                         <c:when test="${notification.type == 'DEL_AMI'}">
                             Suppression d'ami
                         </c:when>
+                        <c:when test="${notification.type == 'REF_AMI'}">
+                            Demande refusée
+                        </c:when>
+                        <c:when test="${notification.type == 'ACC_AMI'}">
+                            Demande acceptée
+                        </c:when>
                         <c:otherwise>
                             Notification
                         </c:otherwise>

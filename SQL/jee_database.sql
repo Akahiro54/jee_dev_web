@@ -35,7 +35,7 @@ CREATE TABLE `activite` (
                             `debut` datetime NOT NULL,
                             `fin` datetime NOT NULL,
                             `lieu` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -46,7 +46,7 @@ CREATE TABLE `activite` (
 CREATE TABLE `amis` (
                         `ami1` bigint NOT NULL,
                         `ami2` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -61,7 +61,7 @@ CREATE TABLE `lieu` (
                         `adresse` text NOT NULL,
                         `latitude` double NOT NULL,
                         `longitude` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -74,10 +74,10 @@ CREATE TABLE `notification` (
                                 `message` text NOT NULL,
                                 `date` datetime NOT NULL,
                                 `etat` enum('lue','non_lue','archivee') NOT NULL,
-                                `type` enum('ami','covid','del_ami') NOT NULL,
+                                `type` enum('ami','covid','del_ami','acc_ami','ref_ami') NOT NULL,
                                 `source` bigint NOT NULL,
                                 `destination` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -98,7 +98,7 @@ CREATE TABLE `utilisateur` (
                                `role` enum('admin','user') NOT NULL DEFAULT 'user',
                                `image` mediumblob,
                                `nomimage` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `utilisateur`
@@ -157,25 +157,25 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `activite`
 --
 ALTER TABLE `activite`
-    MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+    MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `lieu`
 --
 ALTER TABLE `lieu`
-    MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+    MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `notification`
 --
 ALTER TABLE `notification`
-    MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+    MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-    MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+    MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées

@@ -18,6 +18,8 @@ public class Util {
     public static String NOTIF_MSG_FRIEND = "Vous avez une nouvelle demande d'ami de la part de ";
     public static String NOTIF_MSG_COVID = "Vous avez été en contact avec une personne positive au COVID-19. Faites vous tester dès que possible !";
     public static String NOTIF_MSG_UNFRIEND = " vous a supprimé de ses amis.";
+    public static String MSG_FRIEND_ACCEPT = " a accepté votre demande d'ami";
+    public static String MSG_FRIEND_DECLINE = " a refusé votre demande d'ami";
 
     public static String ATT_SESSION_USER = "sessionUtilisateur";
     public static String ATT_DAO_FACTORY = "daofactory";
@@ -29,7 +31,6 @@ public class Util {
     public static String convertUserImage(byte[] imageBytes) {
         if(imageBytes != null) {
             return Base64.getEncoder().encodeToString(imageBytes);
-
         }
         return "";
     }

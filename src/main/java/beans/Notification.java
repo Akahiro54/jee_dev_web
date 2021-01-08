@@ -91,6 +91,13 @@ public class Notification {
             case DEL_AMI:
                 notification.setMessage(source.getPseudo() + Util.NOTIF_MSG_UNFRIEND);
                 break;
+            case ACC_AMI:
+                notification.setMessage(source.getPseudo() + Util.MSG_FRIEND_ACCEPT);
+                break;
+            case REF_AMI:
+                notification.setMessage(source.getPseudo() + Util.MSG_FRIEND_DECLINE);
+                break;
+
         }
         notification.setEtat(EtatNotification.NON_LUE);
         notification.setDate(LocalDateTime.now());

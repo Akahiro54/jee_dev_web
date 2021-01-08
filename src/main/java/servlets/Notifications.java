@@ -2,6 +2,7 @@ package servlets;
 
 import beans.EtatNotification;
 import beans.Notification;
+import beans.TypeNotification;
 import beans.Utilisateur;
 import com.google.gson.Gson;
 import dao.AmisDAO;
@@ -88,6 +89,7 @@ public class Notifications extends HttpServlet {
                             switch (action) {
                                 case "accept":  //if the user wants to accept the demand, tries to update the amis objects
                                     if(amisDAO.add(amis) && notificationDAO.changeState(n, EtatNotification.LUE)) {
+                                        notificationDAO.add(Notification.buildNotification(utilisateur, idAmi, TypeNotification.ACC_AMI));
                                         success.appendMessage(" acceptée avec succès !");
                                         resp.getWriter().write(new Gson().toJson(success));
                                     } else {
@@ -97,6 +99,7 @@ public class Notifications extends HttpServlet {
                                     break;
                                 case "decline": //if the user wants to decline the demand, tries to update the amis objects
                                     if(notificationDAO.changeState(n, EtatNotification.LUE)) {
+                                        notificationDAO.add(Notification.buildNotification(utilisateur, idAmi, TypeNotification.REF_AMI));
                                         success.appendMessage(" refusée avec succès !");
                                         resp.getWriter().write(new Gson().toJson(success));
                                     } else {
