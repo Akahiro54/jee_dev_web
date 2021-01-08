@@ -217,6 +217,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>Lieux</servlet-name>
+        <servlet-class>servlets.Lieux</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Lieux</servlet-name>
+        <url-pattern>/user-restricted/lieux</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>Lieu</servlet-name>
         <servlet-class>servlets.Lieu</servlet-class>
     </servlet>

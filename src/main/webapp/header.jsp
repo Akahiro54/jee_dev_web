@@ -58,6 +58,9 @@
                         <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/activites">Mes activités</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/lieux">Lieux</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="<%=request.getContextPath()%>/user-restricted/amis">Mes amis</a>
                     </li>
                     <c:if test="${sessionUtilisateur.role eq TypeUtilisateur.ADMIN}">
