@@ -27,8 +27,8 @@ public class FormTools {
 
     public static void validateSomeSpecialChars(String data) throws Exception {
         if(data != null) {
-            if(!data.matches("[A-Za-z0-9À-ÖØ-öø-ÿ\\s-,]+")) {
-                throw new Exception("Le champ ne peut contenir que des lettres, chiffres, accents, espaces, tirets (-) et virgules.");
+            if(!data.matches("[A-Za-z0-9À-ÖØ-öø-ÿ\\s-,'.]+")) {
+                throw new Exception("Le champ ne peut contenir que des lettres, chiffres, accents, espaces, tirets (-), apostrophes, virgules et points.");
             }
         }
     }
