@@ -9,6 +9,7 @@ import tools.Util;
 import java.io.InputStream;
 import java.sql.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -296,10 +297,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                                 "FROM activite act INNER JOIN lieu l ON act.lieu = l.id " +
                                 "WHERE act.utilisateur = ?) AS activities " +
                             "ON act.lieu = activities.lid WHERE act.utilisateur != ? " +
-                            "AND (act.debut < activities.afin AND activities.adebut < act.fin)";
+                            "AND (act.debut < activities.afin AND activities.adebut < act.fin)" +
+                            "AND act.fin > ?";
         try {
             connection = daoFactory.getConnection();
-            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, utilisateur.getId(), utilisateur.getId());
+            preparedStatement = SQLTools.initPreparedRequest(connection,request,false, utilisateur.getId(), utilisateur.getId(), LocalDateTime.now().minusDays(10));
             resultat = preparedStatement.executeQuery();
             while (resultat.next()) {
                 Utilisateur u = map(resultat);
