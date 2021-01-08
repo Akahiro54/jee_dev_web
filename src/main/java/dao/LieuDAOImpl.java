@@ -102,7 +102,7 @@ public class LieuDAOImpl implements LieuDAO{
         String request = "INSERT INTO lieu (nom, description, adresse, latitude, longitude) VALUES (?, ?, ? ,?, ?);";
         try {
             connection = daoFactory.getConnection();
-            preparedStatement = SQLTools.initPreparedRequest(connection,request, true, place.getNom(),place.getDescription(),place.getAdresse(),place.getLatitude(),place.getLatitude());
+            preparedStatement = SQLTools.initPreparedRequest(connection,request, true, place.getNom(),place.getDescription(),place.getAdresse(),place.getLatitude(),place.getLongitude());
             preparedStatement.executeUpdate();
             generatedValue = preparedStatement.getGeneratedKeys();
             if(generatedValue.next()) place.setId(generatedValue.getInt(1));
